@@ -1,0 +1,46 @@
+site_name: skyejen
+site_url: https://skyejen.github.io
+site_description: Jen's home base — learning notes, write-ups, and things built along the way.
+site_author: skyejen
+
+theme:
+  name: material
+  custom_dir: overrides
+  palette:
+    - scheme: slate
+      primary: custom
+      accent: custom
+  font:
+    text: Inter
+    code: JetBrains Mono
+  logo: images/logo-placeholder.png
+  favicon: images/logo-placeholder.png
+  icon:
+    repo: fontawesome/brands/github
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/extra.js
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+copyright: >-
+  <span class="md-copyright__highlight">© 2026 Jennifer Skye</span>
+  &nbsp;·&nbsp; stay curious. keep building.
+
+# No search plugin: this is a single landing page, nothing to search.
+plugins: []
+
+extra:
+  generator: false

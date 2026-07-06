@@ -1,0 +1,26 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows system files
+Desktop.ini
+Thumbs.db
+ehthumbs.db
+$RECYCLE.BIN/
+
+# IDE settings
+.vscode/
+.idea/
+
+# Python cache + virtual envs
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# MkDocs build output (generated in CI)
+site/
