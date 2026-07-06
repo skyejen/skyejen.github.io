@@ -11,3 +11,31 @@
     }
   </script>
 {% endblock %}
+
+{% block site_nav %}
+  {#- Single-page landing: the left column holds no nav, just the "Contact me"
+      card pinned at the bottom (matches the cybersecurity site). -#}
+  <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+    <div class="md-sidebar__scrollwrap">
+      <div class="md-sidebar__inner"></div>
+    </div>
+    <a class="sj-side-card" href="mailto:jennifer.skye@outlook.com" title="Email me">
+      <span class="sj-side-card-logo">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+        </svg>
+      </span>
+      <span><strong>Contact me</strong><em>jennifer.skye@outlook.com</em></span>
+    </a>
+  </div>
+  {% if "toc.integrate" not in features %}
+    <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner">
+          {% include "partials/toc.html" %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # :material-hand-wave: Hey there, I'm Jen
 
 I like pulling things apart to see how they work (or don't work), then writing down what I figure out.<br>

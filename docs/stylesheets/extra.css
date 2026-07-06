@@ -1237,11 +1237,13 @@ body {
   font-family: var(--md-text-font-family), "Inter", -apple-system, sans-serif;
 }
 
-/* Earlier ToC activation when clicking/scrolling to a section */
+/* Landing scroll offset: the page scrolls inside .md-container, which already
+   starts below the sticky header — so this only needs a small breathing gap, not
+   the full header height (3.6rem left the previous section peeking in above). */
 .md-typeset h1,
 .md-typeset h2,
 .md-typeset h3 {
-  scroll-margin-top: 3.6rem;
+  scroll-margin-top: 1.2rem;
 }
 
 /* ── Night mode: emulates Windows Night Light at ~55% strength
@@ -1333,13 +1335,18 @@ html.sj-night .sj-night-toggle {
    the content (the theme's 3rem left margin was only there to clear the
    sidebar). Scoped to desktop; mobile has no persistent sidebar anyway. */
 @media screen and (min-width: 76.25em) {
-  /* Match cybersec's layout: reserve the left nav column's 13.6rem but keep it
-     empty, so the content and the "On this page" ToC land in the exact same
-     positions as on the cybersecurity site. visibility:hidden holds the column
-     width (display:none would collapse it and shift everything left). Cybersec's
-     own full-width grid, content margin and header line then all apply as-is. */
-  .md-sidebar--primary[hidden] {
-    visibility: hidden;
+  /* The left column holds only the "Contact me" card (rendered in main.html),
+     no nav — so hide the sidebar's vertical divider line (this landing page has
+     nothing to separate) and unify the header's bottom line across the full
+     width instead of fading it over the column. */
+  .md-sidebar--primary::after {
+    display: none;
+  }
+  .md-header::before {
+    background: var(--sj-border);
+  }
+  .md-header::after {
+    left: 0;
   }
   /* The ToC is short and never needs to scroll, so size it to its content and
      hide the scrollbar entirely — this kills both the load-time flash and the
