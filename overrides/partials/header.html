@@ -19,10 +19,11 @@
     <button class="md-header__button md-icon sj-night-toggle" title="Toggle night mode" aria-label="Toggle night mode" type="button">
       {% include ".icons/material/weather-night.svg" %}
     </button>
-    <span class="sj-hdr-sep" aria-hidden="true"></span>
-    <a class="md-header__button md-icon sj-github" href="https://github.com/skyejen" title="GitHub" rel="noopener" target="_blank">
-      {% include ".icons/fontawesome/brands/github.svg" %}
-    </a>
+    {% if config.repo_url %}
+      <div class="md-header__source">
+        {% include "partials/source.html" %}
+      </div>
+    {% endif %}
     <a class="md-header__button md-icon sj-linkedin" href="https://www.linkedin.com/in/skyejen/" title="LinkedIn" rel="noopener" target="_blank">
       {% include ".icons/fontawesome/brands/linkedin.svg" %}
     </a>

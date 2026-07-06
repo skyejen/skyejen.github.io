@@ -3,6 +3,9 @@ site_url: https://skyejen.github.io
 site_description: Jen's home base — learning notes, write-ups, and things built along the way.
 site_author: skyejen
 
+repo_url: https://github.com/skyejen
+repo_name: skyejen
+
 theme:
   name: material
   custom_dir: overrides

@@ -1333,70 +1333,53 @@ html.sj-night .sj-night-toggle {
    the content (the theme's 3rem left margin was only there to clear the
    sidebar). Scoped to desktop; mobile has no persistent sidebar anyway. */
 @media screen and (min-width: 76.25em) {
-  .md-sidebar--primary[hidden],
-  .md-sidebar--secondary[hidden] {
-    display: none !important;
+  /* Match cybersec's layout: reserve the left nav column's 13.6rem but keep it
+     empty, so the content and the "On this page" ToC land in the exact same
+     positions as on the cybersecurity site. visibility:hidden holds the column
+     width (display:none would collapse it and shift everything left). Cybersec's
+     own full-width grid, content margin and header line then all apply as-is. */
+  .md-sidebar--primary[hidden] {
+    visibility: hidden;
   }
-  /* No left nav panel, but a right ToC: cap and centre the MAIN grid only, so
-     content + ToC sit as a balanced, centred group instead of the content
-     stranded far left with a void before the ToC. The header/footer grids are
-     left untouched, so they stay full-width. */
-  .md-main__inner.md-grid {
-    max-width: 66rem !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+  /* The ToC is short and never needs to scroll, so size it to its content and
+     hide the scrollbar entirely — this kills both the load-time flash and the
+     permanent bar Material's styled scrollbar left behind. */
+  .md-sidebar--secondary .md-sidebar__scrollwrap {
+    height: auto !important;
+    max-height: none !important;
+    overflow: hidden;
+    scrollbar-width: none;
   }
-  .md-content__inner {
-    max-width: none;
-    margin-left: 0 !important;
-    padding-right: 1rem;
-  }
-  /* Unify the header's bottom line. The theme fades it over the old sidebar
-     column (first 13.6rem) and only feathers the content area — with no
-     sidebar, make it one solid line and feather the full width. */
-  .md-header::before {
-    background: var(--sj-border);
-  }
-  .md-header::after {
-    left: 0;
+  .md-sidebar--secondary .md-sidebar__scrollwrap::-webkit-scrollbar {
+    display: none;
   }
 }
 
-/* ── Landing header: one solid bar, faded separator after the logo ──────────
-   The ported theme sizes the brand to the (now-removed) sidebar column width
-   and divides it with a solid border, which read as two panels. Drop that so
-   the header is one bar, then separate the logo from the wordmark with the
-   same faded gradient the theme uses elsewhere in the header. */
+/* ── Landing header: match the cybersecurity header ─────────────────────────
+   Logo + name sit in the same 13.6rem brand column as cybersec (so they land in
+   the exact same spot), with a FADED divider at the column edge instead of
+   cybersec's solid one. The divider sits after the name, at the column boundary.
+   The GitHub icon is rendered via Material's source component (same as cybersec),
+   so its muting, hover and separator come from the shared .md-source styles. */
 @media screen and (min-width: 76.25em) {
   .sj-brand {
-    width: auto;
+    width: 13.6rem;
+    justify-content: center;
+    padding-left: 0;
+    gap: 0.3rem;
     border-right: none;
-    justify-content: flex-start;
-    padding-left: 0.7rem;
-    gap: 0.55rem;
+    position: relative;
   }
-}
-.sj-header-title {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-}
-.sj-header-title::before {
-  content: "";
-  width: 1px;
-  height: 1.3rem;
-  background: linear-gradient(to bottom, transparent, var(--sj-border) 30%, var(--sj-border) 70%, transparent);
-  flex-shrink: 0;
-}
-/* Same faded separator, between the night-mode toggle and the social icons
-   (mirrors the divider on the cybersecurity header). */
-.sj-hdr-sep {
-  width: 1px;
-  height: 1.3rem;
-  align-self: center;
-  margin: 0 0.45rem 0 0.2rem;
-  background: linear-gradient(to bottom, transparent, var(--sj-border) 30%, var(--sj-border) 70%, transparent);
-  flex-shrink: 0;
+  .sj-brand::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 1.3rem;
+    background: linear-gradient(to bottom, transparent, var(--sj-border) 30%, var(--sj-border) 70%, transparent);
+  }
 }
 
 /* Footer: no social icons here, so centre the copyright line. */
