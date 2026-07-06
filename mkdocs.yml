@@ -16,8 +16,8 @@ theme:
   font:
     text: Inter
     code: JetBrains Mono
-  logo: images/logo-placeholder.png
-  favicon: images/logo-placeholder.png
+  logo: images/main-v2-1.png
+  favicon: images/main-v2-1.png
   icon:
     repo: fontawesome/brands/github
 

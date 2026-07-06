@@ -7,8 +7,8 @@ This is home base for my learning notes, write-ups, and the things I build along
 
 <!-- ═══════════════════════════════════════════════════════════════════════
      ADDING A NEW REPO? Copy one <a class="sj-card"> block below, then update
-     its icon, title, desc (also the title="" for the hover tooltip), meta,
-     and href. Drop it into the right section. Swap a "coming soon" placeholder
+     its icon, title, desc, meta, and href. Keep descriptions short (they fit two
+     lines). Drop it into the right section. Swap a "coming soon" placeholder
      (div.sj-card--soon) for a real linked card once that repo has a live site.
      ═══════════════════════════════════════════════════════════════════════ -->
 
@@ -19,14 +19,14 @@ This is home base for my learning notes, write-ups, and the things I build along
 <a class="sj-card" href="https://skyejen.github.io/cybersecurity/" markdown="span">
 <span class="sj-card-icon">:material-shield-lock-outline:</span>
 <span class="sj-card-title">Cybersecurity</span>
-<span class="sj-card-desc" title="TryHackMe write-ups and notes from my security learning.">TryHackMe write-ups and notes from my security learning.</span>
+<span class="sj-card-desc">TryHackMe write-ups and notes from my security learning.</span>
 <span class="sj-card-meta">live - 2026</span>
 </a>
 
 <a class="sj-card" href="https://skyejen.github.io/100-days-of-python/" markdown="span">
 <span class="sj-card-icon">:material-language-python:</span>
 <span class="sj-card-title">100 Days of Python</span>
-<span class="sj-card-desc" title="Working through Angela Yu's Python course - exercises and notes.">Working through Angela Yu's Python course - exercises and notes.</span>
+<span class="sj-card-desc">Working through Angela Yu's Python course - exercises and notes.</span>
 <span class="sj-card-meta">live - 2026</span>
 </a>
 

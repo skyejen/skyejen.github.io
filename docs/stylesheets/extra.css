@@ -1238,12 +1238,13 @@ body {
 }
 
 /* Landing scroll offset: the page scrolls inside .md-container, which already
-   starts below the sticky header — so this only needs a small breathing gap, not
-   the full header height (3.6rem left the previous section peeking in above). */
+   starts below the sticky header — so this only needs a tiny breathing gap. Kept
+   small so the clicked heading sits near the top and the previous section clears
+   out of view (1.2rem still left it peeking in). */
 .md-typeset h1,
 .md-typeset h2,
 .md-typeset h3 {
-  scroll-margin-top: 1.2rem;
+  scroll-margin-top: 0.4rem;
 }
 
 /* ── Night mode: emulates Windows Night Light at ~55% strength
