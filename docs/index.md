@@ -20,7 +20,14 @@ This is home base for my learning notes, write-ups, and the things I build along
 <span class="sj-card-icon">:material-shield-lock-outline:</span>
 <span class="sj-card-title">Cybersecurity</span>
 <span class="sj-card-desc" title="TryHackMe write-ups and notes from my security learning.">TryHackMe write-ups and notes from my security learning.</span>
-<span class="sj-card-meta">live <span class="sj-dot">·</span> 2026</span>
+<span class="sj-card-meta">live - 2026</span>
+</a>
+
+<a class="sj-card" href="https://skyejen.github.io/100-days-of-python/" markdown="span">
+<span class="sj-card-icon">:material-language-python:</span>
+<span class="sj-card-title">100 Days of Python</span>
+<span class="sj-card-desc" title="Working through Angela Yu's Python course - exercises and notes.">Working through Angela Yu's Python course - exercises and notes.</span>
+<span class="sj-card-meta">live - 2026</span>
 </a>
 
 <div class="sj-card sj-card--soon" markdown="span">
