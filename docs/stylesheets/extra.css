@@ -90,10 +90,33 @@
 [data-sj-tip].sj-tip--force.sj-tip--left::before {
   transform: translateY(0);
 }
+/* multiline variant: for longer tooltips (e.g. full text of a clipped card
+   description) — wrap instead of forcing one very wide line */
+[data-sj-tip].sj-tip--multiline::after {
+  white-space: normal;
+  width: max-content;
+  max-width: 15rem;
+  text-align: left;
+  line-height: 1.4;
+}
 /* wrapper that carries the tooltip for code buttons (keeps their icon intact) */
 .sj-tip-wrap {
   display: inline-flex;
   align-items: center;
+}
+/* Detective Buggy page: CTA button row + subtle back link */
+.sj-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 1.2rem 0 1.4rem;
+}
+.md-typeset .sj-back {
+  font-size: 0.8rem;
+  color: var(--sj-text-dim);
+}
+.md-typeset .sj-back:hover {
+  color: var(--sj-gold);
 }
 /* Unify header tooltips: Material sets .md-header__button:hover{opacity:.7},
    which creates a stacking context on hover and traps the tooltip behind the

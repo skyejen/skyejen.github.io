@@ -43,7 +43,7 @@ This is home base for my learning notes, write-ups, and the things I build along
 
 <div class="sj-cards" markdown>
 
-<a class="sj-card" href="https://detective-buggy-ep1.onrender.com/" markdown="span">
+<a class="sj-card" href="detective-buggy/" markdown="span">
 <span class="sj-card-icon">:material-incognito:</span>
 <span class="sj-card-title">Detective Buggy</span>
 <span class="sj-card-desc">A full-stack Flask + Postgres detective game - my CS50 final project.</span>

@@ -54,6 +54,27 @@ document.addEventListener("DOMContentLoaded", function () {
     el.classList.add("sj-tip--left");
   });
 
+  /* Show a themed full-text tooltip ONLY when a card title/description is actually
+     clipped by its line-clamp (…). Re-checked on load + resize so font/layout
+     timing doesn't give a false reading. */
+  function sjTagClippedCards() {
+    document.querySelectorAll(".sj-card-title, .sj-card-desc").forEach(function (el) {
+      var clipped = el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;
+      if (clipped) {
+        var full = el.textContent.trim();
+        el.setAttribute("data-sj-tip", full);
+        el.classList.add("sj-tip--multiline");
+        if (!el.getAttribute("aria-label")) el.setAttribute("aria-label", full);
+      } else if (el.hasAttribute("data-sj-tip")) {
+        el.removeAttribute("data-sj-tip");
+        el.classList.remove("sj-tip--multiline");
+      }
+    });
+  }
+  sjTagClippedCards();
+  window.addEventListener("load", sjTagClippedCards);
+  window.addEventListener("resize", sjTagClippedCards);
+
   /* Copy-to-clipboard buttons are injected by Material AFTER load, so we style
      each one as it appears (MutationObserver) rather than once up front.
      We mirror Material's dynamic "Copied!" title into data-sj-tip and also

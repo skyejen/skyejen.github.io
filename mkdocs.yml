@@ -6,6 +6,11 @@ site_author: skyejen
 repo_url: https://github.com/skyejen
 repo_name: skyejen
 
+# Landing is a single page; the Detective Buggy portfolio page is reached from its
+# tile (kept out of the nav on purpose).
+nav:
+  - Home: index.md
+
 theme:
   name: material
   custom_dir: overrides
