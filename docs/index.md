@@ -12,7 +12,7 @@ This is home base for my learning notes, write-ups, and the things I build along
      (div.sj-card--soon) for a real linked card once that repo has a live site.
      ═══════════════════════════════════════════════════════════════════════ -->
 
-## :material-book-open-page-variant-outline: Learning (write-ups)
+## :material-book-open-page-variant-outline: Learning
 
 <div class="sj-cards" markdown>
 
@@ -32,8 +32,8 @@ This is home base for my learning notes, write-ups, and the things I build along
 
 <div class="sj-card sj-card--soon" markdown="span">
 <span class="sj-card-icon">:material-book-plus-outline:</span>
-<span class="sj-card-title">More paths</span>
-<span class="sj-card-desc">New learning paths and notes as I work through them.</span>
+<span class="sj-card-title">More to come</span>
+<span class="sj-card-desc">New topics and notes as I work through them.</span>
 <span class="sj-card-meta">coming soon</span>
 </div>
 
@@ -43,30 +43,17 @@ This is home base for my learning notes, write-ups, and the things I build along
 
 <div class="sj-cards" markdown>
 
-<div class="sj-card sj-card--soon" markdown="span">
-<span class="sj-card-icon">:material-language-python:</span>
-<span class="sj-card-title">Python projects</span>
-<span class="sj-card-desc">Small tools and scripts, with write-ups on the way.</span>
-<span class="sj-card-meta">coming soon</span>
-</div>
+<a class="sj-card" href="https://detective-buggy-ep1.onrender.com/" markdown="span">
+<span class="sj-card-icon">:material-incognito:</span>
+<span class="sj-card-title">Detective Buggy</span>
+<span class="sj-card-desc">A full-stack Flask + Postgres detective game - my CS50 final project.</span>
+<span class="sj-card-meta">live - 2025</span>
+</a>
 
 <div class="sj-card sj-card--soon" markdown="span">
-<span class="sj-card-icon">:material-console:</span>
-<span class="sj-card-title">CLI utilities</span>
-<span class="sj-card-desc">Handy command-line helpers I reach for often.</span>
-<span class="sj-card-meta">coming soon</span>
-</div>
-
-</div>
-
-## :material-robot-outline: Portfolio - Test Automation
-
-<div class="sj-cards" markdown>
-
-<div class="sj-card sj-card--soon" markdown="span">
-<span class="sj-card-icon">:material-check-decagram-outline:</span>
-<span class="sj-card-title">Test frameworks</span>
-<span class="sj-card-desc">End-to-end and API test suites, and how I built them.</span>
+<span class="sj-card-icon">:material-dots-horizontal:</span>
+<span class="sj-card-title">More to come</span>
+<span class="sj-card-desc">More Python tools and projects as I build them.</span>
 <span class="sj-card-meta">coming soon</span>
 </div>
 
