@@ -3,10 +3,10 @@
 [:material-arrow-left: Back to home](../){ .sj-back }
 
 Detective Inspector Buggy returns to the station to find his hard-earned special chicken
-treats awarded to him by Chief Constable have gone missing. The treats were stored securely in his office. Could it really be one of the officers? It's a lighthearted, story-driven mystery game - and it was my
+treats awarded to him by the Chief Constable have gone missing. The treats were stored securely in his office. Could it really be one of the officers? It's a lighthearted, story-driven mystery game - and it was my
 **CS50x final project**, as well as my first deployed full-stack app :)
 
-P.S. BTW Buggy is actualyl my real life dog and all characters (apart from one, ish) exist in real life!
+P.S. BTW Buggy is actually my real-life dog and all characters (apart from one, ish) exist in real life!
 
 <div class="sj-cta" markdown>
 [:material-play: Play the game](https://detective-buggy-ep1.onrender.com){ .md-button .md-button--primary }
