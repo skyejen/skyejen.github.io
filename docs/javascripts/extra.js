@@ -54,20 +54,30 @@ document.addEventListener("DOMContentLoaded", function () {
     el.classList.add("sj-tip--left");
   });
 
-  /* Show a themed full-text tooltip ONLY when a card title/description is actually
-     clipped by its line-clamp (…). Re-checked on load + resize so font/layout
-     timing doesn't give a false reading. */
+  /* Full-text tooltip when a card's title/description is clipped by its line-clamp.
+     IMPORTANT: the tooltip must live on the CARD, not on .sj-card-desc/.sj-card-title
+     — those carry `overflow:hidden` for the clamp, which clips the tooltip bubble
+     itself (that was the bug: nothing showed even when text was cut off). The card
+     has no such clip. Re-checked on load + resize so font/layout timing doesn't fool it. */
   function sjTagClippedCards() {
-    document.querySelectorAll(".sj-card-title, .sj-card-desc").forEach(function (el) {
-      var clipped = el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;
-      if (clipped) {
-        var full = el.textContent.trim();
-        el.setAttribute("data-sj-tip", full);
-        el.classList.add("sj-tip--multiline");
-        if (!el.getAttribute("aria-label")) el.setAttribute("aria-label", full);
-      } else if (el.hasAttribute("data-sj-tip")) {
-        el.removeAttribute("data-sj-tip");
-        el.classList.remove("sj-tip--multiline");
+    document.querySelectorAll(".sj-card").forEach(function (card) {
+      var clippedEl = null;
+      [".sj-card-desc", ".sj-card-title"].forEach(function (sel) {
+        if (clippedEl) return;
+        var el = card.querySelector(sel);
+        if (el && (el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1)) {
+          clippedEl = el;
+        }
+      });
+      if (clippedEl) {
+        var full = clippedEl.textContent.trim();
+        card.setAttribute("data-sj-tip", full);
+        /* --up so it sits ABOVE the tile (below crowds the next section header) */
+        card.classList.add("sj-tip--multiline", "sj-tip--up");
+        if (!card.getAttribute("aria-label")) card.setAttribute("aria-label", full);
+      } else {
+        card.removeAttribute("data-sj-tip");
+        card.classList.remove("sj-tip--multiline", "sj-tip--up");
       }
     });
   }
