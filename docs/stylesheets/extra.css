@@ -99,6 +99,26 @@
   text-align: left;
   line-height: 1.4;
 }
+/* cursor-following bubble for clipped cards (positioned by JS at the pointer) */
+.sj-cursor-tip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 400;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  max-width: 16rem;
+  background: var(--sj-surface);
+  color: #e6cf94;
+  border: 1px solid var(--sj-border);
+  border-radius: 6px;
+  padding: 0.3rem 0.55rem;
+  font-family: var(--md-text-font-family, "Inter"), sans-serif;
+  font-size: 0.62rem;
+  line-height: 1.4;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
 /* wrapper that carries the tooltip for code buttons (keeps their icon intact) */
 .sj-tip-wrap {
   display: inline-flex;

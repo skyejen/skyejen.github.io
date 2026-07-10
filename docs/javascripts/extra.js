@@ -54,11 +54,10 @@ document.addEventListener("DOMContentLoaded", function () {
     el.classList.add("sj-tip--left");
   });
 
-  /* Full-text tooltip when a card's title/description is clipped by its line-clamp.
-     IMPORTANT: the tooltip must live on the CARD, not on .sj-card-desc/.sj-card-title
-     — those carry `overflow:hidden` for the clamp, which clips the tooltip bubble
-     itself (that was the bug: nothing showed even when text was cut off). The card
-     has no such clip. Re-checked on load + resize so font/layout timing doesn't fool it. */
+  /* Flag cards whose title/description is clipped by its line-clamp, stashing the
+     full text in data-sj-cardtip. (Not data-sj-tip — we don't want the fixed CSS
+     bubble here; a cursor-following bubble handles these, see below.) Re-checked on
+     load + resize so font/layout timing doesn't fool it. */
   function sjTagClippedCards() {
     document.querySelectorAll(".sj-card").forEach(function (card) {
       var clippedEl = null;
@@ -71,19 +70,41 @@ document.addEventListener("DOMContentLoaded", function () {
       });
       if (clippedEl) {
         var full = clippedEl.textContent.trim();
-        card.setAttribute("data-sj-tip", full);
-        /* --up so it sits ABOVE the tile (below crowds the next section header) */
-        card.classList.add("sj-tip--multiline", "sj-tip--up");
+        card.setAttribute("data-sj-cardtip", full);
         if (!card.getAttribute("aria-label")) card.setAttribute("aria-label", full);
       } else {
-        card.removeAttribute("data-sj-tip");
-        card.classList.remove("sj-tip--multiline", "sj-tip--up");
+        card.removeAttribute("data-sj-cardtip");
       }
     });
   }
   sjTagClippedCards();
   window.addEventListener("load", sjTagClippedCards);
   window.addEventListener("resize", sjTagClippedCards);
+
+  /* One floating bubble that follows the cursor while hovering a clipped card —
+     feels like a native tooltip but themed. pointer-events:none so it never blocks. */
+  var cardTip = document.createElement("div");
+  cardTip.className = "sj-cursor-tip";
+  document.body.appendChild(cardTip);
+  var cardTipOn = false;
+  var hideCardTip = function () {
+    if (cardTipOn) { cardTip.style.opacity = "0"; cardTipOn = false; }
+  };
+  document.addEventListener("mousemove", function (e) {
+    var card = e.target && e.target.closest ? e.target.closest(".sj-card[data-sj-cardtip]") : null;
+    if (!card) { hideCardTip(); return; }
+    cardTip.textContent = card.getAttribute("data-sj-cardtip");
+    if (!cardTipOn) { cardTip.style.opacity = "1"; cardTipOn = true; }
+    var pad = 14;
+    var w = cardTip.offsetWidth, h = cardTip.offsetHeight;
+    var x = e.clientX + pad, y = e.clientY + pad;
+    if (x + w > window.innerWidth - 8) x = e.clientX - pad - w;   /* flip left near right edge */
+    if (y + h > window.innerHeight - 8) y = e.clientY - pad - h;  /* flip up near bottom edge */
+    cardTip.style.left = Math.max(8, x) + "px";
+    cardTip.style.top = Math.max(8, y) + "px";
+  }, { passive: true });
+  document.addEventListener("mouseleave", hideCardTip);
+  window.addEventListener("scroll", hideCardTip, { passive: true, capture: true });
 
   /* Copy-to-clipboard buttons are injected by Material AFTER load, so we style
      each one as it appears (MutationObserver) rather than once up front.
