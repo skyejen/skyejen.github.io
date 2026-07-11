@@ -10,6 +10,18 @@
       document.documentElement.classList.add("sj-night");
     }
   </script>
+
+  {#- Open Graph / social share preview (rich link cards in Slack, LinkedIn, etc.) -#}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ config.site_name }}">
+  <meta property="og:title" content="{% if page and page.title and not page.is_homepage %}{{ page.title }} — {{ config.site_name }}{% else %}{{ config.site_name }}{% endif %}">
+  <meta property="og:description" content="{{ config.site_description }}">
+  <meta property="og:image" content="https://skyejen.github.io/images/main-v2-1.png">
+  <meta property="og:url" content="{% if page and page.canonical_url %}{{ page.canonical_url }}{% else %}{{ config.site_url }}{% endif %}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{% if page and page.title and not page.is_homepage %}{{ page.title }} — {{ config.site_name }}{% else %}{{ config.site_name }}{% endif %}">
+  <meta name="twitter:description" content="{{ config.site_description }}">
+  <meta name="twitter:image" content="https://skyejen.github.io/images/main-v2-1.png">
 {% endblock %}
 
 {% block site_nav %}

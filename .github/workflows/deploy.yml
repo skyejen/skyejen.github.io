@@ -20,7 +20,9 @@ jobs:
           python-version: '3.x'
 
       - name: Install MkDocs Material
-        run: pip install mkdocs-material
+        # Pinned to the 9.x line: mkdocs-material 2.0 rewrote theming and breaks
+        # our overrides with no migration path. This lets 9.x patches in, not 2.0.
+        run: pip install "mkdocs-material>=9.7,<10"
 
       - name: Deploy
         run: mkdocs gh-deploy --force

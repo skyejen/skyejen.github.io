@@ -975,11 +975,13 @@ body,
   font-size: 0.85rem;
   line-height: 1.25;
   margin-bottom: 0.4rem;
-  /* natural height (1–2 lines); chips stay bottom-aligned via margin-top:auto */
+  /* always reserve two lines so 1-line and 2-line titles give the same card
+     height (clamped with an ellipsis beyond two) */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  min-height: 2.5em;   /* 2 lines x 1.25 line-height */
 }
 .sj-card:hover .sj-card-title {
   color: var(--sj-gold);
@@ -993,7 +995,7 @@ body,
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: 2.04em;
+  min-height: 3em;   /* 2 lines x 1.5 line-height — always reserve two lines */
   margin-bottom: 0.7rem;
 }
 .sj-card .sj-card-meta {
