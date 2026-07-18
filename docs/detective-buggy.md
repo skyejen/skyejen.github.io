@@ -8,6 +8,8 @@ treats awarded to him by the Chief Constable have gone missing. The treats were 
 
 P.S. BTW Buggy is actually my real-life dog and all characters (apart from one, ish) exist in real life!
 
+---
+
 <div class="sj-cta" markdown>
 [:material-play: Play the game](https://detective-buggy-ep1.onrender.com){ .md-button .md-button--primary }
 [:material-github: Source code](https://github.com/skyejen/detective-buggy-ep1){ .md-button }
