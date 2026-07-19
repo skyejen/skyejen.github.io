@@ -605,18 +605,6 @@ body,
   margin-left: calc(-0.55em - 4px);
   padding-left: calc(0.55em + 4px);
 }
-/* Gold bar drawn at sidebar level (escapes the nested-nav clipping),
-   positioned by JS to track the active row */
-.sj-nav-bar {
-  position: absolute;
-  left: 1.36rem;
-  width: 2px; /* JS widens it to bridge to the row highlight */
-  background: rgba(20, 27, 43, 0.55);
-  border-left: 3px solid var(--sj-gold);
-  pointer-events: none;
-  z-index: 2;
-  transition: opacity 0.15s ease; /* no top transition — tracks the nav scroll instantly */
-}
 .md-nav--primary a.md-nav__link--active::before {
   width: 12px;
   height: 12px;

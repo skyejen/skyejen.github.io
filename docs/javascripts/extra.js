@@ -243,49 +243,6 @@ document.addEventListener("DOMContentLoaded", function () {
     spy();
   }
 
-  /* Gold bar for the active nav row (drawn outside the nested-nav clip).
-     Skip it for section-index pages — those get plain gold text, no bar. */
-  var actRow = document.querySelector(".md-sidebar--primary a.md-nav__link--active");
-  if (actRow && actRow.closest(".md-nav__container")) actRow = null;
-  var barSidebar = document.querySelector(".md-sidebar--primary");
-  var barWrap = document.querySelector(".md-sidebar--primary .md-sidebar__scrollwrap");
-  if (actRow && barSidebar && barWrap && window.matchMedia("(min-width: 76.25em)").matches) {
-    var bar = document.createElement("div");
-    bar.className = "sj-nav-bar";
-    barSidebar.appendChild(bar);
-    /* True when the active row sits inside a collapsed section (hidden from view) */
-    var isRowCollapsed = function () {
-      var el = actRow.closest(".md-nav__item--nested");
-      while (el && barSidebar.contains(el)) {
-        var t = el.querySelector(":scope > input.md-nav__toggle");
-        if (t && !t.checked) return true;
-        el = el.parentElement ? el.parentElement.closest(".md-nav__item--nested") : null;
-      }
-      return false;
-    };
-    var placeBar = function () {
-      var r = actRow.getBoundingClientRect();
-      var s = barSidebar.getBoundingClientRect();
-      var w = barWrap.getBoundingClientRect();
-      bar.style.top = (r.top - s.top) + "px";
-      bar.style.height = r.height + "px";
-      /* bridge the highlight from the gold bar to the row */
-      bar.style.width = Math.max(2, r.left - bar.getBoundingClientRect().left + 1) + "px";
-      var hidden = isRowCollapsed() || r.bottom < w.top + 8 || r.top > w.bottom - 8;
-      bar.style.opacity = hidden ? "0" : "1";
-    };
-    placeBar();
-    /* Only the nav's own internal scroll moves the row relative to the sidebar.
-       The main page scroll does NOT (sidebar is sticky) — listening to it
-       caused the bar to chase transient sticky positions and snap back. */
-    barWrap.addEventListener("scroll", placeBar, { passive: true });
-    window.addEventListener("resize", placeBar);
-    document.querySelectorAll(".md-sidebar--primary input.md-nav__toggle").forEach(function (t) {
-      /* update immediately (hide on collapse) and again after the expand animation */
-      t.addEventListener("change", function () { placeBar(); setTimeout(placeBar, 300); });
-    });
-  }
-
   /* Night mode toggle */
   var nightBtn = document.querySelector(".sj-night-toggle");
   if (nightBtn) {
