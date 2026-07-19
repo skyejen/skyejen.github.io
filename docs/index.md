@@ -12,6 +12,32 @@ This is home base for my learning notes, write-ups, and the things I build along
      (div.sj-card--soon) for a real linked card once that repo has a live site.
      ═══════════════════════════════════════════════════════════════════════ -->
 
+## :material-shield-lock-outline: Portfolio - Cybersecurity
+
+<div class="sj-cards" markdown>
+
+<a class="sj-card" href="https://skyejen.github.io/cybersecurity/portfolio/home-labs/wazuh/" markdown="span">
+<span class="sj-card-icon">:material-radar:</span>
+<span class="sj-card-title">Wazuh SIEM Home Lab</span>
+<span class="sj-card-desc">A multi&#8209;OS SOC lab - Wazuh SIEM across Windows 11, Windows 10 and macOS, with custom detection rules, MITRE-mapped attacks, and compliance evidence.</span>
+<span class="sj-card-meta">live - 2026</span>
+</a>
+
+</div>
+
+## :material-language-python: Portfolio - Python
+
+<div class="sj-cards" markdown>
+
+<a class="sj-card" href="detective-buggy/" markdown="span">
+<span class="sj-card-icon">:material-incognito:</span>
+<span class="sj-card-title">Detective Buggy</span>
+<span class="sj-card-desc">A full-stack Flask + Postgres detective game - my CS50 final project.</span>
+<span class="sj-card-meta">live - 2025</span>
+</a>
+
+</div>
+
 ## :material-book-open-page-variant-outline: Learning
 
 <div class="sj-cards" markdown>
@@ -29,33 +55,6 @@ This is home base for my learning notes, write-ups, and the things I build along
 <span class="sj-card-desc">Working through Angela Yu's Python course - exercises and notes.</span>
 <span class="sj-card-meta">live - 2026</span>
 </a>
-
-<div class="sj-card sj-card--soon" markdown="span">
-<span class="sj-card-icon">:material-book-plus-outline:</span>
-<span class="sj-card-title">More to come</span>
-<span class="sj-card-desc">New topics and notes as I work through them.</span>
-<span class="sj-card-meta">coming soon</span>
-</div>
-
-</div>
-
-## :material-language-python: Portfolio - Python
-
-<div class="sj-cards" markdown>
-
-<a class="sj-card" href="detective-buggy/" markdown="span">
-<span class="sj-card-icon">:material-incognito:</span>
-<span class="sj-card-title">Detective Buggy</span>
-<span class="sj-card-desc">A full-stack Flask + Postgres detective game - my CS50 final project.</span>
-<span class="sj-card-meta">live - 2025</span>
-</a>
-
-<div class="sj-card sj-card--soon" markdown="span">
-<span class="sj-card-icon">:material-dots-horizontal:</span>
-<span class="sj-card-title">More to come</span>
-<span class="sj-card-desc">More Python tools and projects as I build them.</span>
-<span class="sj-card-meta">coming soon</span>
-</div>
 
 </div>
 
