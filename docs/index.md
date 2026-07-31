@@ -5,6 +5,7 @@ This is home base for my learning notes, write-ups, and the things I build along
 
 ---
 
+
 ## :material-star-outline: Featured
 
 <div class="sj-cards" markdown>
@@ -13,32 +14,32 @@ This is home base for my learning notes, write-ups, and the things I build along
 <span class="sj-card-icon">:material-radar:</span>
 <span class="sj-card-title">Wazuh SIEM Home Lab</span>
 <span class="sj-card-desc">A multi&#8209;OS SOC lab with custom detection rules, MITRE-mapped attacks, and compliance evidence.</span>
-<span class="sj-card-meta">cybersecurity <span class="sj-dot">·</span> live 2026</span>
+<span class="sj-card-meta">cybersecurity <span class='sj-dot'>·</span> live 2026</span>
 </a>
 
 <a class="sj-card sj-card--row" href="detective-buggy/" markdown="span">
 <span class="sj-card-icon">:material-incognito:</span>
 <span class="sj-card-title">Detective Buggy</span>
 <span class="sj-card-desc">A full-stack Flask + Postgres detective game - my CS50 final project.</span>
-<span class="sj-card-meta">python <span class="sj-dot">·</span> live 2025</span>
+<span class="sj-card-meta">python <span class='sj-dot'>·</span> live 2025</span>
 </a>
 
 </div>
 
-## :material-compass-outline: Explore by field
+## :material-briefcase-variant-outline: Portfolio
 
 <div class="sj-cards sj-cards--hub" markdown>
 
-<a class="sj-card sj-card--row" href="https://skyejen.github.io/cybersecurity/" markdown="span">
+<a class="sj-card sj-card--row" href="https://skyejen.github.io/cybersecurity/portfolio/" markdown="span">
 <span class="sj-card-icon">:material-shield-lock-outline:</span>
 <span class="sj-card-title">Cybersecurity</span>
-<span class="sj-card-meta">portfolio + learning</span>
+<span class="sj-card-meta">home labs</span>
 </a>
 
-<a class="sj-card sj-card--row" href="https://skyejen.github.io/100-days-of-python/" markdown="span">
+<a class="sj-card sj-card--row" href="detective-buggy/" markdown="span">
 <span class="sj-card-icon">:material-language-python:</span>
 <span class="sj-card-title">Python</span>
-<span class="sj-card-meta">100 days + projects</span>
+<span class="sj-card-meta">projects</span>
 </a>
 
 <div class="sj-card sj-card--row sj-card--soon" markdown="span">
@@ -52,5 +53,23 @@ This is home base for my learning notes, write-ups, and the things I build along
 <span class="sj-card-title">Built with AI</span>
 <span class="sj-card-meta">coming soon</span>
 </div>
+
+</div>
+
+## :material-book-open-page-variant-outline: Learning
+
+<div class="sj-cards sj-cards--hub" markdown>
+
+<a class="sj-card sj-card--row" href="https://skyejen.github.io/cybersecurity/learning/" markdown="span">
+<span class="sj-card-icon">:material-shield-lock-outline:</span>
+<span class="sj-card-title">Cybersecurity</span>
+<span class="sj-card-meta">TryHackMe</span>
+</a>
+
+<a class="sj-card sj-card--row" href="https://skyejen.github.io/100-days-of-python/" markdown="span">
+<span class="sj-card-icon">:material-language-python:</span>
+<span class="sj-card-title">Python</span>
+<span class="sj-card-meta">100 days</span>
+</a>
 
 </div>
