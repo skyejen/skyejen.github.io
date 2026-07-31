@@ -5,74 +5,51 @@ This is home base for my learning notes, write-ups, and the things I build along
 
 ---
 
-<!-- ═══════════════════════════════════════════════════════════════════════
-     ADDING A NEW REPO? Copy one <a class="sj-card"> block below, then update
-     its icon, title, desc, meta, and href. Keep descriptions short (they fit two
-     lines). Drop it into the right section. Swap a "coming soon" placeholder
-     (div.sj-card--soon) for a real linked card once that repo has a live site.
-     ═══════════════════════════════════════════════════════════════════════ -->
-
-## :material-shield-lock-outline: Portfolio - Cybersecurity
+## :material-star-outline: Featured
 
 <div class="sj-cards" markdown>
 
-<a class="sj-card" href="https://skyejen.github.io/cybersecurity/portfolio/home-labs/wazuh/" markdown="span">
+<a class="sj-card sj-card--row" href="https://skyejen.github.io/cybersecurity/portfolio/home-labs/wazuh/" markdown="span">
 <span class="sj-card-icon">:material-radar:</span>
 <span class="sj-card-title">Wazuh SIEM Home Lab</span>
-<span class="sj-card-desc">A multi&#8209;OS SOC lab - Wazuh SIEM across Windows 11, Windows 10 and macOS, with custom detection rules, MITRE-mapped attacks, and compliance evidence.</span>
-<span class="sj-card-meta">live - 2026</span>
+<span class="sj-card-desc">A multi&#8209;OS SOC lab with custom detection rules, MITRE-mapped attacks, and compliance evidence.</span>
+<span class="sj-card-meta">cybersecurity <span class="sj-dot">·</span> live 2026</span>
 </a>
 
-</div>
-
-## :material-language-python: Portfolio - Python
-
-<div class="sj-cards" markdown>
-
-<a class="sj-card" href="detective-buggy/" markdown="span">
+<a class="sj-card sj-card--row" href="detective-buggy/" markdown="span">
 <span class="sj-card-icon">:material-incognito:</span>
 <span class="sj-card-title">Detective Buggy</span>
 <span class="sj-card-desc">A full-stack Flask + Postgres detective game - my CS50 final project.</span>
-<span class="sj-card-meta">live - 2025</span>
+<span class="sj-card-meta">python <span class="sj-dot">·</span> live 2025</span>
 </a>
 
 </div>
 
-## :material-book-open-page-variant-outline: Learning
+## :material-compass-outline: Explore by field
 
-<div class="sj-cards" markdown>
+<div class="sj-cards sj-cards--hub" markdown>
 
-<a class="sj-card" href="https://skyejen.github.io/cybersecurity/" markdown="span">
+<a class="sj-card sj-card--row" href="https://skyejen.github.io/cybersecurity/" markdown="span">
 <span class="sj-card-icon">:material-shield-lock-outline:</span>
 <span class="sj-card-title">Cybersecurity</span>
-<span class="sj-card-desc">TryHackMe write-ups and notes from my security learning.</span>
-<span class="sj-card-meta">live - 2026</span>
+<span class="sj-card-meta">portfolio + learning</span>
 </a>
 
-<a class="sj-card" href="https://skyejen.github.io/100-days-of-python/" markdown="span">
+<a class="sj-card sj-card--row" href="https://skyejen.github.io/100-days-of-python/" markdown="span">
 <span class="sj-card-icon">:material-language-python:</span>
-<span class="sj-card-title">100 Days of Python</span>
-<span class="sj-card-desc">Working through Angela Yu's Python course - exercises and notes.</span>
-<span class="sj-card-meta">live - 2026</span>
+<span class="sj-card-title">Python</span>
+<span class="sj-card-meta">100 days + projects</span>
 </a>
 
-</div>
-
-## :material-creation-outline: Built with AI
-
-<div class="sj-cards" markdown>
-
-<div class="sj-card sj-card--soon" markdown="span">
-<span class="sj-card-icon">:material-tools:</span>
-<span class="sj-card-title">AI-assisted tools</span>
-<span class="sj-card-desc">Things I designed and shipped working alongside AI.</span>
+<div class="sj-card sj-card--row sj-card--soon" markdown="span">
+<span class="sj-card-icon">:material-server-network:</span>
+<span class="sj-card-title">DevOps</span>
 <span class="sj-card-meta">coming soon</span>
 </div>
 
-<div class="sj-card sj-card--soon" markdown="span">
-<span class="sj-card-icon">:material-flask-outline:</span>
-<span class="sj-card-title">Experiments</span>
-<span class="sj-card-desc">Rougher prototypes and ideas worth trying out.</span>
+<div class="sj-card sj-card--row sj-card--soon" markdown="span">
+<span class="sj-card-icon">:material-creation-outline:</span>
+<span class="sj-card-title">Built with AI</span>
 <span class="sj-card-meta">coming soon</span>
 </div>
 

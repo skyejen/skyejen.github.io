@@ -82,3 +82,34 @@
 .sj-cards > p {
   display: contents;
 }
+
+/* ===== Landing redesign: featured + field-hub tiles, horizontal cards ===== */
+.sj-card--row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.1rem 0.85rem;
+  align-content: center;
+  padding: 0.85rem 1rem;
+}
+.sj-card--row > .sj-card-icon {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  align-self: center;
+  margin: 0;
+  font-size: 1.4rem;
+}
+.sj-card--row > .sj-card-title,
+.sj-card--row > .sj-card-desc,
+.sj-card--row > .sj-card-meta {
+  grid-column: 2;
+  margin: 0;
+}
+.sj-card--row > .sj-card-desc { margin-top: 0.25rem; }
+.sj-card--row > .sj-card-meta { margin-top: 0.4rem; }
+.sj-cards {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+.sj-cards--hub {
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
