@@ -27,7 +27,8 @@ theme:
     repo: fontawesome/brands/github
 
 extra_css:
-  - stylesheets/extra.css
+  - sj-theme/extra.css
+  - stylesheets/local.css
 
 extra_javascript:
   - sj-theme/extra.js

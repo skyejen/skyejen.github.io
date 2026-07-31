@@ -1,0 +1,84 @@
+/* ==========================================================================
+   skyejen.github.io — LANDING-LOCAL styles
+   Loaded AFTER the shared theme (sj-theme/extra.css). Only page/site-specific
+   rules that don't belong in the shared theme live here; everything else comes
+   from sj-theme. See AGENTS.md and sj-theme/README.md.
+   ========================================================================== */
+
+/* Landing scroll offset: the page scrolls inside .md-container, which already
+   starts below the sticky header, so this only needs a tiny gap (the shared
+   3.6rem would leave a clicked heading sitting too low). */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+  scroll-margin-top: 0.4rem;
+}
+
+/* "coming soon" placeholder tiles: non-clickable teaser cards for sections
+   with no content yet. <div class="sj-card sj-card--soon"> (no href). */
+.sj-card--soon {
+  cursor: default;
+  border-style: dashed;
+  border-color: var(--sj-border);
+  opacity: 0.6;
+}
+.sj-card--soon:hover {
+  transform: none;
+  border-color: var(--sj-border);
+  box-shadow: none;
+}
+.sj-card--soon:hover .sj-card-title {
+  color: var(--sj-heading);
+}
+.sj-card--soon .sj-card-icon {
+  color: var(--sj-text-dim);
+}
+.sj-card--soon .sj-card-meta {
+  color: var(--sj-gold);
+  background: rgba(242, 193, 78, 0.08);
+  border-color: rgba(242, 193, 78, 0.28);
+}
+
+/* Landing section headings: a touch more breathing room between groups. */
+.md-content h2 {
+  margin-top: 2.4rem;
+}
+
+/* Landing layout: no left nav panel. Single page, no navigation, so remove the
+   sidebar divider and keep the header line uniform full-width. The ToC is short
+   and never scrolls, so hide its scrollbar (kills the load flash + leftover bar). */
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary::after {
+    display: none;
+  }
+  .md-header::before {
+    background: var(--sj-border);
+  }
+  .md-header::after {
+    left: 0;
+  }
+  .md-sidebar--secondary .md-sidebar__scrollwrap {
+    height: auto !important;
+    max-height: none !important;
+    overflow: hidden;
+    scrollbar-width: none;
+  }
+  .md-sidebar--secondary .md-sidebar__scrollwrap::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Footer: no social icons on the landing, so centre the copyright line. */
+.md-footer-meta__inner {
+  justify-content: center;
+}
+.md-footer-copyright {
+  text-align: center;
+}
+
+/* Card grid: dissolve the <p> Markdown wraps around inline card links so every
+   tile (inline <a> and block <div class="sj-card--soon">) is an equal grid item
+   sharing one row height/width. */
+.sj-cards > p {
+  display: contents;
+}
