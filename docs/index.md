@@ -32,25 +32,21 @@ I pull things apart to see how they work (or don't), then write down what I figu
 <a class="sj-card sj-card--row" href="https://skyejen.github.io/cybersecurity/portfolio/" markdown="span">
 <span class="sj-card-icon">:material-shield-lock-outline:</span>
 <span class="sj-card-title">Cybersecurity</span>
-<span class="sj-card-meta">home labs</span>
 </a>
 
 <a class="sj-card sj-card--row" href="detective-buggy/" markdown="span">
 <span class="sj-card-icon">:material-language-python:</span>
 <span class="sj-card-title">Python</span>
-<span class="sj-card-meta">projects</span>
 </a>
 
 <div class="sj-card sj-card--row sj-card--soon" markdown="span">
 <span class="sj-card-icon">:material-server-network:</span>
 <span class="sj-card-title">DevOps</span>
-<span class="sj-card-meta">coming soon</span>
 </div>
 
 <div class="sj-card sj-card--row sj-card--soon" markdown="span">
 <span class="sj-card-icon">:material-creation-outline:</span>
 <span class="sj-card-title">Built with AI</span>
-<span class="sj-card-meta">coming soon</span>
 </div>
 
 </div>
@@ -62,13 +58,11 @@ I pull things apart to see how they work (or don't), then write down what I figu
 <a class="sj-card sj-card--row" href="https://skyejen.github.io/cybersecurity/learning/" markdown="span">
 <span class="sj-card-icon">:material-shield-lock-outline:</span>
 <span class="sj-card-title">Cybersecurity</span>
-<span class="sj-card-meta">TryHackMe</span>
 </a>
 
 <a class="sj-card sj-card--row" href="https://skyejen.github.io/100-days-of-python/" markdown="span">
 <span class="sj-card-icon">:material-language-python:</span>
 <span class="sj-card-title">Python</span>
-<span class="sj-card-meta">100 days</span>
 </a>
 
 </div>
