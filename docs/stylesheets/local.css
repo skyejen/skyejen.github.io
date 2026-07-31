@@ -89,7 +89,7 @@
   --tile-pad-y: 0.7rem;    /* tile top/bottom padding */
   --tile-pad-x: 0.95rem;   /* tile left/right padding */
   --icon-size: 20px;       /* icon width + height */
-  --icon-gap: 0.7rem;      /* space between icon and text */
+  --icon-gap: 0.55rem;     /* space between icon and text */
   --feat-min: 300px;       /* featured tile min width */
   --hub-min: 190px;        /* hub tile min width (raise if a title wraps) */
 }
@@ -102,17 +102,17 @@
   align-content: start;
   padding: var(--tile-pad-y) var(--tile-pad-x);
 }
-/* Icon: fixed square, centred. !important is needed to beat Material's own SVG
-   sizing, which was collapsing the width to 0 (max-height:100% in the grid cell). */
+/* Icon: fixed square, top-aligned with the title. !important beats Material's own
+   SVG sizing, which was collapsing the width to 0 (max-height:100% in the cell). */
 .sj-card--row .sj-card-icon {
   grid-row: 1 / -1;
-  align-self: center;
+  align-self: start;
+  margin: 0.1rem 0 0 !important;
   display: flex !important;
   align-items: center;
   justify-content: center;
   width: var(--icon-size) !important;
   height: var(--icon-size) !important;
-  margin: 0 !important;
   font-size: 0 !important;
   flex: none !important;
 }
@@ -129,8 +129,11 @@
 .sj-card--row > .sj-card-title,
 .sj-card--row > .sj-card-desc,
 .sj-card--row > .sj-card-meta { grid-column: 2; margin: 0; }
+/* kill the theme's 2-line reserves so short text doesn't leave a gap */
+.sj-card--row > .sj-card-title { min-height: 0; }
 .sj-card--row > .sj-card-desc { min-height: 0; margin-top: 0.15rem; }
-.sj-card--row > .sj-card-meta { margin-top: 0.4rem; }
+/* meta chip: hug content and wrap if long, instead of one wide pill */
+.sj-card--row > .sj-card-meta { margin-top: 0.4rem; white-space: normal; justify-self: start; }
 
 .sj-cards { grid-template-columns: repeat(auto-fill, minmax(var(--feat-min), 1fr)); gap: 0.8rem; }
 .sj-cards--hub { grid-template-columns: repeat(auto-fill, minmax(var(--hub-min), 1fr)); gap: 0.65rem; }
