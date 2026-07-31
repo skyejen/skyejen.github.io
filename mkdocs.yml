@@ -30,7 +30,7 @@ extra_css:
   - stylesheets/extra.css
 
 extra_javascript:
-  - javascripts/extra.js
+  - sj-theme/extra.js
 
 markdown_extensions:
   - attr_list
