@@ -1,7 +1,6 @@
 # :material-hand-wave: Hey there, I'm Jen
 
-I like pulling things apart to see how they work (or don't work), then writing down what I figure out.<br>
-This is home base for my learning notes, write-ups, and the things I build along the way.
+I pull things apart to see how they work (or don't), then write down what I figure out.
 
 ---
 
