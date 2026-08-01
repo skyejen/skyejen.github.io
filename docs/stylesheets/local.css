@@ -37,7 +37,7 @@
 .sj-hub:nth-of-type(2) h2 .twemoji svg { fill: var(--sj-green) !important; }
 
 /* ===== Hero ===== */
-.sj-hero { display: grid; grid-template-columns: 1.4fr 1fr 0.42fr; gap: 1.9rem; align-items: start; margin: 0.5rem 0 2.8rem; }
+.sj-hero { display: grid; grid-template-columns: 1.6fr 1fr auto; gap: 2rem; align-items: start; margin: 0.5rem 0 2.8rem; }
 @media screen and (max-width: 76.24em){ .sj-hero { grid-template-columns: 1fr 1fr; gap: 1.6rem; } .sj-hero-toc { display: none; } }
 @media screen and (max-width: 59.9em){ .sj-hero { grid-template-columns: 1fr; gap: 1.5rem; } }
 .sj-pillrow { margin: 0 0 1.1rem; }
@@ -132,7 +132,7 @@
 
 
 /* ===== integrated hero ToC ===== */
-.sj-hero-toc { align-self: start; padding-top: 0; }
+.sj-hero-toc { align-self: start; padding-top: 0; width: fit-content; margin-left: auto; }
 .sj-hero-toc p { display: flex; flex-direction: column; align-items: flex-start; gap: 0.15rem; margin: 0; }
 .sj-hero-toc .sj-toc-label { font-family: "JetBrains Mono", monospace; font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--sj-blue); margin: 0 0 0.55rem; }
 .sj-hero-toc .sj-toc-link { display: inline-flex !important; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: var(--sj-text-dim) !important; padding: 0.3rem 0; border: none; transition: color .15s ease; }
