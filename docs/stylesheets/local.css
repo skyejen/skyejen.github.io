@@ -107,7 +107,7 @@
 .sj-card--row .sj-card-icon {
   grid-row: 1;
   align-self: center;
-  margin: -3px 0 0 !important;   /* lift to offset bottom-heavy glyphs */
+  margin: 0 !important;
   display: flex !important;
   align-items: center;
   justify-content: center;
@@ -116,7 +116,11 @@
   font-size: 0 !important;
   flex: none !important;
 }
-.sj-card--row .sj-card-icon .twemoji { display: flex !important; }
+.sj-card--row .sj-card-icon .twemoji {
+  display: flex !important;
+  height: auto !important;          /* Material sets height via --md-icon-size; collapses to 0 here */
+  vertical-align: baseline !important;  /* Material's text-top pushed the glyph down */
+}
 .sj-card--row .sj-card-icon svg {
   width: var(--icon-size) !important;
   height: var(--icon-size) !important;
