@@ -15,6 +15,7 @@
   .md-grid { max-width: none; }
   .md-content { max-width: none; }
   .md-content__inner { max-width: 82rem !important; margin: 0 auto; padding: 0.2rem 2.2rem 2rem; }
+  .sj-hero-main .sj-lead-p { white-space: nowrap; }
 }
 .md-content h2 { font-size: 1.1rem; margin-top: 2.4rem; }
 /* kill the gold underline rules under headers on the landing */
@@ -40,11 +41,13 @@
 .sj-hero { display: grid; grid-template-columns: 1.6fr 1fr auto; gap: 2rem; align-items: start; margin: -0.4rem 0 2.8rem; }
 @media screen and (max-width: 76.24em){ .sj-hero { grid-template-columns: 1fr 1fr; gap: 1.6rem; } .sj-hero-toc { display: none; } }
 @media screen and (max-width: 59.9em){ .sj-hero { grid-template-columns: 1fr; gap: 1.5rem; } }
-.sj-pillrow { margin: 0 0 1.1rem; }
+.sj-pillrow { margin: 0 0 0.7rem; }
 .sj-pillbar { font-family: "JetBrains Mono", monospace; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sj-blue); background: rgba(30,136,255,0.08); border: 1px solid rgba(30,136,255,0.25); border-radius: 999px; padding: 0.28rem 0.9rem; }
-.sj-hero-main h1 { display: block !important; font-weight: 400; font-size: 1.8rem; line-height: 1.25; letter-spacing: -0.01em; margin: 0 0 0.9rem; }
-.sj-hero-main .sj-lead-p { color: var(--sj-text-dim); font-size: 0.85rem; margin: 0 0 1.4rem; max-width: 30rem; }
+.sj-hero-main h1 { display: block !important; font-weight: 400; font-size: 1.8rem; line-height: 1.25; letter-spacing: -0.01em; margin: 0 0 0.55rem; }
+.sj-hero-main .sj-lead-p { color: var(--sj-text-dim); font-size: 0.85rem; margin: 0 0 1.2rem; max-width: none; }
+.sj-hero-main .sj-lead-strong { color: var(--sj-text); margin-bottom: 0.3rem; }
 .sj-hero-cta { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+.sj-hero-cta p { margin: 0; display: contents; }
 .sj-hero-cta > a { margin: 0; }
 .sj-btn { display: inline-flex !important; align-items: center; gap: 0.45rem; font-size: 0.78rem; font-weight: 500; padding: 0.55rem 1.1rem; border-radius: 8px; border: 1px solid var(--sj-border); color: var(--sj-heading) !important; background: transparent; transition: border-color .15s ease, background .15s ease; }
 .sj-btn .twemoji svg { width: 0.95rem !important; height: 0.95rem !important; vertical-align: baseline !important; }

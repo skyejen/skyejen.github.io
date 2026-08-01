@@ -3,9 +3,11 @@
 
 <p class="sj-pillrow"><span class="sj-pillbar">Builder&nbsp;&middot;&nbsp;Learner&nbsp;&middot;&nbsp;Problem&nbsp;solver</span></p>
 
-# I pull things apart to see how they work (or don't),<br>then write down what I figure out.
+# Building. Learning. Shipping impact.
 
-<p class="sj-lead-p">Home base for my portfolio, learning write-ups, and the things I build along the way.</p>
+<p class="sj-lead-p sj-lead-strong">I break things down to see how they work (or don't), then write down what I figure out.</p>
+
+<p class="sj-lead-p">This is my home for portfolio projects, learning write-ups, and the things I build along the way.</p>
 
 <div class="sj-hero-cta" markdown>
 [:material-briefcase-variant-outline: Explore portfolio](#portfolio){ .sj-btn .sj-btn--primary }
