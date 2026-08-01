@@ -52,8 +52,10 @@
 .sj-btn { display: inline-flex !important; align-items: center; gap: 0.45rem; font-size: 0.78rem; font-weight: 500; padding: 0.55rem 1.1rem; border-radius: 8px; border: 1px solid var(--sj-border); color: var(--sj-heading) !important; background: transparent; transition: border-color .15s ease, background .15s ease; }
 .sj-btn .twemoji svg { width: 0.95rem !important; height: 0.95rem !important; vertical-align: baseline !important; }
 .sj-btn:hover { border-color: var(--sj-blue); }
+.sj-hero-cta .sj-btn:not(.sj-btn--primary) { border-color: rgba(30,136,255,0.55); color: var(--sj-blue) !important; }
+.sj-hero-cta .sj-btn:not(.sj-btn--primary):hover { border-color: var(--sj-blue); color: var(--sj-blue) !important; background: rgba(30,136,255,0.1); }
 .sj-btn--primary { background: var(--sj-blue); border-color: var(--sj-blue); color: #fff !important; }
-.sj-btn--primary:hover { background: #1976e0; }
+.sj-btn--primary:hover { background: var(--sj-gold); border-color: var(--sj-gold); color: #fff !important; }
 .sj-btn--purple { border-color: rgba(155,107,255,0.55); color: var(--sj-purple) !important; }
 .sj-btn--purple:hover { background: rgba(155,107,255,0.12); border-color: var(--sj-purple); }
 .sj-btn--gold { border-color: rgba(242,193,78,0.55); color: var(--sj-gold) !important; }
