@@ -15,7 +15,7 @@
   .md-sidebar--secondary { display: none !important; }
   .md-grid { max-width: none; }
   .md-content { max-width: none; }
-  .md-content__inner { max-width: 82rem !important; margin: 0 auto; padding: 0.2rem 2.2rem 2rem; }
+  .md-content__inner { max-width: none !important; margin: 0 !important; padding: 0.2rem 80px 2rem 92px !important; }
   .sj-hero-main .sj-lead-p { white-space: nowrap; }
 }
 .md-content h2 { font-size: 1.1rem; margin-top: 2.4rem; }
