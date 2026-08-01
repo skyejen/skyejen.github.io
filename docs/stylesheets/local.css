@@ -37,7 +37,7 @@
 .sj-hub:nth-of-type(2) h2 .twemoji svg { fill: var(--sj-green) !important; }
 
 /* ===== Hero ===== */
-.sj-hero { display: grid; grid-template-columns: 1.4fr 1fr 0.42fr; gap: 1.9rem; align-items: center; margin: 0.5rem 0 2.8rem; }
+.sj-hero { display: grid; grid-template-columns: 1.4fr 1fr 0.42fr; gap: 1.9rem; align-items: start; margin: 0.5rem 0 2.8rem; }
 @media screen and (max-width: 76.24em){ .sj-hero { grid-template-columns: 1fr 1fr; gap: 1.6rem; } .sj-hero-toc { display: none; } }
 @media screen and (max-width: 59.9em){ .sj-hero { grid-template-columns: 1fr; gap: 1.5rem; } }
 .sj-pillrow { margin: 0 0 1.1rem; }
@@ -57,14 +57,14 @@
 .sj-btn--gold:hover { background: rgba(242,193,78,0.12); border-color: var(--sj-gold); }
 
 /* terminal - single outline */
-.sj-codepanel { background: var(--sj-bg-deep); border: 1px solid var(--sj-border); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.35); }
+.sj-codepanel { position: relative; background: var(--sj-bg-deep); border: 1px solid var(--sj-border); border-radius: 12px; padding: 1.05rem 1.35rem 1.15rem; box-shadow: none; }
+.sj-prompt { display: block; font-family: "JetBrains Mono", monospace; font-size: 0.85rem; color: var(--sj-blue); margin: 0 0 0.75rem; }
 .sj-codepanel-head { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.85rem; border-bottom: 1px solid var(--sj-border); background: rgba(255,255,255,0.02); }
 .sj-dots { display: inline-flex; gap: 0.4rem; }
 .sj-dots i { width: 0.6rem; height: 0.6rem; border-radius: 50%; display: inline-block; }
 .sj-dots i:nth-child(1){ background:#ff5f56; } .sj-dots i:nth-child(2){ background:#ffbd2e; } .sj-dots i:nth-child(3){ background:#27c93f; }
 .sj-lang { font-family: "JetBrains Mono", monospace; font-size: 0.58rem; color: var(--sj-text-dim); }
-.md-typeset .sj-codepanel-body, .sj-codepanel-body { margin: 0; padding: 0.9rem 1.1rem 1.1rem; height: 9.5rem; overflow: hidden; border: none !important; background: transparent !important; box-shadow: none !important; }
-.sj-codepanel-body::before { content: ">_"; display: block; font-family: "JetBrains Mono", monospace; font-size: 0.8rem; color: var(--sj-blue); margin-bottom: 0.55rem; }
+.md-typeset .sj-codepanel-body, .sj-codepanel-body { margin: 0; padding: 0; height: 7rem; overflow: hidden; border: none !important; background: transparent !important; box-shadow: none !important; }
 .sj-codepanel-body code { font-family: "JetBrains Mono", monospace; font-size: 0.72rem; line-height: 1.7; color: var(--sj-text); white-space: pre; background: none; display: block; transition: opacity .3s ease; }
 .sj-codepanel-body code .tk-str  { color: #7fd88f; }
 .sj-codepanel-body code .tk-kw   { color: #c58cff; }
@@ -132,7 +132,7 @@
 
 
 /* ===== integrated hero ToC ===== */
-.sj-hero-toc { align-self: start; padding-top: 0.4rem; }
+.sj-hero-toc { align-self: start; padding-top: 0; }
 .sj-hero-toc p { display: flex; flex-direction: column; align-items: flex-start; gap: 0.15rem; margin: 0; }
 .sj-hero-toc .sj-toc-label { font-family: "JetBrains Mono", monospace; font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--sj-blue); margin: 0 0 0.55rem; }
 .sj-hero-toc .sj-toc-link { display: inline-flex !important; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: var(--sj-text-dim) !important; padding: 0.3rem 0; border: none; transition: color .15s ease; }

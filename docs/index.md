@@ -15,7 +15,7 @@
 </div>
 <div class="sj-hero-side">
 <div class="sj-codepanel">
-<div class="sj-codepanel-head"><span class="sj-dots"><i></i><i></i><i></i></span><span class="sj-lang" id="sj-code-lang">python</span></div>
+<span class="sj-prompt">&gt;_</span>
 <pre class="sj-codepanel-body"><code id="sj-code">loading...</code></pre>
 </div>
 </div>
