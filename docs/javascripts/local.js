@@ -68,56 +68,90 @@
         filters.forEach(function(b){ b.classList.remove("is-active"); });
         btn.classList.add("is-active");
         var f = btn.getAttribute("data-filter");
-        cards.forEach(function(c){
+        document.querySelectorAll(".sj-feat-card:not(.sj-clone)").forEach(function(c){
           c.style.display = (f === "all" || c.getAttribute("data-disc") === f) ? "" : "none";
         });
-        updateFade();
+        if (window.buildLoop) window.buildLoop();
         tagClippedFeat();
       });
     });
 
-    // carousel + scroll-aware edge fade (peek into darkness)
+    // ===== Featured carousel: infinite loop (prev sliver + focus + next peek) =====
     var track = document.querySelector(".sj-carousel-track");
     var prev = document.querySelector(".sj-carousel-prev");
     var next = document.querySelector(".sj-carousel-next");
+    var loopOn = false, loopUnit = 0, loopStart = 0;
+    function peekPx(){ return parseFloat(getComputedStyle(track).scrollPaddingLeft) || 38; }
+    function gapPx(){ var g = getComputedStyle(track); return parseFloat(g.columnGap || g.gap) || 16; }
+    function realCards(){
+      return [].slice.call(track.querySelectorAll(".sj-feat-card")).filter(function(c){
+        return !c.classList.contains("sj-clone") && c.style.display !== "none";
+      });
+    }
+    function stepPx(){
+      var rs = realCards();
+      if (rs.length < 2) return track.clientWidth * 0.5;
+      return rs[1].getBoundingClientRect().left - rs[0].getBoundingClientRect().left;   // one tile + gap
+    }
     window.updateFade = function(){
       if (!track) return;
-      var sl = track.scrollLeft;
-      var max = track.scrollWidth - track.clientWidth;
       track.classList.remove("fade-l", "fade-r", "fade-lr");
-      if (max <= 2) return;                        // no overflow -> no fade
-      var viewR = sl + track.clientWidth, leftFlush = false, rightFlush = false;
-      track.querySelectorAll(".sj-feat-card").forEach(function(c){
-        if (c.style.display === "none") return;
-        if (Math.abs(c.offsetLeft - sl) < 14) leftFlush = true;                        // a tile is flush at the left
-        if (Math.abs((c.offsetLeft + c.offsetWidth) - viewR) < 14) rightFlush = true;  // a tile is flush at the right
-      });
-      var fl = sl > 2 && !leftFlush;               // fade left only if the left tile is cut
-      var fr = sl < max - 2 && !rightFlush;        // fade right only if the right tile is cut
-      if (fl && fr) track.classList.add("fade-lr");
-      else if (fl) track.classList.add("fade-l");
-      else if (fr) track.classList.add("fade-r");
+      if (loopOn){ track.classList.add("fade-lr"); return; }          // loop: always feather both edges
+      var sl = track.scrollLeft, max = track.scrollWidth - track.clientWidth;
+      if (max <= 2) return;
+      if (sl <= 2) track.classList.add("fade-r");
+      else if (sl >= max - 2) track.classList.add("fade-l");
+      else track.classList.add("fade-lr");
+    };
+    function normalize(){
+      if (!loopOn) return;
+      var N = realCards().length; if (N < 2) return;
+      var st = stepPx(), pk = peekPx();
+      var k = Math.round((track.scrollLeft - (loopStart - pk)) / st);  // nearest tile index (may be <0 or >=N)
+      var kmod = ((k % N) + N) % N;                                     // wrap into the real set
+      track.scrollLeft = Math.round(loopStart + kmod * st - pk);        // exact real-tile gutter (drift-free)
+    }
+    window.buildLoop = function(){
+      if (!track) return;
+      track.querySelectorAll(".sj-clone").forEach(function(n){ n.remove(); });
+      track.style.paddingRight = "";
+      var rs = realCards();
+      loopOn = rs.length >= 3;
+      if (!loopOn){ track.scrollLeft = 0; updateFade(); return; }
+      var mk = function(c){ var cl = c.cloneNode(true); cl.classList.add("sj-clone"); cl.setAttribute("aria-hidden", "true"); return cl; };
+      var af = document.createDocumentFragment(); rs.forEach(function(c){ af.appendChild(mk(c)); }); track.appendChild(af);            // clone-set AFTER
+      var pf = document.createDocumentFragment(); rs.forEach(function(c){ pf.appendChild(mk(c)); }); track.insertBefore(pf, track.firstChild); // clone-set BEFORE
+      var tl = track.getBoundingClientRect().left, sl = track.scrollLeft;
+      var first = rs[0], last = rs[rs.length - 1];
+      loopStart = Math.round(first.getBoundingClientRect().left - tl + sl);
+      loopUnit = Math.round((last.getBoundingClientRect().right - tl + sl) + gapPx() - loopStart);  // one set-width
+      track.scrollLeft = loopStart - peekPx();          // first real tile focused at the gutter
+      updateFade();
     };
     if (track && prev && next){
-      var tileStep = function(){
-        var cs = track.querySelectorAll(".sj-feat-card");
-        if (cs.length >= 2) return cs[1].offsetLeft - cs[0].offsetLeft;   // one tile + gap
-        if (cs.length) return cs[0].offsetWidth + 13;
-        return track.clientWidth * 0.5;
-      };
-      prev.addEventListener("click", function(){
-        var max = track.scrollWidth - track.clientWidth;
-        if (track.scrollLeft <= 2) track.scrollTo({ left: max, behavior: "smooth" });   // wrap to end
-        else track.scrollBy({ left: -tileStep(), behavior: "smooth" });
-      });
-      next.addEventListener("click", function(){
-        var max = track.scrollWidth - track.clientWidth;
-        if (track.scrollLeft >= max - 2) track.scrollTo({ left: 0, behavior: "smooth" }); // wrap to start
-        else track.scrollBy({ left: tileStep(), behavior: "smooth" });
-      });
-      track.addEventListener("scroll", function(){ window.requestAnimationFrame(updateFade); });
-      window.addEventListener("resize", updateFade);
-      updateFade();
+      if (!next.__sjbound){
+        next.__sjbound = true;
+        var animating = false;
+        function animateTo(target, done){
+          var start = track.scrollLeft, dist = target - start, t0 = 0, dur = 340;
+          animating = true;
+          (function frame(now){
+            if (!t0) t0 = now;
+            var p = Math.min(1, (now - t0) / dur);
+            var e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;   // easeInOutQuad
+            track.scrollLeft = Math.round(start + dist * e);
+            if (p < 1) requestAnimationFrame(frame);
+            else { animating = false; if (done) done(); }
+          })(performance.now());
+        }
+        var go = function(dir){ if (!animating) animateTo(track.scrollLeft + dir * stepPx(), normalize); };
+        prev.addEventListener("click", function(){ go(-1); });
+        next.addEventListener("click", function(){ go(1); });
+        track.addEventListener("scroll", function(){ window.requestAnimationFrame(updateFade); });
+        window.addEventListener("resize", function(){ window.buildLoop(); });
+        window.addEventListener("load", function(){ window.buildLoop(); });
+      }
+      window.buildLoop();
     }
 
     // clipped-text tooltip for featured tiles (cursor-following bubble, theme-styled)
