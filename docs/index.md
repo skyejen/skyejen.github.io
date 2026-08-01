@@ -33,9 +33,9 @@
 
 <div class="sj-divider"></div>
 
-## :material-star-outline: Featured
+<div class="sj-sechead" markdown>
 
-<p class="sj-section-sub">A few highlights across my work and learning.</p>
+## :material-star-outline: Featured
 
 <div class="sj-filters">
 <button class="sj-filter is-active" data-filter="all">All</button>
@@ -44,6 +44,10 @@
 <button class="sj-filter" data-filter="devops">DevOps</button>
 <button class="sj-filter" data-filter="ai">AI / Products</button>
 </div>
+
+</div>
+
+<p class="sj-section-sub">A few highlights across my work and learning.</p>
 
 <div class="sj-carousel" markdown>
 <div class="sj-carousel-track" markdown>
@@ -68,6 +72,8 @@
 <button class="sj-carousel-btn sj-carousel-prev" aria-label="Previous">&lsaquo;</button>
 <button class="sj-carousel-btn sj-carousel-next" aria-label="Next">&rsaquo;</button>
 </div>
+
+<div class="sj-divider sj-divider--sec"></div>
 
 <div class="sj-hubs" markdown>
 <div class="sj-hub" markdown>
@@ -139,6 +145,8 @@
 </div>
 </div>
 </div>
+
+<div class="sj-divider sj-divider--sec"></div>
 
 <div class="sj-connect" markdown>
 <div class="sj-panel sj-about" markdown>
