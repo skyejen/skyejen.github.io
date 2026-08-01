@@ -91,15 +91,21 @@
       else track.classList.add("fade-lr");        // middle -> both
     };
     if (track && prev && next){
+      var tileStep = function(){
+        var cs = track.querySelectorAll(".sj-feat-card");
+        if (cs.length >= 2) return cs[1].offsetLeft - cs[0].offsetLeft;   // one tile + gap
+        if (cs.length) return cs[0].offsetWidth + 13;
+        return track.clientWidth * 0.5;
+      };
       prev.addEventListener("click", function(){
         var max = track.scrollWidth - track.clientWidth;
         if (track.scrollLeft <= 2) track.scrollTo({ left: max, behavior: "smooth" });   // wrap to end
-        else track.scrollBy({ left: -track.clientWidth * 0.5, behavior: "smooth" });
+        else track.scrollBy({ left: -tileStep(), behavior: "smooth" });
       });
       next.addEventListener("click", function(){
         var max = track.scrollWidth - track.clientWidth;
         if (track.scrollLeft >= max - 2) track.scrollTo({ left: 0, behavior: "smooth" }); // wrap to start
-        else track.scrollBy({ left: track.clientWidth * 0.5, behavior: "smooth" });
+        else track.scrollBy({ left: tileStep(), behavior: "smooth" });
       });
       track.addEventListener("scroll", function(){ window.requestAnimationFrame(updateFade); });
       window.addEventListener("resize", updateFade);

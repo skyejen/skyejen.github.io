@@ -105,14 +105,14 @@
 .sj-carousel-next { order: 1; }
 .sj-carousel-btn:hover { opacity: 1; color: var(--sj-gold); }
 
-.sj-feat-card { display: grid; grid-template-columns: auto 1fr 6.5rem; grid-template-areas: "icon title thumb" "desc desc thumb" "tags tags thumb"; gap: 0.08rem 0.7rem; align-content: center; background: var(--sj-tile); border: 1px solid var(--sj-tile-border); border-radius: 12px; padding: 0.42rem 0.9rem; color: var(--sj-text) !important; transition: border-color .15s ease; }
-.sj-feat-card.sj-card--soon { border-style: dashed; opacity: 0.5; cursor: not-allowed; }
-.sj-feat-card.sj-card--soon:hover { border-color: var(--sj-tile-border); }
+.sj-feat-card { display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: "icon title thumb" "desc desc thumb" "tags tags thumb"; gap: 0.08rem 0.8rem; align-content: center; background: var(--sj-tile); border: 1px solid var(--sj-tile-border); border-radius: 12px; padding: 0.42rem 0.9rem; color: var(--sj-text) !important; transition: border-color .15s ease; }
+.sj-feat-card.sj-card--soon { border: 1px dashed var(--sj-border); opacity: 0.55; cursor: default; }
+.sj-feat-card.sj-card--soon:hover { border-color: var(--sj-border); }
 .sj-feat-card:hover { border-color: rgba(30,136,255,0.5); }
 .sj-feat-card > .sj-card-icon { grid-area: icon; align-self: center; }
 .sj-feat-card > .sj-card-title { grid-area: title; align-self: center; font-family: "Space Grotesk", sans-serif; font-weight: 700; color: var(--sj-heading); font-size: 0.85rem; }
 .sj-feat-card > .sj-card-desc { grid-area: desc; font-size: 0.68rem; color: var(--sj-text-dim); line-height: 1.3; margin-top: 0.1rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.6em; }
-.sj-feat-card > .sj-feat-thumb { grid-area: thumb; align-self: stretch; border-radius: 8px; border: 1px solid var(--sj-tile-border); background: linear-gradient(135deg,#121a29,#0a0e16); position: relative; }
+.sj-feat-card > .sj-feat-thumb { grid-area: thumb; align-self: stretch; aspect-ratio: 16 / 9; border-radius: 8px; border: 1px solid var(--sj-tile-border); background: linear-gradient(135deg,#121a29,#0a0e16); position: relative; }
 .sj-feat-thumb::after { content: "thumbnail"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--sj-text-dim); font-size: 0.55rem; }
 
 /* two separate tags */
