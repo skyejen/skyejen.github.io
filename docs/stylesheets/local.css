@@ -19,6 +19,7 @@
   .sj-hero-main .sj-lead-p { white-space: nowrap; }
 }
 .md-content h2 { font-size: 1.1rem; margin-top: 2.4rem; }
+.md-content__inner > h2 { margin-top: 1.5rem; }
 /* kill the gold underline rules under headers on the landing */
 .md-content h2::after, .md-content h3::after, .md-content h4::after { display: none !important; content: none !important; }
 .sj-section-sub { color: var(--sj-text-dim); font-size: 0.78rem; margin: 0.1rem 0 1.1rem; }
@@ -39,7 +40,7 @@
 .sj-hub:nth-of-type(2) h2 .twemoji svg { fill: var(--sj-green) !important; }
 
 /* ===== Hero ===== */
-.sj-hero { display: grid; grid-template-columns: 1.6fr 1fr auto; gap: 2rem; align-items: start; margin: -0.4rem 0 2.8rem; }
+.sj-hero { display: grid; grid-template-columns: 1.6fr 1fr auto; gap: 2rem; align-items: start; margin: -0.4rem 0 1.6rem; }
 @media screen and (max-width: 76.24em){ .sj-hero { grid-template-columns: 1fr 1fr; gap: 1.6rem; } .sj-hero-toc { display: none; } }
 @media screen and (max-width: 59.9em){ .sj-hero { grid-template-columns: 1fr; gap: 1.5rem; } }
 .sj-pillrow { margin: 0 0 0.7rem; }
@@ -150,3 +151,7 @@
 .sj-hero-toc .toc-learning  .twemoji svg { fill: var(--sj-green) !important; }
 .sj-hero-toc .toc-about     .twemoji svg { fill: var(--sj-purple) !important; }
 .sj-hero-toc .toc-contact   .twemoji svg { fill: var(--sj-gold) !important; }
+
+
+/* faint section divider (neutral, faded ends) */
+.sj-divider { height: 1px; border: 0; margin: 0; background: linear-gradient(90deg, transparent 14%, rgba(255,255,255,0.15) 34%, rgba(255,255,255,0.15) 66%, transparent 86%); }

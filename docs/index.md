@@ -31,6 +31,8 @@
 </nav>
 </div>
 
+<div class="sj-divider"></div>
+
 ## :material-star-outline: Featured
 
 <p class="sj-section-sub">A few highlights across my work and learning.</p>
