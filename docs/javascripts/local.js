@@ -85,10 +85,18 @@
       var sl = track.scrollLeft;
       var max = track.scrollWidth - track.clientWidth;
       track.classList.remove("fade-l", "fade-r", "fade-lr");
-      if (max <= 2) return;                       // no overflow -> no fade
-      if (sl <= 2) track.classList.add("fade-r"); // at start -> fade right only
-      else if (sl >= max - 2) track.classList.add("fade-l"); // at end -> fade left only
-      else track.classList.add("fade-lr");        // middle -> both
+      if (max <= 2) return;                        // no overflow -> no fade
+      var viewR = sl + track.clientWidth, leftFlush = false, rightFlush = false;
+      track.querySelectorAll(".sj-feat-card").forEach(function(c){
+        if (c.style.display === "none") return;
+        if (Math.abs(c.offsetLeft - sl) < 14) leftFlush = true;                        // a tile is flush at the left
+        if (Math.abs((c.offsetLeft + c.offsetWidth) - viewR) < 14) rightFlush = true;  // a tile is flush at the right
+      });
+      var fl = sl > 2 && !leftFlush;               // fade left only if the left tile is cut
+      var fr = sl < max - 2 && !rightFlush;        // fade right only if the right tile is cut
+      if (fl && fr) track.classList.add("fade-lr");
+      else if (fl) track.classList.add("fade-l");
+      else if (fr) track.classList.add("fade-r");
     };
     if (track && prev && next){
       var tileStep = function(){
