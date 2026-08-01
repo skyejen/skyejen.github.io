@@ -68,6 +68,22 @@
 <span class="sj-feat-thumb"></span>
 </a>
 
+<a class="sj-feat-card" data-disc="ai" href="https://github.com/skyejen/skyejen.github.io" markdown="span">
+<span class="sj-card-icon">:material-creation-outline:</span>
+<span class="sj-card-title">Portfolio Site Built with AI</span>
+<span class="sj-card-desc">This very site - theme, layout and components designed and built end-to-end pairing with an AI.</span>
+<span class="sj-tags"><span class="sj-tag">AI</span><span class="sj-tag sj-tag--live">Live</span></span>
+<span class="sj-feat-thumb"></span>
+</a>
+
+<div class="sj-feat-card sj-card--soon" data-disc="devops" markdown="span">
+<span class="sj-card-icon">:material-server-network:</span>
+<span class="sj-card-title">DevOps</span>
+<span class="sj-card-desc">Pipelines, infrastructure and tooling write-ups - coming soon.</span>
+<span class="sj-tags"><span class="sj-tag">DevOps</span><span class="sj-tag sj-tag--soon">Soon</span></span>
+<span class="sj-feat-thumb"></span>
+</div>
+
 </div>
 <button class="sj-carousel-btn sj-carousel-prev" aria-label="Previous">&lsaquo;</button>
 <button class="sj-carousel-btn sj-carousel-next" aria-label="Next">&rsaquo;</button>

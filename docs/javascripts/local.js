@@ -71,18 +71,75 @@
         cards.forEach(function(c){
           c.style.display = (f === "all" || c.getAttribute("data-disc") === f) ? "" : "none";
         });
+        updateFade();
+        tagClippedFeat();
       });
     });
 
-    // carousel
+    // carousel + scroll-aware edge fade (peek into darkness)
     var track = document.querySelector(".sj-carousel-track");
     var prev = document.querySelector(".sj-carousel-prev");
     var next = document.querySelector(".sj-carousel-next");
+    window.updateFade = function(){
+      if (!track) return;
+      var sl = track.scrollLeft;
+      var max = track.scrollWidth - track.clientWidth;
+      track.classList.remove("fade-l", "fade-r", "fade-lr");
+      if (max <= 2) return;                       // no overflow -> no fade
+      if (sl <= 2) track.classList.add("fade-r"); // at start -> fade right only
+      else if (sl >= max - 2) track.classList.add("fade-l"); // at end -> fade left only
+      else track.classList.add("fade-lr");        // middle -> both
+    };
     if (track && prev && next){
-      prev.addEventListener("click", function(){ track.scrollBy({ left: -track.clientWidth * 0.55, behavior: "smooth" }); });
-      next.addEventListener("click", function(){ track.scrollBy({ left: track.clientWidth * 0.55, behavior: "smooth" }); });
+      prev.addEventListener("click", function(){
+        var max = track.scrollWidth - track.clientWidth;
+        if (track.scrollLeft <= 2) track.scrollTo({ left: max, behavior: "smooth" });   // wrap to end
+        else track.scrollBy({ left: -track.clientWidth * 0.5, behavior: "smooth" });
+      });
+      next.addEventListener("click", function(){
+        var max = track.scrollWidth - track.clientWidth;
+        if (track.scrollLeft >= max - 2) track.scrollTo({ left: 0, behavior: "smooth" }); // wrap to start
+        else track.scrollBy({ left: track.clientWidth * 0.5, behavior: "smooth" });
+      });
+      track.addEventListener("scroll", function(){ window.requestAnimationFrame(updateFade); });
+      window.addEventListener("resize", updateFade);
+      updateFade();
+    }
+
+    // clipped-text tooltip for featured tiles (cursor-following bubble, theme-styled)
+    tagClippedFeat();
+    window.addEventListener("resize", tagClippedFeat);
+    if (!window.__sjFeatTipInit){
+      window.__sjFeatTipInit = true;
+      var featTip = document.createElement("div");
+      featTip.className = "sj-cursor-tip";
+      document.body.appendChild(featTip);
+      var on = false;
+      document.addEventListener("mousemove", function(e){
+        var card = e.target && e.target.closest ? e.target.closest(".sj-feat-card[data-feat-tip]") : null;
+        if (!card){ if (on){ featTip.style.opacity = "0"; on = false; } return; }
+        featTip.textContent = card.getAttribute("data-feat-tip");
+        if (!on){ featTip.style.opacity = "1"; on = true; }
+        var pad = 14, w = featTip.offsetWidth, h = featTip.offsetHeight;
+        var x = e.clientX + pad, y = e.clientY + pad;
+        if (x + w > window.innerWidth - 8) x = e.clientX - pad - w;
+        if (y + h > window.innerHeight - 8) y = e.clientY - pad - h;
+        featTip.style.left = Math.max(8, x) + "px";
+        featTip.style.top = Math.max(8, y) + "px";
+      }, { passive: true });
+      window.addEventListener("scroll", function(){ featTip.style.opacity = "0"; on = false; }, { passive: true, capture: true });
     }
   }
+  function tagClippedFeat(){
+    document.querySelectorAll(".sj-feat-card").forEach(function(card){
+      var d = card.querySelector(".sj-card-desc");
+      var full = null;
+      if (d && d.scrollHeight > d.clientHeight + 1) full = d.textContent.trim();
+      if (full) card.setAttribute("data-feat-tip", full);
+      else card.removeAttribute("data-feat-tip");
+    });
+  }
+  function updateFade(){ if (window.updateFade) window.updateFade(); }
 
   if (document.readyState !== "loading") init();
   else document.addEventListener("DOMContentLoaded", init);
