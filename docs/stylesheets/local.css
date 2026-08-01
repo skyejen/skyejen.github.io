@@ -1,146 +1,128 @@
 /* ==========================================================================
-   skyejen.github.io — LANDING-LOCAL styles
-   Loaded AFTER the shared theme (sj-theme/extra.css). Only page/site-specific
-   rules that don't belong in the shared theme live here; everything else comes
-   from sj-theme. See AGENTS.md and sj-theme/README.md.
+   LANDING v2 - full-width hero, featured carousel, hubs, connect
    ========================================================================== */
-
-/* Landing scroll offset: the page scrolls inside .md-container, which already
-   starts below the sticky header, so this only needs a tiny gap (the shared
-   3.6rem would leave a clicked heading sitting too low). */
-.md-typeset h1,
-.md-typeset h2,
-.md-typeset h3 {
-  scroll-margin-top: 0.4rem;
-}
-
-/* "coming soon" placeholder tiles: non-clickable teaser cards for sections
-   with no content yet. <div class="sj-card sj-card--soon"> (no href). */
-.sj-card--soon {
-  cursor: default;
-  border-style: dashed;
-  border-color: var(--sj-border);
-  opacity: 0.6;
-}
-.sj-card--soon:hover {
-  transform: none;
-  border-color: var(--sj-border);
-  box-shadow: none;
-}
-.sj-card--soon:hover .sj-card-title {
-  color: var(--sj-heading);
-}
-.sj-card--soon .sj-card-icon {
-  color: var(--sj-text-dim);
-}
-.sj-card--soon .sj-card-meta {
-  color: var(--sj-gold);
-  background: rgba(242, 193, 78, 0.08);
-  border-color: rgba(242, 193, 78, 0.28);
-}
-
-/* Landing section headings: a touch more breathing room between groups. */
-.md-content h2 {
-  margin-top: 2.4rem;
-}
-
-/* Landing layout: no left nav panel. Single page, no navigation, so remove the
-   sidebar divider and keep the header line uniform full-width. The ToC is short
-   and never scrolls, so hide its scrollbar (kills the load flash + leftover bar). */
-@media screen and (min-width: 76.25em) {
-  .md-sidebar--primary::after {
-    display: none;
-  }
-  .md-header::before {
-    background: var(--sj-border);
-  }
-  .md-header::after {
-    left: 0;
-  }
-  .md-sidebar--secondary .md-sidebar__scrollwrap {
-    height: auto !important;
-    max-height: none !important;
-    overflow: hidden;
-    scrollbar-width: none;
-  }
-  .md-sidebar--secondary .md-sidebar__scrollwrap::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-/* Footer: no social icons on the landing, so centre the copyright line. */
-.md-footer-meta__inner {
-  justify-content: center;
-}
-.md-footer-copyright {
-  text-align: center;
-}
-
-/* Card grid: dissolve the <p> Markdown wraps around inline card links so every
-   tile (inline <a> and block <div class="sj-card--soon">) is an equal grid item
-   sharing one row height/width. */
-.sj-cards > p {
-  display: contents;
-}
-
-/* ===== Landing redesign: featured + field-hub tiles =====================
-   TWEAK ZONE - change a number, save, the browser reloads instantly. */
 :root {
-  --tile-pad-y: 0.7rem;    /* tile top/bottom padding */
-  --tile-pad-x: 0.95rem;   /* tile left/right padding */
-  --icon-size: 20px;       /* icon width + height */
-  --icon-gap: 0.55rem;     /* space between icon and text */
-  --feat-min: 300px;       /* featured tile min width */
-  --hub-min: 190px;        /* hub tile min width (raise if a title wraps) */
+  --sj-tile: #0a0e16;
+  --sj-tile-border: rgba(255,255,255,0.055);
+  --sj-purple: #b48cff;
+  --sj-green: #56d9a3;
+  --sj-py: #4b9fd6;
 }
-/* ---- end tweak zone ---- */
 
-.sj-card--row {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0 var(--icon-gap);
-  align-content: start;
-  padding: var(--tile-pad-y) var(--tile-pad-x);
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary { display: none !important; }
+  .md-content { max-width: none; }
+  .md-content__inner { padding: 0.75rem 1.4rem 2rem; }
 }
-/* Icon: fixed square, top-aligned with the title. !important beats Material's own
-   SVG sizing, which was collapsing the width to 0 (max-height:100% in the cell). */
-.sj-card--row .sj-card-icon {
-  grid-row: 1;
-  align-self: center;
-  margin: 0 !important;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  width: var(--icon-size) !important;
-  height: var(--icon-size) !important;
-  font-size: 0 !important;
-  flex: none !important;
-}
-.sj-card--row .sj-card-icon .twemoji {
-  display: flex !important;
-  height: auto !important;          /* Material sets height via --md-icon-size; collapses to 0 here */
-  vertical-align: baseline !important;  /* Material's text-top pushed the glyph down */
-}
-.sj-card--row .sj-card-icon svg {
-  width: var(--icon-size) !important;
-  height: var(--icon-size) !important;
-  min-width: var(--icon-size) !important;
-  min-height: var(--icon-size) !important;
-  max-width: var(--icon-size) !important;
-  max-height: var(--icon-size) !important;
-  display: block !important;
-}
-.sj-card--row > .sj-card-title,
-.sj-card--row > .sj-card-desc,
-.sj-card--row > .sj-card-meta { grid-column: 2; margin: 0; }
-/* kill the theme's 2-line reserves so short text doesn't leave a gap */
-.sj-card--row > .sj-card-title { min-height: 0; }
-.sj-card--row > .sj-card-desc { min-height: 0; margin-top: 0.15rem; }
-/* meta chip: hug content and wrap if long, instead of one wide pill */
-.sj-card--row > .sj-card-meta { margin-top: 0.4rem; white-space: normal; justify-self: start; }
+.md-content h2 { font-size: 1.1rem; margin-top: 2.4rem; }
+/* kill the gold underline rules under headers on the landing */
+.md-content h2::after, .md-content h3::after, .md-content h4::after { display: none !important; content: none !important; }
+.sj-section-sub { color: var(--sj-text-dim); font-size: 0.78rem; margin: 0.1rem 0 1.1rem; }
 
-.sj-cards { grid-template-columns: repeat(auto-fill, minmax(var(--feat-min), 1fr)); gap: 0.8rem; }
-.sj-cards--hub { grid-template-columns: repeat(auto-fill, minmax(var(--hub-min), 1fr)); gap: 0.65rem; }
+/* twemoji sizing/baseline fix */
+.sj-card-icon .twemoji, .sj-connect-icon .twemoji { height: auto !important; vertical-align: baseline !important; }
+.sj-card-icon .twemoji svg { width: 1.2rem !important; height: 1.2rem !important; vertical-align: baseline !important; }
 
-/* smaller section headings on the landing, to win vertical space */
-.md-content h2 { font-size: 1.05rem; margin-top: 1.7rem; }
+/* discipline-coloured tile icons */
+[data-disc="cybersecurity"] > .sj-card-icon .twemoji svg { fill: var(--sj-gold) !important; }
+[data-disc="python"]       > .sj-card-icon .twemoji svg { fill: var(--sj-py) !important; }
+[data-disc="devops"]       > .sj-card-icon .twemoji svg { fill: var(--sj-purple) !important; }
+[data-disc="ai"]           > .sj-card-icon .twemoji svg { fill: var(--sj-green) !important; }
+
+/* section-header icons: featured=gold, portfolio=blue, learning=green */
+.md-content__inner > h2 .twemoji svg { fill: var(--sj-gold) !important; }
+.sj-hub:nth-of-type(1) h2 .twemoji svg { fill: var(--sj-blue) !important; }
+.sj-hub:nth-of-type(2) h2 .twemoji svg { fill: var(--sj-green) !important; }
+
+/* ===== Hero ===== */
+.sj-hero { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 2.5rem; align-items: center; margin: 0.5rem 0 2.8rem; }
+@media screen and (max-width: 59.9em){ .sj-hero { grid-template-columns: 1fr; gap: 1.5rem; } }
+.sj-pillrow { margin: 0 0 1.1rem; }
+.sj-pillbar { font-family: "JetBrains Mono", monospace; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sj-blue); background: rgba(30,136,255,0.08); border: 1px solid rgba(30,136,255,0.25); border-radius: 999px; padding: 0.28rem 0.9rem; }
+.sj-hero-main h1 { display: block !important; font-weight: 400; font-size: 1.8rem; line-height: 1.25; letter-spacing: -0.01em; margin: 0 0 0.9rem; }
+.sj-hero-main .sj-lead-p { color: var(--sj-text-dim); font-size: 0.85rem; margin: 0 0 1.4rem; max-width: 30rem; }
+.sj-hero-cta { display: flex; gap: 0.7rem; }
+.sj-hero-cta > a { margin: 0; }
+.sj-btn { display: inline-flex !important; align-items: center; gap: 0.45rem; font-size: 0.78rem; font-weight: 500; padding: 0.55rem 1.1rem; border-radius: 8px; border: 1px solid var(--sj-border); color: var(--sj-heading) !important; background: transparent; transition: border-color .15s ease, background .15s ease; }
+.sj-btn .twemoji svg { width: 0.95rem !important; height: 0.95rem !important; vertical-align: baseline !important; }
+.sj-btn:hover { border-color: var(--sj-blue); }
+.sj-btn--primary { background: var(--sj-blue); border-color: var(--sj-blue); color: #fff !important; }
+.sj-btn--primary:hover { background: #1976e0; }
+.sj-btn--purple { border-color: rgba(155,107,255,0.55); color: var(--sj-purple) !important; }
+.sj-btn--purple:hover { background: rgba(155,107,255,0.12); border-color: var(--sj-purple); }
+.sj-btn--gold { border-color: rgba(242,193,78,0.55); color: var(--sj-gold) !important; }
+.sj-btn--gold:hover { background: rgba(242,193,78,0.12); border-color: var(--sj-gold); }
+
+/* terminal - single outline */
+.sj-codepanel { background: var(--sj-bg-deep); border: 1px solid var(--sj-border); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.35); }
+.sj-codepanel-head { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.85rem; border-bottom: 1px solid var(--sj-border); background: rgba(255,255,255,0.02); }
+.sj-dots { display: inline-flex; gap: 0.4rem; }
+.sj-dots i { width: 0.6rem; height: 0.6rem; border-radius: 50%; display: inline-block; }
+.sj-dots i:nth-child(1){ background:#ff5f56; } .sj-dots i:nth-child(2){ background:#ffbd2e; } .sj-dots i:nth-child(3){ background:#27c93f; }
+.sj-lang { font-family: "JetBrains Mono", monospace; font-size: 0.58rem; color: var(--sj-text-dim); }
+.md-typeset .sj-codepanel-body, .sj-codepanel-body { margin: 0; padding: 0.9rem 1.1rem 1.1rem; height: 9.5rem; overflow: hidden; border: none !important; background: transparent !important; box-shadow: none !important; }
+.sj-codepanel-body::before { content: ">_"; display: block; font-family: "JetBrains Mono", monospace; font-size: 0.8rem; color: var(--sj-blue); margin-bottom: 0.55rem; }
+.sj-codepanel-body code { font-family: "JetBrains Mono", monospace; font-size: 0.72rem; line-height: 1.7; color: var(--sj-text); white-space: pre; background: none; display: block; transition: opacity .3s ease; }
+.sj-codepanel-body code .tk-str  { color: #7fd88f; }
+.sj-codepanel-body code .tk-kw   { color: #c58cff; }
+.sj-codepanel-body code .tk-bool { color: #e07aa8; }
+.sj-codepanel-body code .tk-com  { color: #6b7488; font-style: italic; }
+.sj-codepanel-body code .tk-fn   { color: #63b3ed; }
+
+/* ===== Featured ===== */
+.sj-filters { display: flex; gap: 0.45rem; flex-wrap: wrap; margin: -2.6rem 0 1.3rem; justify-content: flex-end; }
+@media screen and (max-width: 45em){ .sj-filters { margin-top: 0.4rem; justify-content: flex-start; } }
+.sj-filter { font-size: 0.68rem; padding: 0.32rem 0.85rem; border-radius: 999px; border: 1px solid var(--sj-tile-border); background: var(--sj-tile); color: var(--sj-text-dim); cursor: pointer; transition: all .15s ease; }
+.sj-filter:hover { border-color: var(--sj-blue); color: var(--sj-heading); }
+.sj-filter.is-active { border-color: var(--sj-blue); color: var(--sj-blue); background: rgba(30,136,255,0.08); }
+
+.sj-carousel { position: relative; }
+.sj-carousel-track { display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.sj-carousel-track::-webkit-scrollbar { display: none; }
+.sj-carousel-track > .sj-feat-card { flex: 0 0 calc(50% - 0.5rem); scroll-snap-align: start; }
+/* feathered edge arrows */
+.sj-carousel-btn { position: absolute; top: 0; bottom: 0; width: 3.5rem; border: none; background: transparent; color: var(--sj-text-dim); opacity: 0.45; font-size: 2.4rem; line-height: 1; cursor: pointer; z-index: 4; display: flex; align-items: center; transition: color .15s ease, opacity .15s ease; }
+.sj-carousel-prev { left: 0; justify-content: flex-start; padding-left: 0.4rem; background: linear-gradient(to right, var(--sj-bg) 10%, transparent); }
+.sj-carousel-next { right: 0; justify-content: flex-end; padding-right: 0.4rem; background: linear-gradient(to left, var(--sj-bg) 10%, transparent); }
+.sj-carousel-btn:hover { opacity: 1; color: var(--sj-gold); }
+
+.sj-feat-card { display: grid; grid-template-columns: auto 1fr 9rem; grid-template-areas: "icon title thumb" "desc desc thumb" "tags tags thumb"; gap: 0.15rem 0.7rem; align-content: start; height: 9.5rem; background: var(--sj-tile); border: 1px solid var(--sj-tile-border); border-radius: 14px; padding: 1.1rem 1.2rem; color: var(--sj-text) !important; transition: border-color .15s ease; }
+.sj-feat-card:hover { border-color: rgba(30,136,255,0.5); }
+.sj-feat-card > .sj-card-icon { grid-area: icon; align-self: center; }
+.sj-feat-card > .sj-card-title { grid-area: title; align-self: center; font-family: "Space Grotesk", sans-serif; font-weight: 700; color: var(--sj-heading); font-size: 0.92rem; }
+.sj-feat-card > .sj-card-desc { grid-area: desc; font-size: 0.72rem; color: var(--sj-text-dim); line-height: 1.5; margin-top: 0.35rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.sj-feat-card > .sj-feat-thumb { grid-area: thumb; align-self: stretch; border-radius: 8px; border: 1px solid var(--sj-tile-border); background: linear-gradient(135deg,#121a29,#0a0e16); position: relative; }
+.sj-feat-thumb::after { content: "thumbnail"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--sj-text-dim); font-size: 0.55rem; }
+
+/* two separate tags */
+.sj-tags { grid-area: tags; display: flex; gap: 0.4rem; align-self: end; }
+.sj-tag { font-family: "JetBrains Mono", monospace; font-size: 0.56rem; letter-spacing: 0.02em; color: var(--sj-blue); background: rgba(30,136,255,0.08); border: 1px solid rgba(30,136,255,0.28); border-radius: 999px; padding: 0.16rem 0.55rem; }
+.sj-tag--live { color: var(--sj-green); background: rgba(86,217,163,0.08); border-color: rgba(86,217,163,0.3); }
+
+/* ===== Hubs ===== */
+.sj-hubs { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 1rem; }
+@media screen and (max-width: 55em){ .sj-hubs { grid-template-columns: 1fr; gap: 1.5rem; } }
+.sj-hubs > .sj-hub:first-child { border-right: 1px solid var(--sj-tile-border); padding-right: 3rem; }
+@media screen and (max-width: 55em){ .sj-hubs > .sj-hub:first-child { border-right: none; padding-right: 0; } }
+.sj-hub h2 { margin-top: 0.5rem; }
+.sj-hubgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+.sj-hubcard { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "icon title" "desc desc"; gap: 0.2rem 0.5rem; align-content: start; height: 6.3rem; background: var(--sj-tile); border: 1px solid var(--sj-tile-border); border-radius: 12px; padding: 0.9rem 1rem; color: var(--sj-text) !important; transition: border-color .15s ease; }
+.sj-hubcard:hover { border-color: rgba(30,136,255,0.5); }
+.sj-hubcard > .sj-card-icon { grid-area: icon; align-self: center; }
+.sj-hubcard > .sj-card-title { grid-area: title; align-self: center; font-family: "Space Grotesk", sans-serif; font-weight: 700; color: var(--sj-heading); font-size: 0.84rem; }
+.sj-hubcard > .sj-card-desc { grid-area: desc; font-size: 0.68rem; color: var(--sj-text-dim); line-height: 1.5; margin-top: 0.3rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.sj-hubcard.sj-card--soon { border-style: dashed; opacity: 0.5; cursor: not-allowed; }
+
+/* ===== About + Connect ===== */
+.sj-connect { display: grid; grid-template-columns: 1fr 0.72fr 1fr; gap: 1.4rem; align-items: stretch; margin-top: 3rem; }
+@media screen and (max-width: 55em){ .sj-connect { grid-template-columns: 1fr; } }
+.sj-panel { background: var(--sj-tile); border: 1px solid var(--sj-tile-border); border-radius: 14px; padding: 1.2rem 1.35rem; display: flex; flex-direction: column; }
+.sj-panel h3, .sj-panel h4 { margin: 0 0 0.5rem; }
+.sj-panel h3 { font-size: 0.98rem; }
+.sj-panel h4 { font-size: 0.92rem; }
+.sj-panel .sj-section-sub { margin-bottom: 1rem; flex: 1; }
+.sj-panel .sj-btn { align-self: flex-start; }
+.sj-about h3 .twemoji svg { fill: var(--sj-purple) !important; }
+.sj-connectbox h4 .twemoji svg { fill: var(--sj-gold) !important; }
+.sj-connect-graphic { display: flex; align-items: center; justify-content: center; color: var(--sj-text-dim); font-size: 0.6rem; text-align: center; border-radius: 14px; }
+@media screen and (max-width: 55em){ .sj-connect-graphic { display: none; } }

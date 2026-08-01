@@ -32,6 +32,7 @@ extra_css:
 
 extra_javascript:
   - sj-theme/extra.js
+  - javascripts/local.js
 
 markdown_extensions:
   - attr_list
