@@ -19,6 +19,14 @@
 <pre class="sj-codepanel-body"><code id="sj-code">loading...</code></pre>
 </div>
 </div>
+<nav class="sj-hero-toc" markdown>
+<span class="sj-toc-label">On this page</span>
+[:material-star-outline: Featured](#featured){ .sj-toc-link .toc-featured }
+[:material-briefcase-variant-outline: Portfolio](#portfolio){ .sj-toc-link .toc-portfolio }
+[:material-book-open-page-variant-outline: Learning](#learning){ .sj-toc-link .toc-learning }
+[:material-account-outline: About me](#about-me){ .sj-toc-link .toc-about }
+[:material-email-outline: Contact](#lets-connect){ .sj-toc-link .toc-contact }
+</nav>
 </div>
 
 ## :material-star-outline: Featured
