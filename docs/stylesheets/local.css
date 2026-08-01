@@ -7,6 +7,7 @@
   --sj-purple: #b48cff;
   --sj-green: #56d9a3;
   --sj-py: #4b9fd6;
+  --sj-blue-deep: #1663c9;
 }
 
 @media screen and (min-width: 76.25em) {
@@ -54,7 +55,7 @@
 .sj-btn:hover { border-color: var(--sj-blue); }
 .sj-hero-cta .sj-btn:not(.sj-btn--primary) { border-color: rgba(30,136,255,0.55); color: var(--sj-blue) !important; }
 .sj-hero-cta .sj-btn:not(.sj-btn--primary):hover { border-color: var(--sj-blue); color: var(--sj-blue) !important; background: rgba(30,136,255,0.1); }
-.sj-btn--primary { background: var(--sj-blue); border-color: var(--sj-blue); color: #fff !important; }
+.sj-btn--primary { background: var(--sj-blue-deep); border-color: var(--sj-blue-deep); color: #fff !important; }
 .sj-btn--primary:hover { background: var(--sj-gold); border-color: var(--sj-gold); color: #fff !important; }
 .sj-btn--purple { border-color: rgba(155,107,255,0.55); color: var(--sj-purple) !important; }
 .sj-btn--purple:hover { background: rgba(155,107,255,0.12); border-color: var(--sj-purple); }
