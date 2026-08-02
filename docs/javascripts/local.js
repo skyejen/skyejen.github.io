@@ -69,7 +69,8 @@
         btn.classList.add("is-active");
         var f = btn.getAttribute("data-filter");
         document.querySelectorAll(".sj-feat-card:not(.sj-clone)").forEach(function(c){
-          c.style.display = (f === "all" || c.getAttribute("data-disc") === f) ? "" : "none";
+          var discs = (c.getAttribute("data-disc") || "").split(/\s+/);   // supports multiple, space-separated
+          c.style.display = (f === "all" || discs.indexOf(f) !== -1) ? "" : "none";
         });
         if (window.buildLoop) window.buildLoop();
         tagClippedFeat();

@@ -19,12 +19,12 @@
   .sj-hero-main .sj-lead-p { white-space: nowrap; }
 }
 .md-content h2 { font-size: 1.1rem; margin-top: 2.4rem; }
-.sj-sechead { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin: 0.9rem 0 0.35rem; }
-.sj-sechead h2 { margin: 0; }
-.md-content__inner > .sj-section-sub { margin-bottom: 0.55rem; }
+.sj-sechead { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin: 0.9rem 0 0.12rem; }
+.sj-sechead h2 { margin: 0; padding-bottom: 0; }
+.md-content__inner > .sj-section-sub { margin-bottom: 1.25rem; }
 /* kill the gold underline rules under headers on the landing */
 .md-content h2::after, .md-content h3::after, .md-content h4::after { display: none !important; content: none !important; }
-.sj-section-sub { color: var(--sj-text-dim); font-size: 0.78rem; margin: 0.1rem 0 0.55rem; }
+.sj-section-sub { color: var(--sj-text-dim); font-size: 0.78rem; margin: 0 0 1.25rem; }
 
 /* twemoji sizing/baseline fix */
 .sj-card-icon .twemoji, .sj-connect-icon .twemoji { height: auto !important; vertical-align: baseline !important; }
@@ -126,7 +126,7 @@
 @media screen and (max-width: 55em){ .sj-hubs { grid-template-columns: 1fr; gap: 1.5rem; } }
 .sj-hubs > .sj-hub:first-child { border-right: 1px solid var(--sj-tile-border); padding-right: 3rem; }
 @media screen and (max-width: 55em){ .sj-hubs > .sj-hub:first-child { border-right: none; padding-right: 0; } }
-.sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.3rem; }
+.sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.12rem; padding-bottom: 0; }
 .sj-hubgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
 .sj-hubgrid > p { display: contents; }
 .sj-hubcard { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "icon title" "desc desc"; gap: 0.08rem 0.5rem; align-content: center; height: 4rem; background: var(--sj-tile); border: 1px solid var(--sj-tile-border); border-radius: 12px; padding: 0.55rem 1rem 0.85rem; color: var(--sj-text) !important; transition: border-color .15s ease; }
