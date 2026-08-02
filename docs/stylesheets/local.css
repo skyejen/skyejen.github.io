@@ -128,11 +128,12 @@
 @media screen and (max-width: 55em){ .sj-hubs > .sj-hub:first-child { border-right: none; padding-right: 0; } }
 .sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.3rem; }
 .sj-hubgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-.sj-hubcard { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "icon title" "desc desc"; gap: 0.2rem 0.5rem; align-content: start; height: 6.3rem; background: var(--sj-tile); border: 1px solid var(--sj-tile-border); border-radius: 12px; padding: 0.9rem 1rem; color: var(--sj-text) !important; transition: border-color .15s ease; }
+.sj-hubgrid > p { display: contents; }
+.sj-hubcard { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "icon title" "desc desc"; gap: 0.08rem 0.5rem; align-content: center; height: 4rem; background: var(--sj-tile); border: 1px solid var(--sj-tile-border); border-radius: 12px; padding: 0.55rem 1rem 0.85rem; color: var(--sj-text) !important; transition: border-color .15s ease; }
 .sj-hubcard:hover { border-color: rgba(30,136,255,0.5); }
 .sj-hubcard > .sj-card-icon { grid-area: icon; align-self: center; }
 .sj-hubcard > .sj-card-title { grid-area: title; align-self: center; font-family: "Space Grotesk", sans-serif; font-weight: 700; color: var(--sj-heading); font-size: 0.84rem; }
-.sj-hubcard > .sj-card-desc { grid-area: desc; font-size: 0.68rem; color: var(--sj-text-dim); line-height: 1.5; margin-top: 0.3rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.sj-hubcard > .sj-card-desc { grid-area: desc; font-size: 0.68rem; color: var(--sj-text-dim); line-height: 1.3; margin-top: 0.1rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .sj-hubcard.sj-card--soon { border-style: dashed; opacity: 0.5; cursor: not-allowed; }
 
 /* ===== About + Connect ===== */
