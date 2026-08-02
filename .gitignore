@@ -24,3 +24,7 @@ venv/
 
 # MkDocs build output (generated in CI)
 site/
+
+# Local (private) notes — not published
+NOTES.local.md
+*.local.md

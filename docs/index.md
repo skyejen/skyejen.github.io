@@ -166,20 +166,25 @@
 
 <div class="sj-connect" markdown>
 <div class="sj-panel sj-about" markdown>
+<div class="sj-panel-body" markdown>
 
 ### :material-account-outline: About me
 
-<p class="sj-section-sub">Tech enthusiast with a QA/DevOps background, a love for automation, and a brain that never stops asking "why?".</p>
-
-[Read more about me &rarr;](#){ .sj-btn .sj-btn--purple }
+<p class="sj-section-sub">QA background, now building across security, DevOps and AI.</p>
 
 </div>
-<div class="sj-connect-graphic">laptop + Buggy graphic</div>
+
+[Read more about me](#){ .sj-btn .sj-btn--purple }
+
+</div>
 <div class="sj-panel sj-connectbox" markdown>
+<div class="sj-panel-body" markdown>
 
 #### :material-email-outline: Let's connect
 
 <p class="sj-section-sub">Open to new opportunities and collaborations.</p>
+
+</div>
 
 [Contact me](mailto:jennifer.skye@outlook.com){ .sj-btn .sj-btn--gold }
 
