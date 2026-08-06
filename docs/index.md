@@ -55,17 +55,17 @@
 <a class="sj-feat-card" data-disc="cybersecurity" href="https://skyejen.github.io/cybersecurity/portfolio/home-labs/wazuh/" markdown="span">
 <span class="sj-card-icon">:material-radar:</span>
 <span class="sj-card-title">Wazuh SIEM Home Lab</span>
-<span class="sj-card-desc">A multi&#8209;OS SOC lab with custom detection rules, MITRE-mapped attacks, and dashboarding.</span>
+<span class="sj-card-desc">A multi&#8209;OS SOC lab with custom detection rules, MITRE-mapped attacks, and dashboards.</span>
 <span class="sj-tags"><span class="sj-tag">Cybersecurity</span><span class="sj-tag sj-tag--live">Live</span></span>
-<span class="sj-feat-thumb"></span>
+<span class="sj-feat-thumb" style="background-image:url(images/featured/wazuh.png)"></span>
 </a>
 
 <a class="sj-feat-card" data-disc="python" href="detective-buggy/" markdown="span">
-<span class="sj-card-icon">:material-incognito:</span>
+<span class="sj-card-icon">:material-magnify:</span>
 <span class="sj-card-title">Detective Buggy</span>
 <span class="sj-card-desc">A full-stack Flask + Postgres detective game - my CS50 final project.</span>
 <span class="sj-tags"><span class="sj-tag">Python</span><span class="sj-tag sj-tag--live">Live</span></span>
-<span class="sj-feat-thumb"></span>
+<span class="sj-feat-thumb" style="background-image:url(images/featured/detective-buggy.png)"></span>
 </a>
 
 <a class="sj-feat-card" data-disc="ai" href="built-with-ai/" markdown="span">
@@ -73,7 +73,7 @@
 <span class="sj-card-title">Portfolio Site Built with AI</span>
 <span class="sj-card-desc">This very site. Theme, layout and components, designed and built end to end while pairing with AI.</span>
 <span class="sj-tags"><span class="sj-tag">AI-Assisted</span><span class="sj-tag sj-tag--live">Live</span></span>
-<span class="sj-feat-thumb"></span>
+<span class="sj-feat-thumb" style="background-image:url(images/featured/portfolio-site.png)"></span>
 </a>
 
 <div class="sj-feat-card sj-card--soon" data-disc="devops" markdown="span">
@@ -121,7 +121,7 @@
 <div class="sj-hubcard sj-card--soon" data-disc="ai" markdown="span">
 <span class="sj-card-icon">:material-creation-outline:</span>
 <span class="sj-card-title">AI-Assisted</span>
-<span class="sj-card-desc">AI-powered tools &amp; experiments</span>
+<span class="sj-card-desc">Tooling and ops workflow optimisation</span>
 </div>
 
 </div>
@@ -155,7 +155,7 @@
 <div class="sj-hubcard sj-card--soon" data-disc="ai" markdown="span">
 <span class="sj-card-icon">:material-creation-outline:</span>
 <span class="sj-card-title">AI-Assisted</span>
-<span class="sj-card-desc">Research, guides &amp; experiments</span>
+<span class="sj-card-desc">Apps, projects and experiments</span>
 </div>
 
 </div>

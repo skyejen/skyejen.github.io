@@ -1,4 +1,4 @@
-# :material-incognito: Detective Buggy - A Bitter Bite
+# :material-magnify: Detective Buggy - A Bitter Bite
 
 [:material-arrow-left: Back to home](../){ .sj-back }
 

@@ -194,3 +194,25 @@
   else document.addEventListener("DOMContentLoaded", init);
   if (window.document$ && window.document$.subscribe) window.document$.subscribe(init);
 })();
+
+/* highlight the target section with a gold pulse when its hero CTA / toc link is clicked */
+(function () {
+  function bind(){
+    document.querySelectorAll('a[href="#portfolio"], a[href="#learning"]').forEach(function(a){
+      if (a.__sjFlash) return;
+      a.__sjFlash = true;
+      a.addEventListener("click", function(){
+        var el = document.getElementById(a.getAttribute("href").slice(1));
+        var hub = el && el.closest ? el.closest(".sj-hub") : null;
+        if (!hub) return;
+        hub.classList.remove("sj-flash");
+        void hub.offsetWidth;            // force reflow so a repeat click restarts the animation
+        hub.classList.add("sj-flash");
+        setTimeout(function(){ hub.classList.remove("sj-flash"); }, 4200);
+      });
+    });
+  }
+  if (document.readyState !== "loading") bind();
+  else document.addEventListener("DOMContentLoaded", bind);
+  if (window.document$ && window.document$.subscribe) window.document$.subscribe(bind);
+})();
