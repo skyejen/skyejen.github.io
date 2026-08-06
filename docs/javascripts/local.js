@@ -2,16 +2,16 @@
   var snippets = [
     { lang: "python", code:
 "jen = {\n" +
-"    \"was\": \"QA + tech ops\",\n" +
+"    \"was\": [\"QA\", \"tech ops\"],\n" +
 "    \"now\": [\"security\", \"devops\", \"ai\"],\n" +
-"    \"fuel\": \"preworkout, not coffee\",\n" +
+"    \"fuel\": \"preworkout and coffee\",\n" +
 "}" },
     { lang: "python", code:
 "while curious:  # i.e. always\n" +
 "    system = pick_something()\n" +
 "    problem = pull_apart(system)\n" +
-"    write_up(what_i_learned)\n" +
-"    repeat()" },
+"    lesson = figure_out(problem)\n" +
+"    write_up(lesson)" },
     { lang: "bash", code:
 "for topic in security devops ai; do\n" +
 "    learn \"$topic\"\n" +

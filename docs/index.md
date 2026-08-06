@@ -3,7 +3,7 @@
 
 <p class="sj-pillrow"><span class="sj-pillbar">Builder&nbsp;&middot;&nbsp;Learner&nbsp;&middot;&nbsp;Problem&nbsp;solver</span></p>
 
-# Building. Learning. Shipping impact.
+# Building. Learning. Shipping.
 
 <p class="sj-lead-p sj-lead-strong">I break things down to see how they work (or don't), then write down what I figure out.</p>
 
@@ -42,7 +42,7 @@
 <button class="sj-filter" data-filter="cybersecurity">Cybersecurity</button>
 <button class="sj-filter" data-filter="python">Python</button>
 <button class="sj-filter" data-filter="devops">DevOps</button>
-<button class="sj-filter" data-filter="ai">AI / Products</button>
+<button class="sj-filter" data-filter="ai">AI-Assisted</button>
 </div>
 
 </div>
@@ -68,11 +68,11 @@
 <span class="sj-feat-thumb"></span>
 </a>
 
-<a class="sj-feat-card" data-disc="ai" href="https://github.com/skyejen/skyejen.github.io" markdown="span">
+<a class="sj-feat-card" data-disc="ai" href="built-with-ai/" markdown="span">
 <span class="sj-card-icon">:material-creation-outline:</span>
 <span class="sj-card-title">Portfolio Site Built with AI</span>
-<span class="sj-card-desc">This very site - theme, layout and components designed and built end-to-end pairing with an AI.</span>
-<span class="sj-tags"><span class="sj-tag">AI</span><span class="sj-tag sj-tag--live">Live</span></span>
+<span class="sj-card-desc">This very site. Theme, layout and components, designed and built end to end while pairing with AI.</span>
+<span class="sj-tags"><span class="sj-tag">AI-Assisted</span><span class="sj-tag sj-tag--live">Live</span></span>
 <span class="sj-feat-thumb"></span>
 </a>
 
@@ -109,7 +109,7 @@
 <a class="sj-hubcard" data-disc="python" href="detective-buggy/" markdown="span">
 <span class="sj-card-icon">:material-language-python:</span>
 <span class="sj-card-title">Python</span>
-<span class="sj-card-desc">Scripts, apps &amp; automation</span>
+<span class="sj-card-desc">Apps &amp; projects</span>
 </a>
 
 <div class="sj-hubcard sj-card--soon" data-disc="devops" markdown="span">
@@ -120,7 +120,7 @@
 
 <div class="sj-hubcard sj-card--soon" data-disc="ai" markdown="span">
 <span class="sj-card-icon">:material-creation-outline:</span>
-<span class="sj-card-title">AI / Products</span>
+<span class="sj-card-title">AI-Assisted</span>
 <span class="sj-card-desc">AI-powered tools &amp; experiments</span>
 </div>
 
@@ -154,7 +154,7 @@
 
 <div class="sj-hubcard sj-card--soon" data-disc="ai" markdown="span">
 <span class="sj-card-icon">:material-creation-outline:</span>
-<span class="sj-card-title">AI / Tools</span>
+<span class="sj-card-title">AI-Assisted</span>
 <span class="sj-card-desc">Research, guides &amp; experiments</span>
 </div>
 
@@ -170,11 +170,11 @@
 
 ### :material-account-outline: About me
 
-<p class="sj-section-sub">QA background, now building across security, DevOps and AI.</p>
+<p class="sj-section-sub">QA and TechOps background, now moving into security, DevOps and AI.</p>
 
 </div>
 
-[Read more about me](#){ .sj-btn .sj-btn--purple }
+[Read more about me](about/){ .sj-btn .sj-btn--purple }
 
 </div>
 <div class="sj-panel sj-connectbox" markdown>
