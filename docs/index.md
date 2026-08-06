@@ -60,12 +60,20 @@
 <span class="sj-feat-thumb" style="background-image:url(images/featured/wazuh.png)"></span>
 </a>
 
-<a class="sj-feat-card" data-disc="python" href="detective-buggy/" markdown="span">
+<a class="sj-feat-card" data-disc="python" href="https://skyejen.github.io/python/portfolio/detective-buggy/" markdown="span">
 <span class="sj-card-icon">:material-magnify:</span>
 <span class="sj-card-title">Detective Buggy</span>
 <span class="sj-card-desc">A full-stack Flask + Postgres detective game - my CS50 final project.</span>
 <span class="sj-tags"><span class="sj-tag">Python</span><span class="sj-tag sj-tag--live">Live</span></span>
 <span class="sj-feat-thumb" style="background-image:url(images/featured/detective-buggy.png)"></span>
+</a>
+
+<a class="sj-feat-card" data-disc="python" href="https://skyejen.github.io/python/portfolio/meeting-meerkat/" markdown="span">
+<span class="sj-card-icon">:material-bell-ring-outline:</span>
+<span class="sj-card-title">Meeting Meerkat</span>
+<span class="sj-card-desc">A self&#8209;built Python service that replaced a paid meeting&#8209;reminder tool.</span>
+<span class="sj-tags"><span class="sj-tag">Python</span><span class="sj-tag sj-tag--live">Live</span></span>
+<span class="sj-feat-thumb" style="background-image:url(images/featured/meeting-meerkat.png)"></span>
 </a>
 
 <a class="sj-feat-card" data-disc="ai" href="built-with-ai/" markdown="span">
@@ -114,7 +122,7 @@
 <span class="sj-card-desc">Labs, write-ups &amp; projects</span>
 </a>
 
-<a class="sj-hubcard" data-disc="python" href="detective-buggy/" markdown="span">
+<a class="sj-hubcard" data-disc="python" href="https://skyejen.github.io/python/portfolio/" markdown="span">
 <span class="sj-card-icon">:material-language-python:</span>
 <span class="sj-card-title">Python</span>
 <span class="sj-card-desc">Apps &amp; projects</span>
@@ -148,7 +156,7 @@
 <span class="sj-card-desc">Notes, labs &amp; certifications</span>
 </a>
 
-<a class="sj-hubcard" data-disc="python" href="https://skyejen.github.io/100-days-of-python/" markdown="span">
+<a class="sj-hubcard" data-disc="python" href="https://skyejen.github.io/python/learning/" markdown="span">
 <span class="sj-card-icon">:material-language-python:</span>
 <span class="sj-card-title">Python</span>
 <span class="sj-card-desc">Notes, mini-projects &amp; concepts</span>
