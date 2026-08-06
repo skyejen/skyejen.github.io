@@ -76,13 +76,21 @@
 <span class="sj-feat-thumb" style="background-image:url(images/featured/portfolio-site.png)"></span>
 </a>
 
-<div class="sj-feat-card sj-card--soon" data-disc="devops" markdown="span">
-<span class="sj-card-icon">:material-server-network:</span>
-<span class="sj-card-title">DevOps</span>
-<span class="sj-card-desc">Pipelines, infrastructure and tooling write-ups - coming soon.</span>
-<span class="sj-tags"><span class="sj-tag">DevOps</span><span class="sj-tag sj-tag--soon">Soon</span></span>
-<span class="sj-feat-thumb"></span>
-</div>
+<a class="sj-feat-card" data-disc="devops" href="https://skyejen.github.io/devops/portfolio/sentry-rescue/" markdown="span">
+<span class="sj-card-icon">:material-lifebuoy:</span>
+<span class="sj-card-title">Sentry Rescue</span>
+<span class="sj-card-desc">Recovering a self&#8209;hosted Sentry stuck at 101% vCPU and down for weeks.</span>
+<span class="sj-tags"><span class="sj-tag">DevOps</span><span class="sj-tag sj-tag--live">Live</span></span>
+<span class="sj-feat-thumb" style="background-image:url(images/featured/sentry.png)"></span>
+</a>
+
+<a class="sj-feat-card" data-disc="devops cybersecurity" href="https://skyejen.github.io/devops/portfolio/ugs-trigger/" markdown="span">
+<span class="sj-card-icon">:material-file-search-outline:</span>
+<span class="sj-card-title">Silent Build Trigger</span>
+<span class="sj-card-desc">A CI pipeline that failed silently, traced to a hidden authorisation 403.</span>
+<span class="sj-tags"><span class="sj-tag">DevOps</span><span class="sj-tag">Cybersecurity</span><span class="sj-tag sj-tag--live">Live</span></span>
+<span class="sj-feat-thumb" style="background-image:url(images/featured/ugs.png)"></span>
+</a>
 
 </div>
 <button class="sj-carousel-btn sj-carousel-prev" aria-label="Previous">&lsaquo;</button>
@@ -112,11 +120,11 @@
 <span class="sj-card-desc">Apps &amp; projects</span>
 </a>
 
-<div class="sj-hubcard sj-card--soon" data-disc="devops" markdown="span">
+<a class="sj-hubcard" data-disc="devops" href="https://skyejen.github.io/devops/portfolio/" markdown="span">
 <span class="sj-card-icon">:material-server-network:</span>
 <span class="sj-card-title">DevOps</span>
-<span class="sj-card-desc">Pipelines, infra &amp; tooling</span>
-</div>
+<span class="sj-card-desc">Incidents, CI/CD &amp; infra</span>
+</a>
 
 <div class="sj-hubcard sj-card--soon" data-disc="ai" markdown="span">
 <span class="sj-card-icon">:material-creation-outline:</span>
