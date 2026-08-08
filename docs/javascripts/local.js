@@ -60,22 +60,63 @@
       }, 4500);
     }
 
-    // filters
-    var filters = document.querySelectorAll(".sj-filter");
-    var cards = document.querySelectorAll(".sj-feat-card");
-    filters.forEach(function(btn){
+    // filters (multi-select):
+    //   - domain pills (Cybersecurity / Python / DevOps) OR-combine with each other
+    //   - "Built with AI" is a method toggle that AND-combines on top of the domains
+    //   - "All" clears everything; it re-activates itself whenever nothing else is on
+    var filterBtns = Array.prototype.slice.call(document.querySelectorAll(".sj-filter"));
+    var allBtn = document.querySelector('.sj-filter[data-filter="all"]');
+    var methodBtn = document.querySelector(".sj-filter--ai");
+    // Reserve the row's real height (measured from a live card) so it never collapses / jumps when filtered to empty.
+    var carTrack = document.querySelector(".sj-carousel-track");
+    function measureCarousel(){
+      if (!carTrack) return;
+      var card = carTrack.querySelector(".sj-feat-card:not(.sj-clone)");
+      if (card && card.offsetHeight) carTrack.style.minHeight = card.offsetHeight + "px";
+    }
+    function applyFilters(){
+      measureCarousel();
+      var domains = filterBtns.filter(function(b){
+        return b !== allBtn && b !== methodBtn && b.classList.contains("is-active");
+      }).map(function(b){ return b.getAttribute("data-filter"); });
+      var methodOn = !!(methodBtn && methodBtn.classList.contains("is-active"));
+      if (allBtn) allBtn.classList.toggle("is-active", domains.length === 0 && !methodOn);
+      var shown = 0;
+      document.querySelectorAll(".sj-feat-card:not(.sj-clone)").forEach(function(c){
+        var discs = (c.getAttribute("data-disc") || "").split(/\s+/);   // space-separated, supports multiple
+        var domainMatch = domains.length === 0 || domains.some(function(d){ return discs.indexOf(d) !== -1; });
+        var methodMatch = !methodOn || discs.indexOf("built-ai") !== -1;
+        var vis = domainMatch && methodMatch;
+        c.style.display = vis ? "" : "none";
+        if (vis) shown++;
+      });
+      var emptyEl = document.querySelector(".sj-carousel-empty");
+      if (emptyEl) emptyEl.hidden = shown > 0;
+      var car = document.querySelector(".sj-carousel");
+      if (car) car.classList.toggle("sj-carousel--empty", shown === 0);
+      if (window.buildLoop) window.buildLoop();
+      tagClippedFeat();
+    }
+    filterBtns.forEach(function(btn){
+      if (btn.__sjFilterBound) return;   // avoid double-binding on re-init
+      btn.__sjFilterBound = true;
       btn.addEventListener("click", function(){
-        filters.forEach(function(b){ b.classList.remove("is-active"); });
-        btn.classList.add("is-active");
-        var f = btn.getAttribute("data-filter");
-        document.querySelectorAll(".sj-feat-card:not(.sj-clone)").forEach(function(c){
-          var discs = (c.getAttribute("data-disc") || "").split(/\s+/);   // supports multiple, space-separated
-          c.style.display = (f === "all" || discs.indexOf(f) !== -1) ? "" : "none";
-        });
-        if (window.buildLoop) window.buildLoop();
-        tagClippedFeat();
+        if (btn === allBtn){
+          filterBtns.forEach(function(b){ b.classList.remove("is-active"); });
+          allBtn.classList.add("is-active");
+        } else {
+          btn.classList.toggle("is-active");
+          if (allBtn) allBtn.classList.remove("is-active");
+        }
+        applyFilters();
       });
     });
+    measureCarousel();
+    if (!window.__sjMeasureBound){
+      window.__sjMeasureBound = true;
+      window.addEventListener("load", measureCarousel);
+      window.addEventListener("resize", measureCarousel);
+    }
 
     // ===== Featured carousel: infinite loop (prev sliver + focus + next peek) =====
     var track = document.querySelector(".sj-carousel-track");

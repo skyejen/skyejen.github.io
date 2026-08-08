@@ -42,7 +42,8 @@
 <button class="sj-filter" data-filter="cybersecurity">Cybersecurity</button>
 <button class="sj-filter" data-filter="python">Python</button>
 <button class="sj-filter" data-filter="devops">DevOps</button>
-<button class="sj-filter" data-filter="ai">AI-Assisted</button>
+<span class="sj-filter-sep" aria-hidden="true"></span>
+<button class="sj-filter sj-filter--ai" data-filter="built-ai">Built with AI</button>
 </div>
 
 </div>
@@ -68,20 +69,28 @@
 <span class="sj-feat-thumb" style="background-image:url(images/featured/detective-buggy.png)"></span>
 </a>
 
-<a class="sj-feat-card" data-disc="python" href="https://skyejen.github.io/python/portfolio/meeting-meerkat/" markdown="span">
+<a class="sj-feat-card" data-disc="python built-ai" href="https://skyejen.github.io/python/portfolio/meeting-meerkat/" markdown="span">
 <span class="sj-card-icon">:material-bell-ring-outline:</span>
 <span class="sj-card-title">Meeting Meerkat</span>
 <span class="sj-card-desc">A self&#8209;built Python service that replaced a paid meeting&#8209;reminder tool.</span>
-<span class="sj-tags"><span class="sj-tag">Python</span><span class="sj-tag sj-tag--live">Live</span></span>
+<span class="sj-tags"><span class="sj-tag">Python</span><span class="sj-tag sj-tag--ai">Built with AI</span><span class="sj-tag sj-tag--live">Live</span></span>
 <span class="sj-feat-thumb" style="background-image:url(images/featured/meeting-meerkat.png)"></span>
 </a>
 
-<a class="sj-feat-card" data-disc="ai" href="built-with-ai/" markdown="span">
+<a class="sj-feat-card" data-disc="built-ai" href="built-with-ai/" markdown="span">
 <span class="sj-card-icon">:material-creation-outline:</span>
 <span class="sj-card-title">Portfolio Site Built with AI</span>
 <span class="sj-card-desc">This very site. Theme, layout and components, designed and built end to end while pairing with AI.</span>
-<span class="sj-tags"><span class="sj-tag">AI-Assisted</span><span class="sj-tag sj-tag--live">Live</span></span>
+<span class="sj-tags"><span class="sj-tag sj-tag--ai">Built with AI</span><span class="sj-tag sj-tag--live">Live</span></span>
 <span class="sj-feat-thumb" style="background-image:url(images/featured/portfolio-site.png)"></span>
+</a>
+
+<a class="sj-feat-card" data-disc="built-ai" href="https://skyejen.github.io/generalist-tech/portfolio/living-stars/" markdown="span">
+<span class="sj-card-icon">:material-graph-outline:</span>
+<span class="sj-card-title">The Living Stars</span>
+<span class="sj-card-desc">An interactive knowledge&#8209;graph star map, built full&#8209;stack while pairing with AI.</span>
+<span class="sj-tags"><span class="sj-tag sj-tag--ai">Built with AI</span><span class="sj-tag sj-tag--live">Live</span></span>
+<span class="sj-feat-thumb" style="background-image:url(images/featured/living-stars-app.png)"></span>
 </a>
 
 <a class="sj-feat-card" data-disc="devops" href="https://skyejen.github.io/devops/portfolio/sentry-rescue/" markdown="span">
@@ -99,6 +108,16 @@
 <span class="sj-tags"><span class="sj-tag">DevOps</span><span class="sj-tag">Cybersecurity</span><span class="sj-tag sj-tag--live">Live</span></span>
 <span class="sj-feat-thumb" style="background-image:url(images/featured/ugs.png)"></span>
 </a>
+
+<a class="sj-feat-card" data-disc="devops" href="https://skyejen.github.io/devops/portfolio/living-stars/" markdown="span">
+<span class="sj-card-icon">:material-server-network:</span>
+<span class="sj-card-title">The Living Stars (Infra)</span>
+<span class="sj-card-desc">Hosting, CI/CD, and automated backups for a live app I built as a side project.</span>
+<span class="sj-tags"><span class="sj-tag">DevOps</span><span class="sj-tag sj-tag--live">Live</span></span>
+<span class="sj-feat-thumb" style="background-image:url(images/featured/living-stars-infra.png)"></span>
+</a>
+
+<div class="sj-carousel-empty" hidden>No featured items match those filters yet. Try removing a filter.</div>
 
 </div>
 <button class="sj-carousel-btn sj-carousel-prev" aria-label="Previous">&lsaquo;</button>
@@ -134,11 +153,11 @@
 <span class="sj-card-desc">Incidents, CI/CD &amp; infra</span>
 </a>
 
-<div class="sj-hubcard sj-card--soon" data-disc="ai" markdown="span">
-<span class="sj-card-icon">:material-creation-outline:</span>
-<span class="sj-card-title">AI-Assisted</span>
-<span class="sj-card-desc">Tooling and ops workflow optimisation</span>
-</div>
+<a class="sj-hubcard" data-disc="generalist" href="https://skyejen.github.io/generalist-tech/portfolio/" markdown="span">
+<span class="sj-card-icon">:material-toy-brick-outline:</span>
+<span class="sj-card-title">Generalist Tech</span>
+<span class="sj-card-desc">Full-stack apps, tools &amp; experiments</span>
+</a>
 
 </div>
 </div>
@@ -168,10 +187,10 @@
 <span class="sj-card-desc">Notes, guides &amp; playbooks</span>
 </div>
 
-<div class="sj-hubcard sj-card--soon" data-disc="ai" markdown="span">
-<span class="sj-card-icon">:material-creation-outline:</span>
-<span class="sj-card-title">AI-Assisted</span>
-<span class="sj-card-desc">Apps, projects and experiments</span>
+<div class="sj-hubcard sj-card--soon" data-disc="generalist" markdown="span">
+<span class="sj-card-icon">:material-toy-brick-outline:</span>
+<span class="sj-card-title">Generalist Tech</span>
+<span class="sj-card-desc">Notes &amp; experiments</span>
 </div>
 
 </div>

@@ -91,10 +91,20 @@ body:has(.sj-hero) .md-content h2::after, body:has(.sj-hero) .md-content h3::aft
 .sj-filter { font-size: 0.68rem; padding: 0.32rem 0.85rem; border-radius: 999px; border: 1px solid var(--sj-tile-border); background: var(--sj-tile); color: var(--sj-text-dim); cursor: pointer; transition: all .15s ease; }
 .sj-filter:hover { border-color: var(--sj-blue); color: var(--sj-heading); }
 .sj-filter.is-active { border-color: var(--sj-blue); color: var(--sj-blue); background: rgba(30,136,255,0.08); }
+/* method filter (not a discipline): purple text so it reads differently from the domain pills.
+   Border only appears on hover / active, same as the other pills. */
+.sj-filter--ai { color: #a893d6; }
+/* vertical divider: marks "Built with AI" as a different kind of toggle (a method, not a domain) */
+.sj-filter-sep { align-self: center; width: 1px; height: 1.1rem; background: var(--sj-border); margin: 0 0.2rem; }
+.sj-filter--ai:hover { border-color: #9a6bff; color: #cdb6ff; }
+.sj-filter--ai.is-active { border-color: #9a6bff; color: #c3a6ff; background: rgba(150,110,255,0.12); }
 
 .sj-carousel { display: flex; align-items: stretch; gap: 0.4rem; }
 .sj-carousel > p { display: contents; }
-.sj-carousel-track { flex: 1; min-width: 0; display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: none; scroll-padding-left: 6.5rem; scrollbar-width: none; }
+.sj-carousel-track { flex: 1; min-width: 0; display: flex; align-items: center; gap: 1rem; min-height: 8rem; overflow-x: auto; scroll-snap-type: none; scroll-padding-left: 6.5rem; scrollbar-width: none; }
+/* keep the row height stable and show a message when filters match nothing */
+.sj-carousel-empty { flex: 1; text-align: center; align-self: center; color: var(--sj-text-dim); font-size: 0.8rem; padding: 1rem 0; }
+.sj-carousel--empty .sj-carousel-btn { visibility: hidden; }
 .sj-carousel-track > p { display: contents; }
 .sj-carousel-track::-webkit-scrollbar { display: none; }
 .sj-carousel-track.fade-r  { -webkit-mask-image: linear-gradient(to right, #000 82%, transparent); mask-image: linear-gradient(to right, #000 82%, transparent); }
@@ -123,6 +133,7 @@ body:has(.sj-hero) .md-content h2::after, body:has(.sj-hero) .md-content h3::aft
 .sj-tag { font-family: "JetBrains Mono", monospace; font-size: 0.56rem; letter-spacing: 0.02em; color: var(--sj-blue); background: rgba(30,136,255,0.08); border: 1px solid rgba(30,136,255,0.28); border-radius: 999px; padding: 0.16rem 0.55rem; }
 .sj-tag--live { color: var(--sj-green); background: rgba(86,217,163,0.08); border-color: rgba(86,217,163,0.3); }
 .sj-tag--soon { color: var(--sj-gold); background: rgba(242,193,78,0.08); border-color: rgba(242,193,78,0.3); }
+.sj-tag--ai { color: #b98cff; background: rgba(150,110,255,0.09); border-color: rgba(150,110,255,0.32); }
 
 /* ===== Hubs ===== */
 .sj-hubs { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; margin-top: 0; position: relative; }
