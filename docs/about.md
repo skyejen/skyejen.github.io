@@ -12,7 +12,7 @@ Now I'm growing into security, DevOps, and AI, and I mean growing *into* it: han
 
 ## :material-account-heart-outline: How I work
 
-I learn by reading the theory and then building and breaking things hands-on. I always try to understand what already exists before I dive in, so I don't end up reinventing the wheel. I write things up, half to cement them for myself and half so the next person has the map I never got. And I'm always honest about what I actually know versus what I'm still working out, and about where AI helped and where the thinking was mine.
+I learn by reading the theory and then building and breaking things hands-on. I always try to understand what already exists before I dive in, so I don't end up reinventing the wheel. I write things up, half to cement them for myself and half so the next person has the map I never got. I'm also genuinely obsessed with AI, both how it works and how it can empower one person to learn faster and reach further, and I lean on it constantly to open doors into disciplines that would otherwise be out of reach for me right now. And I'm always honest about what I actually know versus what I'm still working out, and about where AI helped and where the thinking was mine.
 
 ## :material-coffee-outline: Beyond the terminal
 
