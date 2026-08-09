@@ -111,9 +111,9 @@
 <span class="sj-feat-thumb" style="background-image:url(images/featured/detective-buggy.png)"></span>
 </a>
 
-<a class="sj-feat-card" data-disc="built-ai" href="built-with-ai/" markdown="span">
+<a class="sj-feat-card" data-disc="built-ai" href="https://skyejen.github.io/generalist-tech/portfolio/portfolio-site/" markdown="span">
 <span class="sj-card-icon">:material-creation-outline:</span>
-<span class="sj-card-title">Portfolio Site Built with AI</span>
+<span class="sj-card-title">Portfolio Site</span>
 <span class="sj-card-desc">This very site. Theme, layout and components, designed and built end to end while pairing with AI.</span>
 <span class="sj-tags"><span class="sj-tag sj-tag--ai">Built with AI</span><span class="sj-tag sj-tag--live">Live</span></span>
 <span class="sj-feat-thumb" style="background-image:url(images/featured/portfolio-site.png)"></span>
@@ -209,7 +209,7 @@
 
 ### :material-account-outline: About me
 
-<p class="sj-section-sub">QA and TechOps background, now moving into security, DevOps and AI.</p>
+<p class="sj-section-sub">QA and TechOps background, now moving into cybersecurity, DevOps and AI.</p>
 
 </div>
 

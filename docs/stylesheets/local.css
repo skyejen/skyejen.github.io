@@ -17,7 +17,7 @@
   body:has(.sj-hero) .md-grid { max-width: none; }
   body:has(.sj-hero) .md-content { max-width: none; }
   body:has(.sj-hero) .md-content__inner { max-width: none !important; margin: 0 !important; padding: 0.2rem 80px 2rem 92px !important; }
-  .sj-hero-main .sj-lead-p { white-space: nowrap; }
+  /* lead wraps naturally; forcing nowrap overflowed on windowed wide screens */
 }
 body:has(.sj-hero) .md-content h2 { font-size: 1.1rem; margin-top: 2.4rem; }
 .sj-sechead { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin: 0.9rem 0 0.12rem; }
@@ -67,7 +67,7 @@ body:has(.sj-hero) .md-content h2::after, body:has(.sj-hero) .md-content h3::aft
 .sj-btn--gold:hover { background: rgba(242,193,78,0.12); border-color: var(--sj-gold); }
 
 /* terminal - single outline */
-.sj-codepanel { position: relative; box-sizing: border-box; height: 251px; display: flex; flex-direction: column; background: var(--sj-bg-deep); border: 1px solid var(--sj-border); border-radius: 12px; padding: 0.8rem 1.35rem; box-shadow: none; }
+.sj-codepanel { position: relative; box-sizing: border-box; min-height: 251px; display: flex; flex-direction: column; background: var(--sj-bg-deep); border: 1px solid var(--sj-border); border-radius: 12px; padding: 0.8rem 1.35rem; box-shadow: none; }
 .sj-prompt { display: block; font-family: "JetBrains Mono", monospace; font-size: 0.85rem; color: var(--sj-blue); opacity: 0.7; margin: 0 0 0.5rem; }
 .sj-codepanel-head { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.85rem; border-bottom: 1px solid var(--sj-border); background: rgba(255,255,255,0.02); }
 .sj-dots { display: inline-flex; gap: 0.4rem; }
