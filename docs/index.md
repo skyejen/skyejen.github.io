@@ -33,6 +33,8 @@
 
 <div class="sj-divider"></div>
 
+<div class="sj-featwrap" markdown>
+
 <div class="sj-sechead" markdown>
 
 ## :material-star-outline: Featured
@@ -61,38 +63,6 @@
 <span class="sj-feat-thumb" style="background-image:url(images/featured/wazuh.png)"></span>
 </a>
 
-<a class="sj-feat-card" data-disc="python" href="https://skyejen.github.io/python/portfolio/detective-buggy/" markdown="span">
-<span class="sj-card-icon">:material-magnify:</span>
-<span class="sj-card-title">Detective Buggy</span>
-<span class="sj-card-desc">A full-stack Flask + Postgres detective game - my CS50 final project.</span>
-<span class="sj-tags"><span class="sj-tag">Python</span><span class="sj-tag sj-tag--live">Live</span></span>
-<span class="sj-feat-thumb" style="background-image:url(images/featured/detective-buggy.png)"></span>
-</a>
-
-<a class="sj-feat-card" data-disc="python built-ai" href="https://skyejen.github.io/python/portfolio/meeting-meerkat/" markdown="span">
-<span class="sj-card-icon">:material-bell-ring-outline:</span>
-<span class="sj-card-title">Meeting Meerkat</span>
-<span class="sj-card-desc">A self&#8209;built Python service that replaced a paid meeting&#8209;reminder tool.</span>
-<span class="sj-tags"><span class="sj-tag">Python</span><span class="sj-tag sj-tag--ai">Built with AI</span><span class="sj-tag sj-tag--live">Live</span></span>
-<span class="sj-feat-thumb" style="background-image:url(images/featured/meeting-meerkat.png)"></span>
-</a>
-
-<a class="sj-feat-card" data-disc="built-ai" href="built-with-ai/" markdown="span">
-<span class="sj-card-icon">:material-creation-outline:</span>
-<span class="sj-card-title">Portfolio Site Built with AI</span>
-<span class="sj-card-desc">This very site. Theme, layout and components, designed and built end to end while pairing with AI.</span>
-<span class="sj-tags"><span class="sj-tag sj-tag--ai">Built with AI</span><span class="sj-tag sj-tag--live">Live</span></span>
-<span class="sj-feat-thumb" style="background-image:url(images/featured/portfolio-site.png)"></span>
-</a>
-
-<a class="sj-feat-card" data-disc="built-ai" href="https://skyejen.github.io/generalist-tech/portfolio/living-stars/" markdown="span">
-<span class="sj-card-icon">:material-graph-outline:</span>
-<span class="sj-card-title">The Living Stars</span>
-<span class="sj-card-desc">An interactive knowledge&#8209;graph star map, built full&#8209;stack while pairing with AI.</span>
-<span class="sj-tags"><span class="sj-tag sj-tag--ai">Built with AI</span><span class="sj-tag sj-tag--live">Live</span></span>
-<span class="sj-feat-thumb" style="background-image:url(images/featured/living-stars-app.png)"></span>
-</a>
-
 <a class="sj-feat-card" data-disc="devops" href="https://skyejen.github.io/devops/portfolio/sentry-rescue/" markdown="span">
 <span class="sj-card-icon">:material-lifebuoy:</span>
 <span class="sj-card-title">Sentry Rescue</span>
@@ -109,6 +79,14 @@
 <span class="sj-feat-thumb" style="background-image:url(images/featured/ugs.png)"></span>
 </a>
 
+<a class="sj-feat-card" data-disc="built-ai" href="https://skyejen.github.io/generalist-tech/portfolio/living-stars/" markdown="span">
+<span class="sj-card-icon">:material-graph-outline:</span>
+<span class="sj-card-title">The Living Stars (App)</span>
+<span class="sj-card-desc">An interactive knowledge&#8209;graph star map, built full&#8209;stack while pairing with AI.</span>
+<span class="sj-tags"><span class="sj-tag sj-tag--ai">Built with AI</span><span class="sj-tag sj-tag--live">Live</span></span>
+<span class="sj-feat-thumb" style="background-image:url(images/featured/living-stars-app.png)"></span>
+</a>
+
 <a class="sj-feat-card" data-disc="devops" href="https://skyejen.github.io/devops/portfolio/living-stars/" markdown="span">
 <span class="sj-card-icon">:material-server-network:</span>
 <span class="sj-card-title">The Living Stars (Infra)</span>
@@ -117,11 +95,37 @@
 <span class="sj-feat-thumb" style="background-image:url(images/featured/living-stars-infra.png)"></span>
 </a>
 
+<a class="sj-feat-card" data-disc="python built-ai" href="https://skyejen.github.io/python/portfolio/meeting-meerkat/" markdown="span">
+<span class="sj-card-icon">:material-bell-ring-outline:</span>
+<span class="sj-card-title">Meeting Meerkat</span>
+<span class="sj-card-desc">A Python service that replaced a paid meeting&#8209;reminder tool.</span>
+<span class="sj-tags"><span class="sj-tag">Python</span><span class="sj-tag sj-tag--ai">Built with AI</span><span class="sj-tag sj-tag--live">Live</span></span>
+<span class="sj-feat-thumb" style="background-image:url(images/featured/meeting-meerkat.png)"></span>
+</a>
+
+<a class="sj-feat-card" data-disc="python" href="https://skyejen.github.io/python/portfolio/detective-buggy/" markdown="span">
+<span class="sj-card-icon">:material-magnify:</span>
+<span class="sj-card-title">Detective Buggy</span>
+<span class="sj-card-desc">A full-stack Flask + Postgres detective game - my CS50 final project.</span>
+<span class="sj-tags"><span class="sj-tag">Python</span><span class="sj-tag sj-tag--live">Live</span></span>
+<span class="sj-feat-thumb" style="background-image:url(images/featured/detective-buggy.png)"></span>
+</a>
+
+<a class="sj-feat-card" data-disc="built-ai" href="built-with-ai/" markdown="span">
+<span class="sj-card-icon">:material-creation-outline:</span>
+<span class="sj-card-title">Portfolio Site Built with AI</span>
+<span class="sj-card-desc">This very site. Theme, layout and components, designed and built end to end while pairing with AI.</span>
+<span class="sj-tags"><span class="sj-tag sj-tag--ai">Built with AI</span><span class="sj-tag sj-tag--live">Live</span></span>
+<span class="sj-feat-thumb" style="background-image:url(images/featured/portfolio-site.png)"></span>
+</a>
+
 <div class="sj-carousel-empty" hidden>No featured items match those filters yet. Try removing a filter.</div>
 
 </div>
 <button class="sj-carousel-btn sj-carousel-prev" aria-label="Previous">&lsaquo;</button>
 <button class="sj-carousel-btn sj-carousel-next" aria-label="Next">&rsaquo;</button>
+</div>
+
 </div>
 
 <div class="sj-divider sj-divider--sec"></div>

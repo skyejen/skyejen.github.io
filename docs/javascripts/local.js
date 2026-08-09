@@ -238,18 +238,24 @@
 
 /* highlight the target section with a gold pulse when its hero CTA / toc link is clicked */
 (function () {
+  function boxFor(href){
+    if (href === "#featured") return document.querySelector(".sj-featwrap");   // glow the whole featured section (header + tiles)
+    var el = document.getElementById(href.slice(1));
+    if (!el || !el.closest) return null;
+    if (href === "#about-me" || href === "#lets-connect") return el.closest(".sj-panel");
+    return el.closest(".sj-hub");     // #portfolio, #learning
+  }
   function bind(){
-    document.querySelectorAll('a[href="#portfolio"], a[href="#learning"]').forEach(function(a){
+    document.querySelectorAll('a[href="#portfolio"], a[href="#learning"], a[href="#featured"], a[href="#about-me"], a[href="#lets-connect"]').forEach(function(a){
       if (a.__sjFlash) return;
       a.__sjFlash = true;
       a.addEventListener("click", function(){
-        var el = document.getElementById(a.getAttribute("href").slice(1));
-        var hub = el && el.closest ? el.closest(".sj-hub") : null;
-        if (!hub) return;
-        hub.classList.remove("sj-flash");
-        void hub.offsetWidth;            // force reflow so a repeat click restarts the animation
-        hub.classList.add("sj-flash");
-        setTimeout(function(){ hub.classList.remove("sj-flash"); }, 4200);
+        var box = boxFor(a.getAttribute("href"));
+        if (!box) return;
+        box.classList.remove("sj-flash");
+        void box.offsetWidth;            // force reflow so a repeat click restarts the animation
+        box.classList.add("sj-flash");
+        setTimeout(function(){ box.classList.remove("sj-flash"); }, 4200);
       });
     });
   }
