@@ -255,7 +255,7 @@ body:has(.sj-hero) .sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.12rem; padd
 
   /* Featured carousel: keep the JS slide (no scroll-snap override), modest centred peek,
      no dark mask, uniform heights, shadow, full descriptions, a touch more inner padding */
-  .sj-carousel-track { -webkit-mask-image: none !important; mask-image: none !important; scroll-padding-left: 2rem; align-items: stretch; }
+  .sj-carousel-track { -webkit-mask-image: none !important; mask-image: none !important; scroll-padding-left: 1.5rem; align-items: stretch; }
   .sj-carousel-track .sj-feat-card { flex: 0 0 80%; }
   .sj-carousel-btn { opacity: 0.8; }
   .sj-feat-card {
