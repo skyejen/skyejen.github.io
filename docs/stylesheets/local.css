@@ -211,3 +211,83 @@ body:has(.sj-hero) .sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.12rem; padd
 .sj-divider { height: 1px; border: 0; margin: 0; background: linear-gradient(90deg, transparent 14%, rgba(255,255,255,0.15) 34%, rgba(255,255,255,0.15) 66%, transparent 86%); }
 
 .sj-divider--sec { margin: 2rem 0; }
+
+/* ============================================================
+   Phone-only refinements (max-width 30em / ~480px).
+   Desktop and tablet layouts are intentionally untouched.
+   Added in the mobile pass.
+   ============================================================ */
+@media screen and (max-width: 30em) {
+  /* Restore the site logo (a mobile rule was hiding it on the landing) */
+  body:has(.sj-hero) .md-header__button.md-logo { display: inline-flex !important; }
+
+  /* Kill horizontal overflow: let the hero and terminal shrink to the viewport */
+  .sj-hero { min-width: 0; }
+  .sj-hero-main { min-width: 0; }
+  .sj-codepanel { min-width: 0; max-width: 100%; overflow: hidden; height: 12rem; min-height: 0; padding: 0.7rem 1rem; }
+  .sj-codepanel-body { min-width: 0; }
+  /* Wrap the terminal text and hold a fixed height so no snippet resizes or pushes the layout.
+     Accepted trade: a short snippet leaves some empty space under the code (the v3 behaviour). */
+  .sj-codepanel-body code { white-space: pre-wrap; word-break: break-word; font-size: 0.68rem; line-height: 1.6; }
+
+  /* Hero CTAs: side by side, smaller */
+  .sj-hero-cta { flex-wrap: nowrap; gap: 0.5rem; }
+  .sj-hero-cta .sj-btn { flex: 1 1 0; min-width: 0; justify-content: center; font-size: 0.72rem; padding: 0.5rem 0.4rem; white-space: nowrap; }
+
+  /* Touch has no hover: keep buttons / filters / carousel arrows resting after a tap */
+  .sj-btn--primary:hover { background: var(--sj-blue-deep); border-color: var(--sj-blue-deep); color: #fff !important; }
+  .sj-hero-cta .sj-btn:not(.sj-btn--primary):hover { background: transparent; }
+  .sj-btn--purple:hover { background: transparent; }
+  .sj-btn--gold:hover { background: transparent; }
+  .sj-filter:hover { border-color: var(--sj-tile-border); color: var(--sj-text-dim); }
+  .sj-carousel-btn:hover, .sj-carousel-btn:focus { color: var(--sj-text-dim); opacity: 0.8; }
+
+  /* Featured: heading, description, filter chips, then the carousel */
+  .sj-featwrap { display: flex; flex-direction: column; }
+  .sj-sechead { display: contents; }
+  .sj-featwrap .sj-sechead h2 { order: 0; }
+  .sj-featwrap > .sj-section-sub { order: 1; margin-bottom: 0.6rem; }
+  .sj-featwrap .sj-filters { order: 2; justify-content: flex-start; margin: 0 0 0.8rem; transform: none; }
+  .sj-featwrap .sj-carousel { order: 3; }
+
+  /* Featured carousel: keep the JS slide (no scroll-snap override), modest centred peek,
+     no dark mask, uniform heights, shadow, full descriptions, a touch more inner padding */
+  .sj-carousel-track { -webkit-mask-image: none !important; mask-image: none !important; scroll-padding-left: 2rem; align-items: stretch; }
+  .sj-carousel-track .sj-feat-card { flex: 0 0 80%; }
+  .sj-carousel-btn { opacity: 0.8; }
+  .sj-feat-card {
+    grid-template-columns: 1.5rem 1fr;
+    grid-template-areas: "thumb thumb" "icon title" "desc desc" "tags tags";
+    gap: 0.12rem 0.6rem;
+    padding: 0.7rem 0.9rem;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.5);
+  }
+  .sj-feat-card > .sj-feat-thumb { grid-area: thumb; width: 100%; height: 6rem; aspect-ratio: auto; margin-bottom: 0.5rem; }
+  .sj-feat-card > .sj-card-title, .sj-hubcard > .sj-card-title { line-height: 1.15; }
+  .sj-feat-card > .sj-card-desc { -webkit-line-clamp: unset; display: block; overflow: visible; min-height: 0; }
+  .sj-feat-card .sj-tags { flex-wrap: wrap; row-gap: 0.25rem; }
+  .sj-feat-card .sj-tag { white-space: nowrap; }
+
+  /* Portfolio & Learning hub tiles: single column + full description */
+  .sj-hubgrid { grid-template-columns: 1fr; }
+  .sj-hubcard { height: auto; }
+  .sj-hubcard > .sj-card-desc { -webkit-line-clamp: unset; display: block; overflow: visible; }
+
+  /* About / Contact panels: stack text above a full-width button */
+  .sj-panel { flex-direction: column; align-items: stretch; gap: 0.6rem; }
+  .sj-panel .sj-btn { min-width: 0; width: 100%; align-self: stretch; }
+
+  /* Touch: don't let tap-triggered tile borders stick */
+  .sj-hubcard:hover, .sj-feat-card:hover { border-color: var(--sj-tile-border); }
+  .sj-hubcard.sj-card--soon:hover, .sj-feat-card.sj-card--soon:hover { border-color: var(--sj-tile-border); border-style: dashed; }
+
+  /* Section glow: tighter so the left/right edges aren't cut off-screen */
+  .sj-flash::after { inset: -0.4rem; }
+
+  /* Footer: copyright on two centred lines, snug to the bottom */
+  .md-footer-meta__inner { flex-direction: column; text-align: center; }
+  .md-footer-meta { padding-top: 0.4rem; padding-bottom: 0.8rem; }
+  .md-footer-copyright { width: 100%; text-align: center; }
+  .sj-copy-sep { display: none; }
+  .sj-copy-tag { display: block; }
+}
