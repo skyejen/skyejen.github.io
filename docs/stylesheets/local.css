@@ -250,7 +250,7 @@ body:has(.sj-hero) .sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.12rem; padd
   .sj-sechead { display: contents; }
   .sj-featwrap .sj-sechead h2 { order: 0; }
   .sj-featwrap > .sj-section-sub { order: 1; margin-bottom: 0.6rem; }
-  .sj-featwrap .sj-filters { order: 2; justify-content: flex-start; margin: 0 0 0.8rem; transform: none; }
+  .sj-featwrap .sj-filters { order: 2; justify-content: flex-start; margin: 0 0 1.4rem; transform: none; }
   .sj-featwrap .sj-carousel { order: 3; }
 
   /* Featured carousel: keep the JS slide (no scroll-snap override), modest centred peek,
