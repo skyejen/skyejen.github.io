@@ -221,6 +221,9 @@ body:has(.sj-hero) .sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.12rem; padd
   /* Restore the site logo (a mobile rule was hiding it on the landing) */
   body:has(.sj-hero) .md-header__button.md-logo { display: inline-flex !important; }
 
+  /* GitHub (repo) icon is pinned to the dim --sj-text; match it to the other header icons */
+  .md-source { color: var(--sj-heading); }
+
   /* Kill horizontal overflow: let the hero and terminal shrink to the viewport */
   .sj-hero { min-width: 0; }
   .sj-hero-main { min-width: 0; }
