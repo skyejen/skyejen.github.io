@@ -224,7 +224,9 @@ body:has(.sj-hero) .sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.12rem; padd
   /* GitHub (repo) icon is pinned to the dim --sj-text; match it to the other header icons */
   .md-source { color: var(--sj-heading); }
 
-  /* Kill horizontal overflow: let the hero and terminal shrink to the viewport */
+  /* Kill horizontal overflow: let the hero and terminal shrink to the viewport,
+     and clip any stray sideways overflow so the page can't scroll left/right on iOS Safari */
+  .md-content { overflow-x: clip; }
   .sj-hero { min-width: 0; }
   .sj-hero-main { min-width: 0; }
   .sj-codepanel { min-width: 0; max-width: 100%; overflow: hidden; height: 12rem; min-height: 0; padding: 0.7rem 1rem; }
@@ -244,6 +246,10 @@ body:has(.sj-hero) .sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.12rem; padd
   .sj-btn--gold:hover { background: transparent; }
   .sj-filter:hover { border-color: var(--sj-tile-border); color: var(--sj-text-dim); }
   .sj-carousel-btn:hover, .sj-carousel-btn:focus { color: var(--sj-text-dim); opacity: 0.8; }
+  /* header icons (night toggle, GitHub, LinkedIn) shouldn't stick highlighted after a tap */
+  .sj-night-toggle:hover, .sj-night-toggle:focus,
+  .md-source:hover, .md-source:focus,
+  .sj-linkedin:hover, .sj-linkedin:focus { color: var(--sj-heading); }
 
   /* Featured: heading, description, filter chips, then the carousel */
   .sj-featwrap { display: flex; flex-direction: column; }
