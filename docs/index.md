@@ -55,14 +55,6 @@
 <div class="sj-carousel" markdown>
 <div class="sj-carousel-track" markdown>
 
-<a class="sj-feat-card" data-disc="cybersecurity" href="https://skyejen.github.io/cybersecurity/portfolio/ai-security/red-teaming-llm-agent/" markdown="span">
-<span class="sj-card-icon">:material-shield-search:</span>
-<span class="sj-card-title">Red-Teaming an LLM Agent</span>
-<span class="sj-card-desc">An adversarial red&#8209;team pass on an LLM agent and its generative pipeline, mapped to the OWASP LLM Top 10.</span>
-<span class="sj-tags"><span class="sj-tag">Cybersecurity</span><span class="sj-tag sj-tag--live">AI red-team</span></span>
-<span class="sj-feat-thumb" style="background-image:url(images/featured/ai-red-team.png)"></span>
-</a>
-
 <a class="sj-feat-card" data-disc="cybersecurity" href="https://skyejen.github.io/cybersecurity/portfolio/home-labs/wazuh/" markdown="span">
 <span class="sj-card-icon">:material-radar:</span>
 <span class="sj-card-title">Wazuh SIEM Home Lab</span>
