@@ -101,6 +101,10 @@
       if (btn.__sjFilterBound) return;   // avoid double-binding on re-init
       btn.__sjFilterBound = true;
       btn.addEventListener("click", function(){
+        // touch devices can synthesise a duplicate click after touchend; ignore the echo
+        var now = Date.now();
+        if (btn.__sjLastTap && now - btn.__sjLastTap < 400) return;
+        btn.__sjLastTap = now;
         if (btn === allBtn){
           filterBtns.forEach(function(b){ b.classList.remove("is-active"); });
           allBtn.classList.add("is-active");
@@ -122,7 +126,8 @@
     var track = document.querySelector(".sj-carousel-track");
     var prev = document.querySelector(".sj-carousel-prev");
     var next = document.querySelector(".sj-carousel-next");
-    var loopOn = false, loopUnit = 0, loopStart = 0;
+    var loopOn = false, loopUnit = 0;
+    var LOOP = window.__sjLoop || (window.__sjLoop = { start: 0 });   // shared across bind() re-inits so the arrows read the CURRENT loop geometry
     function peekPx(){ return parseFloat(getComputedStyle(track).scrollPaddingLeft) || 38; }
     function gapPx(){ var g = getComputedStyle(track); return parseFloat(g.columnGap || g.gap) || 16; }
     function realCards(){
@@ -138,7 +143,7 @@
     window.updateFade = function(){
       if (!track) return;
       track.classList.remove("fade-l", "fade-r", "fade-lr");
-      if (loopOn){ track.classList.add("fade-lr"); return; }          // loop: always feather both edges
+      if (track.querySelector(".sj-clone")){ track.classList.add("fade-lr"); return; }   // clones present = looping; feather both edges
       var sl = track.scrollLeft, max = track.scrollWidth - track.clientWidth;
       if (max <= 2) return;
       if (sl <= 2) track.classList.add("fade-r");
@@ -146,18 +151,23 @@
       else track.classList.add("fade-lr");
     };
     function normalize(){
-      if (!loopOn) return;
+      // Read the live DOM, not the closure's loopOn: document$ re-runs bind() so the arrow handlers
+      // keep the FIRST closure's loopOn (stale = true), while filtering rebuilds the loop via the latest
+      // closure. No clones present = no active loop = nothing to normalize (prevents the snap-back on filtered arrows).
+      if (!track.querySelector(".sj-clone")) return;
       var N = realCards().length; if (N < 2) return;
       var st = stepPx(), pk = peekPx();
-      var k = Math.round((track.scrollLeft - (loopStart - pk)) / st);  // nearest tile index (may be <0 or >=N)
+      var k = Math.round((track.scrollLeft - (LOOP.start - pk)) / st);  // nearest tile index (may be <0 or >=N)
       var kmod = ((k % N) + N) % N;                                     // wrap into the real set
-      track.scrollLeft = Math.round(loopStart + kmod * st - pk);        // exact real-tile gutter (drift-free)
+      track.scrollLeft = Math.round(LOOP.start + kmod * st - pk);       // exact real-tile gutter (drift-free)
     }
     window.buildLoop = function(){
       if (!track) return;
       track.querySelectorAll(".sj-clone").forEach(function(n){ n.remove(); });
       track.style.paddingRight = "";
       var rs = realCards();
+      // Loop whenever there are at least 3 visible cards, filtered views included. The arrows read the
+      // shared loop geometry (LOOP.start), so they can't snap back using a stale closure value.
       loopOn = rs.length >= 3;
       if (!loopOn){ track.scrollLeft = 0; updateFade(); return; }
       var mk = function(c){ var cl = c.cloneNode(true); cl.classList.add("sj-clone"); cl.setAttribute("aria-hidden", "true"); return cl; };
@@ -165,9 +175,9 @@
       var pf = document.createDocumentFragment(); rs.forEach(function(c){ pf.appendChild(mk(c)); }); track.insertBefore(pf, track.firstChild); // clone-set BEFORE
       var tl = track.getBoundingClientRect().left, sl = track.scrollLeft;
       var first = rs[0], last = rs[rs.length - 1];
-      loopStart = Math.round(first.getBoundingClientRect().left - tl + sl);
-      loopUnit = Math.round((last.getBoundingClientRect().right - tl + sl) + gapPx() - loopStart);  // one set-width
-      track.scrollLeft = loopStart - peekPx();          // first real tile focused at the gutter
+      LOOP.start = Math.round(first.getBoundingClientRect().left - tl + sl);
+      loopUnit = Math.round((last.getBoundingClientRect().right - tl + sl) + gapPx() - LOOP.start);  // one set-width
+      track.scrollLeft = LOOP.start - peekPx();          // first real tile focused at the gutter
       updateFade();
     };
     if (track && prev && next){

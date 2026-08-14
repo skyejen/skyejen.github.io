@@ -244,7 +244,7 @@ body:has(.sj-hero) .sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.12rem; padd
   .sj-hero-cta .sj-btn:not(.sj-btn--primary):hover { background: transparent; }
   .sj-btn--purple:hover { background: transparent; }
   .sj-btn--gold:hover { background: transparent; }
-  .sj-filter:hover { border-color: var(--sj-tile-border); color: var(--sj-text-dim); }
+  .sj-filter:not(.is-active):hover { border-color: var(--sj-tile-border); color: var(--sj-text-dim); }
   .sj-carousel-btn:hover, .sj-carousel-btn:focus { color: var(--sj-text-dim); opacity: 0.8; }
   /* header icons (night toggle, GitHub, LinkedIn) shouldn't stick highlighted after a tap */
   .sj-night-toggle:hover, .sj-night-toggle:focus,
