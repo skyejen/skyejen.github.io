@@ -161,6 +161,27 @@
       var kmod = ((k % N) + N) % N;                                     // wrap into the real set
       track.scrollLeft = Math.round(LOOP.start + kmod * st - pk);       // exact real-tile gutter (drift-free)
     }
+    window.updateArrows = function(){
+      // Non-looping (1-2 cards): disable the arrow that points at nothing (edge-aware, updates on scroll).
+      // Looping (3+ cards, clones present): infinite, so both stay active. Read live DOM, not a stale flag.
+      if (!track) return;
+      var looping = !!track.querySelector(".sj-clone");
+      var pd = false, nd = false;
+      if (!looping){
+        var rs = realCards();
+        if (rs.length < 1){ pd = nd = true; }
+        else {
+          var tr = track.getBoundingClientRect();
+          var firstR = rs[0].getBoundingClientRect();
+          var lastR = rs[rs.length - 1].getBoundingClientRect();
+          var sl = track.scrollLeft, max = track.scrollWidth - track.clientWidth;
+          pd = sl <= 1 || firstR.left >= tr.left - 1;         // at scroll start, or first card fully in view
+          nd = sl >= max - 1 || lastR.right <= tr.right + 1;  // at scroll end, or last card fully in view
+        }
+      }
+      if (prev) prev.disabled = pd;
+      if (next) next.disabled = nd;
+    };
     window.buildLoop = function(){
       if (!track) return;
       track.querySelectorAll(".sj-clone").forEach(function(n){ n.remove(); });
@@ -169,7 +190,7 @@
       // Loop whenever there are at least 3 visible cards, filtered views included. The arrows read the
       // shared loop geometry (LOOP.start), so they can't snap back using a stale closure value.
       loopOn = rs.length >= 3;
-      if (!loopOn){ track.scrollLeft = 0; updateFade(); return; }
+      if (!loopOn){ track.scrollLeft = 0; updateFade(); window.updateArrows(); return; }
       var mk = function(c){ var cl = c.cloneNode(true); cl.classList.add("sj-clone"); cl.setAttribute("aria-hidden", "true"); return cl; };
       var af = document.createDocumentFragment(); rs.forEach(function(c){ af.appendChild(mk(c)); }); track.appendChild(af);            // clone-set AFTER
       var pf = document.createDocumentFragment(); rs.forEach(function(c){ pf.appendChild(mk(c)); }); track.insertBefore(pf, track.firstChild); // clone-set BEFORE
@@ -179,6 +200,7 @@
       loopUnit = Math.round((last.getBoundingClientRect().right - tl + sl) + gapPx() - LOOP.start);  // one set-width
       track.scrollLeft = LOOP.start - peekPx();          // first real tile focused at the gutter
       updateFade();
+      window.updateArrows();
     };
     if (track && prev && next){
       if (!next.__sjbound){
@@ -196,10 +218,10 @@
             else { animating = false; if (done) done(); }
           })(performance.now());
         }
-        var go = function(dir){ if (!animating) animateTo(track.scrollLeft + dir * stepPx(), normalize); };
+        var go = function(dir){ if (!animating) animateTo(track.scrollLeft + dir * stepPx(), function(){ normalize(); window.updateArrows(); }); };
         prev.addEventListener("click", function(){ go(-1); });
         next.addEventListener("click", function(){ go(1); });
-        track.addEventListener("scroll", function(){ window.requestAnimationFrame(updateFade); });
+        track.addEventListener("scroll", function(){ window.requestAnimationFrame(function(){ updateFade(); if (window.updateArrows) window.updateArrows(); }); });
         window.addEventListener("resize", function(){ window.buildLoop(); });
         window.addEventListener("load", function(){ window.buildLoop(); });
       }

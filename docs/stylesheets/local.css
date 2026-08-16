@@ -115,6 +115,7 @@ body:has(.sj-hero) .md-content h2::after, body:has(.sj-hero) .md-content h3::aft
 .sj-carousel-prev { order: -1; }
 .sj-carousel-next { order: 1; }
 .sj-carousel-btn:hover { opacity: 1; color: var(--sj-gold); }
+.sj-carousel-btn:disabled { opacity: 0.2; cursor: default; pointer-events: none; }
 
 .sj-feat-card { display: grid; grid-template-columns: 1.5rem 12rem auto; grid-template-areas: "icon title thumb" "desc desc thumb" "tags tags thumb"; gap: 0.08rem 0.7rem; align-content: center; background: var(--sj-tile); border: 1px solid var(--sj-tile-border); border-radius: 12px; padding: 0.42rem 0.9rem; color: var(--sj-text) !important; transition: border-color .15s ease; }
 .sj-feat-card.sj-card--soon { border: 1px solid var(--sj-tile-border); opacity: 0.55; cursor: not-allowed; }
