@@ -10,7 +10,9 @@ This site shares a design system with my other repos via the `sj-theme` git subm
 git clone https://github.com/skyejen/skyejen.github.io.git
 cd skyejen.github.io
 git submodule update --init            # pull in sj-theme
-pip install "mkdocs-material>=9.7,<10" "pymdown-extensions>=10,<11"
+uv venv --python 3.12                  # or python -m venv .venv
+.venv\Scripts\activate                 # source .venv/bin/activate on macOS
+uv pip install "mkdocs-material>=9.7,<10" "pymdown-extensions>=10,<11"
 mkdocs serve                           # http://127.0.0.1:8000
 ```
 
