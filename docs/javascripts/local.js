@@ -312,9 +312,18 @@
   // page is open, and remembered so a refresh cannot send half the requests
   // back to production:
   //   localStorage.setItem("sj-twin-api", "http://127.0.0.1:8010")
+  // A trailing slash is stripped. Paths are appended directly, so ".../app/" and
+  // "/api/chips" make a double slash, which the host answers with a redirect
+  // that carries no CORS headers - the request then fails before reaching a
+  // handler, and the console blames CORS rather than the slash.
   function api() {
-    if (window.SJ_TWIN_API) return window.SJ_TWIN_API;
-    try { return localStorage.getItem("sj-twin-api") || LIVE_API; } catch (e) { return LIVE_API; }
+    var url = LIVE_API;
+    if (window.SJ_TWIN_API) {
+      url = window.SJ_TWIN_API;
+    } else {
+      try { url = localStorage.getItem("sj-twin-api") || LIVE_API; } catch (e) { url = LIVE_API; }
+    }
+    return String(url).replace(/\/+$/, "");
   }
 
   // The API rejects a transcript larger than this, so trim before sending
