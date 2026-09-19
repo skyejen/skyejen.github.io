@@ -295,3 +295,399 @@
   else document.addEventListener("DOMContentLoaded", bind);
   if (window.document$ && window.document$.subscribe) window.document$.subscribe(bind);
 })();
+
+
+/* ==========================================================================
+   AI digital twin: launcher + panel
+   Streams NDJSON from the twin API and renders the answer as markdown,
+   sanitised in the browser. Contract: API.md in the ai-digital-twin repo.
+   ========================================================================== */
+(function () {
+  "use strict";
+
+  var LIVE_API = "https://ai-digital-twin-skyejen.vercel.app";
+  var LOG_KEY = "sj-twin-log";
+
+  // Read per call rather than once, so a local API can be pointed at while the
+  // page is open, and remembered so a refresh cannot send half the requests
+  // back to production:
+  //   localStorage.setItem("sj-twin-api", "http://127.0.0.1:8010")
+  function api() {
+    if (window.SJ_TWIN_API) return window.SJ_TWIN_API;
+    try { return localStorage.getItem("sj-twin-api") || LIVE_API; } catch (e) { return LIVE_API; }
+  }
+
+  // The API rejects a transcript larger than this, so trim before sending
+  // rather than letting a long conversation start failing with a 400.
+  var MAX_TURNS = 20;
+  var MAX_CHARS = 8000;
+
+  // Pinned with an integrity hash, so a compromised CDN cannot swap them out.
+  var LIBS = [
+    { url: "https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.4.15/purify.min.js", sri: "sha512-jeyPlk6E7VcWU2QTRw5UAe4iKLrWOJkyLc4GkOAOey1tOeTyxfTzrCY7p84VSer8/lRON5p236RGVeTErze9fA==", ready: function () { return window.DOMPurify; } },
+    { url: "https://cdnjs.cloudflare.com/ajax/libs/marked/18.0.13/lib/marked.umd.min.js", sri: "sha512-kHavuYjOa82OKvUxD8j04s+kMIH84FmETnuIgj0yFyY9LWU10sXNwU54Iozpewat8VxAzH4aXiwTEZMRrpwfBw==", ready: function () { return window.marked; } }
+  ];
+
+  var log = load();
+  var chips = null;
+  var busy = false;
+  var el = {};
+
+  /* ---------------------------------------------------------------- store */
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(LOG_KEY);
+      var parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function save() {
+    try {
+      localStorage.setItem(LOG_KEY, JSON.stringify(log.slice(-MAX_TURNS)));
+    } catch (e) {
+      /* private browsing, blocked storage: the conversation still works */
+    }
+  }
+
+  /* ------------------------------------------------------------ libraries */
+
+  function loadScript(lib) {
+    return new Promise(function (resolve, reject) {
+      if (lib.ready()) return resolve();
+      var s = document.createElement("script");
+      s.src = lib.url;
+      s.integrity = lib.sri;
+      s.crossOrigin = "anonymous";
+      s.referrerPolicy = "no-referrer";
+      s.onload = function () { lib.ready() ? resolve() : reject(new Error("loaded but absent")); };
+      s.onerror = function () { reject(new Error("blocked")); };
+      document.head.appendChild(s);
+    });
+  }
+
+  var libsReady = null;
+  function ensureLibs() {
+    if (!libsReady) libsReady = Promise.all(LIBS.map(loadScript));
+    return libsReady;
+  }
+
+  /* --------------------------------------------------------------- render */
+
+  function asText(s) {
+    var d = document.createElement("div");
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function toHtml(markdown) {
+    // Sanitising happens here because this is where the HTML is finally
+    // parsed. A sanitiser anywhere else reads the markup with a different
+    // parser from the one that renders it, and mutation XSS lives in that gap.
+    if (!window.marked || !window.DOMPurify) return "<p>" + asText(markdown) + "</p>";
+    var html = window.marked.parse(markdown, { breaks: true });
+    return window.DOMPurify.sanitize(html, { ADD_ATTR: ["target", "rel"] });
+  }
+
+  function bubble(role, markdown) {
+    var b = document.createElement("div");
+    b.className = "sj-twin-msg sj-twin-msg--" + role;
+    if (role === "user") b.textContent = markdown;
+    else b.innerHTML = toHtml(markdown);
+    b.querySelectorAll("a[href]").forEach(function (a) {
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+    });
+    return b;
+  }
+
+  function drawLog() {
+    el.feed.innerHTML = "";
+    log.forEach(function (m) { el.feed.appendChild(bubble(m.role, m.content)); });
+    drawChips();
+    scrollDown();
+  }
+
+  function scrollDown() {
+    el.feed.scrollTop = el.feed.scrollHeight;
+  }
+
+  function drawChecklist(steps, done, total) {
+    // create_checklist replaces the plan, so render the latest rather than
+    // merging it into whatever arrived before.
+    var box = el.feed.querySelector(".sj-twin-plan") || (function () {
+      var d = document.createElement("div");
+      d.className = "sj-twin-plan";
+      el.feed.appendChild(d);
+      return d;
+    })();
+    var items = (steps || []).map(function (s) {
+      return '<li data-state="' + asText(s.status || "pending") + '">' + asText(s.title || "") + "</li>";
+    }).join("");
+    box.innerHTML = '<p class="sj-twin-plan-head">Working through it (' +
+      asText(String(done || 0)) + " of " + asText(String(total || 0)) + ")</p><ol>" + items + "</ol>";
+    scrollDown();
+  }
+
+  function clearPending() {
+    var p = el.feed.querySelector(".sj-twin-plan");
+    if (p) p.remove();
+    var t = el.feed.querySelector(".sj-twin-thinking");
+    if (t) t.remove();
+  }
+
+  /* ---------------------------------------------------------------- chips */
+
+  function fillChips() {
+    if (chips) return drawChips();
+    fetch(api() + "/api/chips")
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (body) {
+        if (!body || !Array.isArray(body.chips)) return;
+        chips = body.chips;
+        drawChips();
+      })
+      .catch(function () { /* no chips is a quieter failure than a broken panel */ });
+  }
+
+  function drawChips() {
+    if (!chips) return;
+    // An asked chip is dimmed rather than removed: it stays a record of what
+    // has been covered, and asking the same thing twice is allowed.
+    var asked = log.filter(function (m) { return m.role === "user"; })
+                   .map(function (m) { return m.content; });
+    el.chips.innerHTML = "";
+    chips.forEach(function (c) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "sj-twin-chip" + (asked.indexOf(c.question) === -1 ? "" : " sj-twin-chip--used");
+      b.textContent = c.label;
+      b.addEventListener("click", function () { send(c.question); });
+      el.chips.appendChild(b);
+    });
+    el.chipwrap.hidden = chips.length === 0;
+    el.chipwrap.classList.toggle("sj-twin-chips--started", asked.length > 0);
+  }
+
+  /* ----------------------------------------------------------------- send */
+
+  function trimmed() {
+    var out = [], chars = 0;
+    for (var i = log.length - 1; i >= 0 && out.length < MAX_TURNS; i--) {
+      chars += (log[i].content || "").length;
+      if (chars > MAX_CHARS) break;
+      out.unshift({ role: log[i].role, content: log[i].content });
+    }
+    return out;
+  }
+
+  function fail(message) {
+    clearPending();
+    el.feed.appendChild(bubble("assistant", message));
+    scrollDown();
+  }
+
+  function send(text) {
+    text = (text || "").trim();
+    if (!text || busy) return;
+    busy = true;
+    el.send.disabled = true;
+    el.input.value = "";
+
+    var history = trimmed();
+    log.push({ role: "user", content: text });
+    save();
+    drawChips();
+    el.feed.appendChild(bubble("user", text));
+
+    // Something moves from the moment the request leaves, rather than from
+    // the first event: a turn can take up to 30 seconds.
+    var wait = document.createElement("div");
+    wait.className = "sj-twin-thinking";
+    wait.innerHTML = "<span></span><span></span><span></span>";
+    el.feed.appendChild(wait);
+    scrollDown();
+
+    ensureLibs().catch(function () { /* fall back to plain text rendering */ })
+      .then(function () {
+        return fetch(api() + "/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: text, history: history })
+        });
+      })
+      .then(function (res) {
+        if (!res.ok) {
+          // A 429 is generated at the edge and is not one of the API's JSON
+          // shapes, so it is recognised by status rather than parsed.
+          if (res.status === 429) {
+            throw new Error("That is a lot of questions at once. Give it a minute and try again.");
+          }
+          return res.json()
+            .catch(function () { throw new Error("Something went wrong on my side. Please try again."); })
+            .then(function (body) { throw new Error(body.message || "Something went wrong on my side."); });
+        }
+        return stream(res);
+      })
+      .catch(function (e) { fail(e.message || "I could not reach the server. Please try again."); })
+      .then(function () {
+        busy = false;
+        el.send.disabled = false;
+        el.input.focus();
+      });
+  }
+
+  function stream(res) {
+    var reader = res.body.getReader();
+    var decoder = new TextDecoder();
+    var buffer = "";
+    var answered = false;
+
+    function handle(line) {
+      if (!line.trim()) return;
+      var ev;
+      try { ev = JSON.parse(line); } catch (e) { return; }
+      if (ev.type === "checklist") drawChecklist(ev.steps, ev.done, ev.total);
+      else if (ev.type === "error") { answered = true; fail(ev.message || "Something went wrong on my side."); }
+      else if (ev.type === "answer") {
+        answered = true;
+        clearPending();
+        var textOut = (ev.text || "").trim() || "I do not have an answer for that one. Try asking another way.";
+        log.push({ role: "assistant", content: textOut });
+        save();
+        el.feed.appendChild(bubble("assistant", textOut));
+        drawChips();
+        scrollDown();
+      }
+    }
+
+    function pump() {
+      return reader.read().then(function (chunk) {
+        if (chunk.done) {
+          if (buffer) handle(buffer);
+          if (!answered) fail("That answer stopped part way through. Please try again.");
+          return;
+        }
+        buffer += decoder.decode(chunk.value, { stream: true });
+        var lines = buffer.split("\n");
+        buffer = lines.pop();
+        lines.forEach(handle);
+        return pump();
+      });
+    }
+    return pump();
+  }
+
+  /* ----------------------------------------------------------------- open */
+
+  function open() {
+    el.panel.hidden = false;
+    document.documentElement.classList.add("sj-twin-open");
+    fillChips();
+    ensureLibs().then(drawLog, drawLog);
+    setTimeout(function () { el.input.focus(); }, 60);
+  }
+
+  function close() {
+    el.panel.hidden = true;
+    document.documentElement.classList.remove("sj-twin-open");
+    el.launch.focus();
+  }
+
+  /* ----------------------------------------------------------------- build */
+
+  function icon(paths, cls) {
+    return '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" ' +
+      'class="' + (cls || "") + '" fill="none" stroke="currentColor" stroke-width="2" ' +
+      'stroke-linecap="round" stroke-linejoin="round">' + paths + "</svg>";
+  }
+
+  function build() {
+    if (document.getElementById("sj-twin-launch")) return;
+
+    var launch = document.createElement("button");
+    launch.id = "sj-twin-launch";
+    launch.type = "button";
+    launch.className = "sj-twin-launch";
+    launch.setAttribute("aria-label", "Ask my AI twin");
+    launch.innerHTML =
+      '<span class="sj-twin-launch-mark" aria-hidden="true">' +
+      '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" ' +
+      'stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="M21 12a8 8 0 0 1-8 8H7l-4 3v-5.5A8 8 0 1 1 21 12Z"></path>' +
+      '<path d="M8.5 12h.01M12 12h.01M15.5 12h.01"></path></svg></span>' +
+      '<span class="sj-twin-launch-label">Ask my AI twin</span>';
+
+    var panel = document.createElement("div");
+    panel.className = "sj-twin-panel";
+    panel.id = "sj-twin-panel";
+    panel.hidden = true;
+    panel.setAttribute("role", "dialog");
+    panel.setAttribute("aria-modal", "false");
+    panel.setAttribute("aria-label", "Ask Jen's AI twin");
+    panel.innerHTML =
+      '<header class="sj-twin-head">' +
+        '<div class="sj-twin-title">' +
+          "<strong>Jen's AI twin</strong>" +
+          '<em>She built it. Ask about her work.</em>' +
+        "</div>" +
+        '<button type="button" class="sj-twin-icon sj-twin-max" aria-label="Expand">' +
+          icon('<path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path>' +
+               '<path d="M21 3l-7 7"></path><path d="M3 21l7-7"></path>', "sj-twin-i-out") +
+          icon('<path d="M21 9h-6V3"></path><path d="M3 15h6v6"></path>' +
+               '<path d="M14 10l7-7"></path><path d="M10 14l-7 7"></path>', "sj-twin-i-in") +
+        "</button>" +
+        '<button type="button" class="sj-twin-icon sj-twin-close" aria-label="Close">' +
+          icon('<path d="M18 6L6 18"></path><path d="M6 6l12 12"></path>') +
+        "</button>" +
+      "</header>" +
+      '<div class="sj-twin-feed" tabindex="0"></div>' +
+      '<div class="sj-twin-chipwrap"><div class="sj-twin-chips"></div></div>' +
+      '<form class="sj-twin-ask">' +
+        '<input class="sj-twin-input" type="text" autocomplete="off" ' +
+          'placeholder="Ask about her work" aria-label="Ask about her work">' +
+        '<button class="sj-twin-send" type="submit" aria-label="Send">Send</button>' +
+      "</form>";
+
+    document.body.appendChild(launch);
+    document.body.appendChild(panel);
+
+    el = {
+      launch: launch,
+      panel: panel,
+      feed: panel.querySelector(".sj-twin-feed"),
+      chipwrap: panel.querySelector(".sj-twin-chipwrap"),
+      chips: panel.querySelector(".sj-twin-chips"),
+      input: panel.querySelector(".sj-twin-input"),
+      send: panel.querySelector(".sj-twin-send")
+    };
+
+    launch.addEventListener("click", function () { panel.hidden ? open() : close(); });
+    panel.querySelector(".sj-twin-close").addEventListener("click", close);
+    panel.querySelector(".sj-twin-max").addEventListener("click", function () {
+      panel.classList.toggle("sj-twin-panel--max");
+    });
+    panel.querySelector(".sj-twin-ask").addEventListener("submit", function (e) {
+      e.preventDefault();
+      send(el.input.value);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !panel.hidden) close();
+    });
+
+    // Collapse the label once the reader is past the hero, so it stops
+    // competing with the page and becomes a handle.
+    var shrink = function () {
+      launch.classList.toggle("sj-twin-launch--small", window.scrollY > 260);
+    };
+    shrink();
+    window.addEventListener("scroll", shrink, { passive: true });
+  }
+
+  if (document.readyState !== "loading") build();
+  else document.addEventListener("DOMContentLoaded", build);
+  if (window.document$ && window.document$.subscribe) window.document$.subscribe(build);
+})();
