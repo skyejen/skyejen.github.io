@@ -632,7 +632,7 @@
       '<header class="sj-twin-head">' +
         '<div class="sj-twin-title">' +
           "<strong>Jen's AI twin</strong>" +
-          '<em>She built it. Ask about her work.</em>' +
+          '<em>Built by Jen. Ask about her work.</em>' +
         "</div>" +
         '<button type="button" class="sj-twin-icon sj-twin-max" aria-label="Expand">' +
           icon('<path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path>' +
