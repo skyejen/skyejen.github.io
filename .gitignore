@@ -28,3 +28,6 @@ site/
 # Local (private) notes — not published
 NOTES.local.md
 *.local.md
+
+# Claude Code personal project notes. Never committed.
+CLAUDE.local.md
