@@ -326,6 +326,14 @@
     return String(url).replace(/\/+$/, "");
   }
 
+  // Stand-ins shown until the chips arrive, so an opened panel never looks
+  // broken while a sleeping function wakes up. Spans, not buttons, so there is
+  // nothing to focus or click, and aria-hidden so a screen reader skips them.
+  var GHOSTS = [7, 5, 6].map(function (n) {
+    return '<span class="sj-twin-chip sj-twin-chip--ghost" aria-hidden="true">' +
+      new Array(n + 1).join("\u00a0") + "</span>";
+  }).join("");
+
   // The API rejects a transcript larger than this, so trim before sending
   // rather than letting a long conversation start failing with a 400.
   var MAX_TURNS = 20;
@@ -450,8 +458,16 @@
 
   /* ---------------------------------------------------------------- chips */
 
+  // Called once the page is idle rather than when the panel opens. The API is a
+  // serverless function that sleeps, and a cold start is seconds - long enough
+  // that a visitor who opened the panel would watch an empty box and leave. The
+  // same request wakes the function, so the first question is quicker too.
+  var chipsAsked = false;
+
   function fillChips() {
     if (chips) return drawChips();
+    if (chipsAsked) return;
+    chipsAsked = true;
     fetch(api() + "/api/chips")
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (body) {
@@ -459,7 +475,19 @@
         chips = body.chips;
         drawChips();
       })
-      .catch(function () { /* no chips is a quieter failure than a broken panel */ });
+      .catch(function () {
+        // No chips is a quieter failure than a broken panel, but allow a retry
+        // on the next open in case the first request lost the network.
+        chipsAsked = false;
+        if (el.chipwrap) el.chipwrap.hidden = true;
+      });
+  }
+
+  // Fired after load, and after any onload work, so it never competes with the
+  // page's own rendering.
+  function warmChips() {
+    if (window.requestIdleCallback) window.requestIdleCallback(fillChips, { timeout: 3000 });
+    else setTimeout(fillChips, 1200);
   }
 
   function drawChips() {
@@ -478,7 +506,6 @@
       el.chips.appendChild(b);
     });
     el.chipwrap.hidden = chips.length === 0;
-    el.chipwrap.classList.toggle("sj-twin-chips--started", asked.length > 0);
   }
 
   /* ----------------------------------------------------------------- send */
@@ -654,7 +681,8 @@
         "</button>" +
       "</header>" +
       '<div class="sj-twin-feed" tabindex="0"></div>' +
-      '<div class="sj-twin-chipwrap"><div class="sj-twin-chips"></div></div>' +
+      '<div class="sj-twin-chipwrap"><div class="sj-twin-chips">' +
+      GHOSTS + '</div></div>' +
       '<form class="sj-twin-ask">' +
         '<input class="sj-twin-input" type="text" autocomplete="off" ' +
           'placeholder="Ask about her work" aria-label="Ask about her work">' +
@@ -694,6 +722,8 @@
     };
     shrink();
     window.addEventListener("scroll", shrink, { passive: true });
+
+    warmChips();
   }
 
   if (document.readyState !== "loading") build();
