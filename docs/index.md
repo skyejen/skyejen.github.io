@@ -55,6 +55,14 @@
 <div class="sj-carousel" markdown>
 <div class="sj-carousel-track" markdown>
 
+<a class="sj-feat-card" data-disc="python built-ai" href="https://skyejen.github.io/generalist-tech/portfolio/ai-digital-twin/" markdown="span">
+<span class="sj-card-icon sj-card-icon--gold">:material-account-tie-voice-outline:</span>
+<span class="sj-card-title">AI Digital Twin</span>
+<span class="sj-card-desc">An agent that answers questions about my career background.</span>
+<span class="sj-tags"><span class="sj-tag">Python</span><span class="sj-tag sj-tag--ai">Built with AI</span><span class="sj-tag sj-tag--live">Live</span></span>
+<span class="sj-feat-thumb" style="background-image:url(images/featured/ai-twin.png)"></span>
+</a>
+
 <a class="sj-feat-card" data-disc="cybersecurity" href="https://skyejen.github.io/cybersecurity/portfolio/home-labs/wazuh/" markdown="span">
 <span class="sj-card-icon">:material-radar:</span>
 <span class="sj-card-title">Wazuh SIEM Home Lab</span>

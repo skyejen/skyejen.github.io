@@ -37,6 +37,10 @@ body:has(.sj-hero) .md-content h2::after, body:has(.sj-hero) .md-content h3::aft
 [data-disc="devops"]       > .sj-card-icon .twemoji svg { fill: var(--sj-purple) !important; }
 [data-disc="ai"]           > .sj-card-icon .twemoji svg { fill: var(--sj-green) !important; }
 
+/* The twin is not one of the disciplines, so its icon is coloured explicitly
+   rather than by a data-disc match. */
+.sj-card-icon--gold .twemoji svg { fill: var(--sj-gold) !important; }
+
 /* section-header icons: featured=gold, portfolio=blue, learning=green */
 .sj-sechead h2 .twemoji svg { fill: var(--sj-gold) !important; }
 .sj-hub:nth-of-type(1) h2 .twemoji svg { fill: var(--sj-blue) !important; }
