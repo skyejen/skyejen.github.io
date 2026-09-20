@@ -2,6 +2,22 @@
 
 The landing page for my portfolio: **[skyejen.github.io](https://skyejen.github.io)**. A bespoke MkDocs Material site (custom theme, featured carousel, discipline hubs) that ties together my cybersecurity, Python, DevOps, and generalist work.
 
+## Jen's AI twin
+
+The landing page carries a chat widget that answers questions about my
+background. The UI is here (`docs/javascripts/local.js`, `docs/stylesheets/local.css`);
+the agent behind it is a separate repo, `ai-digital-twin`, deployed on Vercel.
+
+| Link | Opens |
+| --- | --- |
+| [skyejen.github.io/?twin=1](https://skyejen.github.io/?twin=1) | the panel |
+| [skyejen.github.io/?twin=2](https://skyejen.github.io/?twin=2) | the panel, maximised |
+
+`#twin` does the same as `?twin=1`. To point the widget at a local or preview
+API while developing, set `localStorage.setItem("sj-twin-api", "http://127.0.0.1:8010")`
+in the console. It is read per request, and per origin, so clearing it on the
+live site does not clear it on `127.0.0.1`.
+
 ## Local development
 
 This site shares a design system with my other repos via the `sj-theme` git submodule.
