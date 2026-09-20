@@ -333,6 +333,13 @@ body:has(.sj-hero) .sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.12rem; padd
 }
 .sj-twin-launch--small .sj-twin-launch-label { max-width: 0; }
 
+/* The launcher claims the bottom-right corner, which is where the shared theme
+   puts its back-to-top button. Lifted clear here rather than in sj-theme, which
+   the other sites share and which has no twin to make room for. Hidden outright
+   while the panel is open, same as the launcher. */
+.sj-top { bottom: 5rem; }
+html.sj-twin-open .sj-top { display: none; }
+
 .sj-twin-panel {
   position: fixed; right: 20px; bottom: 82px; z-index: 1001;
   display: flex; flex-direction: column;
@@ -410,7 +417,7 @@ body:has(.sj-hero) .sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.12rem; padd
 .sj-twin-panel--max .sj-twin-icon svg.sj-twin-i-in { display: block; }
 
 .sj-twin-feed {
-  flex: 1; min-height: 0; overflow-y: auto;
+  flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
   padding: 0.9rem; display: flex; flex-direction: column; gap: 0.6rem;
   font-size: 0.78rem; line-height: 1.55; color: var(--sj-text);
 }
@@ -515,6 +522,7 @@ body:has(.sj-hero) .sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.12rem; padd
 .sj-twin-chips {
   display: flex; flex-wrap: wrap; gap: 0.32rem;
   padding: 0 0.9rem 0.6rem; max-height: 3.6rem; overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 /* Placeholders while the chips are in flight. */
