@@ -326,6 +326,13 @@
     return String(url).replace(/\/+$/, "");
   }
 
+  // Shown in place of an empty feed. Deliberately NOT pushed into `log`: it is
+  // not something the model said, and putting it in the transcript would send it
+  // back as history and let the model treat its own greeting as prior context.
+  // Plain text rather than markdown, so it does not wait on the renderer libs.
+  var GREETING = "Hey, I'm Jen's AI twin. Ask me about her career, " +
+    "her projects, or how she works.";
+
   // Stand-ins shown until the chips arrive, so an opened panel never looks
   // broken while a sleeping function wakes up. Spans, not buttons, so there is
   // nothing to focus or click, and aria-hidden so a screen reader skips them.
@@ -423,6 +430,12 @@
 
   function drawLog() {
     el.feed.innerHTML = "";
+    if (!log.length) {
+      var hi = document.createElement("div");
+      hi.className = "sj-twin-msg sj-twin-msg--assistant sj-twin-greet";
+      hi.textContent = GREETING;
+      el.feed.appendChild(hi);
+    }
     log.forEach(function (m) { el.feed.appendChild(bubble(m.role, m.content)); });
     drawChips();
     scrollDown();
@@ -668,7 +681,6 @@
       '<header class="sj-twin-head">' +
         '<div class="sj-twin-title">' +
           "<strong>Jen's AI twin</strong>" +
-          '<em>Built by Jen. Ask about her work.</em>' +
         "</div>" +
         '<button type="button" class="sj-twin-icon sj-twin-max" aria-label="Expand">' +
           icon('<path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path>' +
@@ -724,6 +736,22 @@
     window.addEventListener("scroll", shrink, { passive: true });
 
     warmChips();
+
+    // Shareable entry points, so a link in a post lands someone in the
+    // conversation instead of on a page with a button to find.
+    //   ?twin=1  or  ?twin  or  #twin   the panel, as it normally opens
+    //   ?twin=2                         the panel, maximised
+    // Also bound to hashchange: changing only the hash does not reload, and
+    // build() returns early once the widget exists, so nothing would re-run.
+    function deepLink() {
+      var q = /(?:^|[?&])twin(?:=([^&]*))?(?:&|$)/.exec(location.search);
+      var want = q ? (q[1] || "1") : (location.hash === "#twin" ? "1" : null);
+      if (!want) return;
+      panel.classList.toggle("sj-twin-panel--max", want === "2");
+      if (panel.hidden) open();
+    }
+    deepLink();
+    window.addEventListener("hashchange", deepLink);
   }
 
   if (document.readyState !== "loading") build();

@@ -357,9 +357,8 @@ body:has(.sj-hero) .sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.12rem; padd
   padding: 0.7rem 0.6rem 0.7rem 0.95rem;
   border-bottom: 1px solid var(--sj-border); background: var(--sj-surface);
 }
-.sj-twin-title { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; flex: 1; }
+.sj-twin-title { min-width: 0; flex: 1; }
 .sj-twin-title strong { font-size: 0.82rem; color: var(--sj-heading); font-weight: 600; }
-.sj-twin-title em { font-size: 0.66rem; color: var(--sj-text-dim); font-style: normal; }
 .sj-twin-icon {
   flex: none; width: 28px; height: 28px; line-height: 1;
   display: inline-flex; align-items: center; justify-content: center;
@@ -507,7 +506,9 @@ body:has(.sj-hero) .sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.12rem; padd
   background: var(--sj-bg-deep, #04060a);
   border: 1px solid var(--sj-border); border-radius: 8px;
 }
-.sj-twin-input::placeholder { color: var(--sj-text-dim); }
+/* Quieter than the dim text elsewhere: it sat close enough to real copy
+   to read as a sent message rather than a prompt. */
+.sj-twin-input::placeholder { color: var(--sj-text-dim); opacity: 0.45; }
 .sj-twin-input:focus { outline: none; border-color: var(--sj-blue); }
 .sj-twin-send {
   flex: none; padding: 0.5rem 0.85rem;
