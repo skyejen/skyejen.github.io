@@ -307,7 +307,7 @@ body:has(.sj-hero) .sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.12rem; padd
    ========================================================================== */
 
 .sj-twin-launch {
-  position: fixed; right: 20px; bottom: 20px; z-index: 1000;
+  position: fixed; right: var(--sj-dock-right); bottom: 20px; z-index: 1000;
   display: inline-flex; align-items: center; gap: 0.55rem;
   padding: 0.62rem 1rem 0.62rem 0.78rem;
   font-family: var(--sj-font-head, inherit);
@@ -337,7 +337,12 @@ body:has(.sj-hero) .sj-hub h2 { margin-top: 0.5rem; margin-bottom: 0.12rem; padd
    puts its back-to-top button. Lifted clear here rather than in sj-theme, which
    the other sites share and which has no twin to make room for. Hidden outright
    while the panel is open, same as the launcher. */
-.sj-top { bottom: 5rem; }
+/* The launcher and the shared theme's back-to-top both dock in the corner, so
+   they share one inset and stack, flush down their right edges. One variable
+   rather than two numbers, because two numbers drift. The theme's own right is
+   left alone; the launcher comes left to meet it. */
+:root { --sj-dock-right: 1.9rem; }
+.sj-top { right: var(--sj-dock-right); bottom: 5rem; }
 html.sj-twin-open .sj-top { display: none; }
 
 .sj-twin-panel {
@@ -646,7 +651,10 @@ html.sj-twin-open .sj-top { display: none; }
     width: auto; height: 100dvh; border-radius: 0; border: none;
   }
   .sj-twin-max { display: none; }
-  .sj-twin-launch { right: 14px; bottom: 14px; }
+  /* Tighter against the edge on a phone, both of them together. */
+  :root { --sj-dock-right: 14px; }
+  .sj-twin-launch { bottom: 14px; }
+  .sj-top { bottom: 4.6rem; }
   html.sj-twin-open, html.sj-twin-open body { overflow: hidden; }
   html.sj-twin-open .sj-twin-launch { display: none; }
   .sj-twin-panel--max .sj-twin-meta { display: none; }
