@@ -722,11 +722,15 @@
     setTimeout(function () { el.input.focus(); }, 60);
   }
 
-  function close() {
+  function close(byKeyboard) {
     el.panel.hidden = true;
     remember();
     document.documentElement.classList.remove("sj-twin-open");
-    el.launch.focus();
+    // Focus goes back to the launcher only for a keyboard user, who would
+    // otherwise be dropped at the top of the document with no way back. After a
+    // tap or a click the pointer is already where the person is looking, and
+    // moving focus there just paints a gold ring they did not ask for.
+    if (byKeyboard) el.launch.focus();
   }
 
   /* ----------------------------------------------------------------- build */
@@ -810,8 +814,12 @@
       send: panel.querySelector(".sj-twin-send")
     };
 
-    launch.addEventListener("click", function () { panel.hidden ? open() : close(); });
-    panel.querySelector(".sj-twin-close").addEventListener("click", close);
+    launch.addEventListener("click", function (e) {
+      if (panel.hidden) open(); else close(e.detail === 0);
+    });
+    panel.querySelector(".sj-twin-close").addEventListener("click", function (e) {
+      close(e.detail === 0);
+    });
     // No confirm dialog on purpose: a browser modal blocks everything until it
     // is dismissed, and the cost of a mis-click is one conversation.
     // Two clicks rather than a confirm dialog. A browser modal blocks the whole
@@ -853,7 +861,7 @@
       send(el.input.value);
     });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && !panel.hidden) close();
+      if (e.key === "Escape" && !panel.hidden) close(true);
     });
 
     // Collapse the label once the reader is past the hero, so it stops
