@@ -307,6 +307,21 @@
 
   var LIVE_API = "https://ai-digital-twin-skyejen.vercel.app";
   var LOG_KEY = "sj-twin-log";
+  // How the panel was left. A refresh that throws away an open conversation is
+  // the kind of small rudeness people remember. Per browser, like the
+  // transcript it belongs to, and wrapped because private mode can throw.
+  var VIEW_KEY = "sj-twin-view";
+
+  function remember() {
+    try {
+      localStorage.setItem(VIEW_KEY, el.panel.hidden ? "closed"
+        : el.panel.classList.contains("sj-twin-panel--max") ? "max" : "open");
+    } catch (e) { /* the default is a closed panel, which is fine */ }
+  }
+
+  function remembered() {
+    try { return localStorage.getItem(VIEW_KEY); } catch (e) { return null; }
+  }
 
   // Read per call rather than once, so a local API can be pointed at while the
   // page is open, and remembered so a refresh cannot send half the requests
@@ -332,6 +347,32 @@
   // Plain text rather than markdown, so it does not wait on the renderer libs.
   var GREETING = "Hey, I'm Jen's AI twin. Ask me about her career, " +
     "her projects, or how she works.";
+
+  // One glyph per chip. The API sends an icon key alongside each label, so the
+  // set is chosen server-side and this is only the drawing. An unknown key
+  // renders no icon rather than a broken box.
+  var CHIP_ICONS = {
+    "twin-chip-code": '<polyline points="9 7 4 12 9 17"></polyline>' +
+      '<polyline points="15 7 20 12 15 17"></polyline>',
+    "twin-chip-flow": '<line x1="6" y1="3" x2="6" y2="15"></line>' +
+      '<circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle>' +
+      '<path d="M18 9a9 9 0 0 1-9 9"></path>',
+    "twin-chip-ops": '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>',
+    "twin-chip-release": '<polyline points="23 4 23 10 17 10"></polyline>' +
+      '<polyline points="1 20 1 14 7 14"></polyline>' +
+      '<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>',
+    "twin-chip-qa": '<polyline points="9 11 12 14 22 4"></polyline>' +
+      '<path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>',
+    "twin-chip-docs": '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>' +
+      '<polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line>' +
+      '<line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line>',
+    "twin-chip-learn": '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>' +
+      '<path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>',
+    "twin-chip-solve": '<path d="M9 18h6"></path><path d="M10 21h4"></path>' +
+      '<path d="M12 3a6 6 0 0 0-4 10c.5.5 1 1.2 1 2h6c0-.8.5-1.5 1-2a6 6 0 0 0-4-10z"></path>',
+    "twin-chip-person": '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>' +
+      '<circle cx="12" cy="7" r="4"></circle>'
+  };
 
   // Stand-ins shown until the chips arrive, so an opened panel never looks
   // broken while a sleeping function wakes up. Spans, not buttons, so there is
@@ -416,15 +457,35 @@
     return window.DOMPurify.sanitize(html, { ADD_ATTR: ["target", "rel"] });
   }
 
-  function bubble(role, markdown) {
+  function clock(at) {
+    var d = new Date(at);
+    return [d.getHours(), d.getMinutes(), d.getSeconds()]
+      .map(function (n) { return n < 10 ? "0" + n : String(n); }).join(":");
+  }
+
+  // The label and time are hidden until the panel is maximised: in a 380px
+  // column they spend a line that belongs to the answer. A transcript restored
+  // from before they existed has no time, and simply renders without one.
+  function bubble(role, markdown, at) {
     var b = document.createElement("div");
     b.className = "sj-twin-msg sj-twin-msg--" + role;
-    if (role === "user") b.textContent = markdown;
-    else b.innerHTML = toHtml(markdown);
-    b.querySelectorAll("a[href]").forEach(function (a) {
+
+    var meta = document.createElement("span");
+    meta.className = "sj-twin-meta";
+    meta.setAttribute("aria-hidden", "true");
+    meta.innerHTML = "<b>" + (role === "user" ? "YOU" : "JEN//AI") + "</b>" +
+      (at ? "<time>" + clock(at) + "</time>" : "");
+    b.appendChild(meta);
+
+    var body = document.createElement("div");
+    body.className = "sj-twin-body";
+    if (role === "user") body.textContent = markdown;
+    else body.innerHTML = toHtml(markdown);
+    body.querySelectorAll("a[href]").forEach(function (a) {
       a.target = "_blank";
       a.rel = "noopener noreferrer";
     });
+    b.appendChild(body);
     return b;
   }
 
@@ -433,16 +494,29 @@
     if (!log.length) {
       var hi = document.createElement("div");
       hi.className = "sj-twin-msg sj-twin-msg--assistant sj-twin-greet";
-      hi.textContent = GREETING;
+      var hmeta = document.createElement("span");
+      hmeta.className = "sj-twin-meta";
+      hmeta.setAttribute("aria-hidden", "true");
+      hmeta.innerHTML = "<b>JEN//AI</b>";
+      var hbody = document.createElement("div");
+      hbody.className = "sj-twin-body";
+      hbody.textContent = GREETING;
+      hi.appendChild(hmeta);
+      hi.appendChild(hbody);
       el.feed.appendChild(hi);
     }
-    log.forEach(function (m) { el.feed.appendChild(bubble(m.role, m.content)); });
+    log.forEach(function (m) { el.feed.appendChild(bubble(m.role, m.content, m.at)); });
     drawChips();
     scrollDown();
   }
 
+  // Deferred a frame on purpose. Called straight after appendChild, scrollHeight
+  // can be measured before the browser has laid the new message out, which
+  // leaves the feed parked somewhere that is no longer the bottom.
   function scrollDown() {
-    el.feed.scrollTop = el.feed.scrollHeight;
+    var go = function () { el.feed.scrollTop = el.feed.scrollHeight; };
+    if (window.requestAnimationFrame) window.requestAnimationFrame(go);
+    else go();
   }
 
   function drawChecklist(steps, done, total) {
@@ -514,7 +588,12 @@
       var b = document.createElement("button");
       b.type = "button";
       b.className = "sj-twin-chip" + (asked.indexOf(c.question) === -1 ? "" : " sj-twin-chip--used");
-      b.textContent = c.label;
+      // Glyph as markup, label as text: the label comes from the API and is
+      // never trusted as HTML.
+      if (CHIP_ICONS[c.icon]) b.innerHTML = icon(CHIP_ICONS[c.icon], "sj-twin-chip-i");
+      var label = document.createElement("span");
+      label.textContent = c.label;
+      b.appendChild(label);
       b.addEventListener("click", function () { send(c.question); });
       el.chips.appendChild(b);
     });
@@ -535,7 +614,7 @@
 
   function fail(message) {
     clearPending();
-    el.feed.appendChild(bubble("assistant", message));
+    el.feed.appendChild(bubble("assistant", message, Date.now()));
     scrollDown();
   }
 
@@ -547,16 +626,18 @@
     el.input.value = "";
 
     var history = trimmed();
-    log.push({ role: "user", content: text });
+    log.push({ role: "user", content: text, at: Date.now() });
     save();
     drawChips();
-    el.feed.appendChild(bubble("user", text));
+    el.feed.appendChild(bubble("user", text, Date.now()));
 
     // Something moves from the moment the request leaves, rather than from
     // the first event: a turn can take up to 30 seconds.
-    var wait = document.createElement("div");
-    wait.className = "sj-twin-thinking";
-    wait.innerHTML = "<span></span><span></span><span></span>";
+    var wait = bubble("assistant", "", Date.now());
+    wait.classList.add("sj-twin-thinking");
+    wait.querySelector(".sj-twin-body").innerHTML =
+      '<span class="sj-twin-composing">&gt; composing response...</span>' +
+      '<span class="sj-twin-caret" aria-hidden="true"></span>';
     el.feed.appendChild(wait);
     scrollDown();
 
@@ -605,9 +686,9 @@
         answered = true;
         clearPending();
         var textOut = (ev.text || "").trim() || "I do not have an answer for that one. Try asking another way.";
-        log.push({ role: "assistant", content: textOut });
+        log.push({ role: "assistant", content: textOut, at: Date.now() });
         save();
-        el.feed.appendChild(bubble("assistant", textOut));
+        el.feed.appendChild(bubble("assistant", textOut, Date.now()));
         drawChips();
         scrollDown();
       }
@@ -634,6 +715,7 @@
 
   function open() {
     el.panel.hidden = false;
+    remember();
     document.documentElement.classList.add("sj-twin-open");
     fillChips();
     ensureLibs().then(drawLog, drawLog);
@@ -642,6 +724,7 @@
 
   function close() {
     el.panel.hidden = true;
+    remember();
     document.documentElement.classList.remove("sj-twin-open");
     el.launch.focus();
   }
@@ -682,24 +765,37 @@
         '<div class="sj-twin-title">' +
           "<strong>Jen's AI twin</strong>" +
         "</div>" +
-        '<button type="button" class="sj-twin-icon sj-twin-max" aria-label="Expand">' +
+        '<button type="button" class="sj-twin-icon sj-twin-reset" ' +
+          'data-tip="Start a new chat" aria-label="Start a new chat">' +
+          icon('<path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path>') +
+        "</button>" +
+        '<button type="button" class="sj-twin-icon sj-twin-max" ' +
+          'data-tip="Expand" aria-label="Expand">' +
           icon('<path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path>' +
                '<path d="M21 3l-7 7"></path><path d="M3 21l7-7"></path>', "sj-twin-i-out") +
           icon('<path d="M21 9h-6V3"></path><path d="M3 15h6v6"></path>' +
                '<path d="M14 10l7-7"></path><path d="M10 14l-7 7"></path>', "sj-twin-i-in") +
         "</button>" +
-        '<button type="button" class="sj-twin-icon sj-twin-close" aria-label="Close">' +
-          icon('<path d="M18 6L6 18"></path><path d="M6 6l12 12"></path>') +
+        '<button type="button" class="sj-twin-icon sj-twin-close" ' +
+          'data-tip="Minimise" aria-label="Minimise">' +
+          icon('<path d="M6 9l6 6 6-6"></path>') +
         "</button>" +
       "</header>" +
       '<div class="sj-twin-feed" tabindex="0"></div>' +
       '<div class="sj-twin-chipwrap"><div class="sj-twin-chips">' +
       GHOSTS + '</div></div>' +
       '<form class="sj-twin-ask">' +
-        '<input class="sj-twin-input" type="text" autocomplete="off" ' +
-          'placeholder="Ask about her work" aria-label="Ask about her work">' +
-        '<button class="sj-twin-send" type="submit" aria-label="Send">Send</button>' +
-      "</form>";
+        '<span class="sj-twin-field">' +
+          '<input class="sj-twin-input" type="text" autocomplete="off" ' +
+            'placeholder="Ask about her work" aria-label="Ask about her work">' +
+          '<button class="sj-twin-send" type="submit" aria-label="Send">' +
+            '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" ' +
+            'fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>' +
+          "</button>" +
+        "</span>" +
+      "</form>" +
+      '<p class="sj-twin-note">Responses are generated by AI and may not ' +
+      "always be accurate.</p>";
 
     document.body.appendChild(launch);
     document.body.appendChild(panel);
@@ -716,8 +812,41 @@
 
     launch.addEventListener("click", function () { panel.hidden ? open() : close(); });
     panel.querySelector(".sj-twin-close").addEventListener("click", close);
-    panel.querySelector(".sj-twin-max").addEventListener("click", function () {
+    // No confirm dialog on purpose: a browser modal blocks everything until it
+    // is dismissed, and the cost of a mis-click is one conversation.
+    // Two clicks rather than a confirm dialog. A browser modal blocks the whole
+    // page until dismissed; arming the button asks the same question in place,
+    // and forgets it again after a few seconds if the answer never comes.
+    var armed = null;
+    var reset = panel.querySelector(".sj-twin-reset");
+    reset.addEventListener("click", function () {
+      if (!armed) {
+        reset.classList.add("sj-twin-reset--armed");
+        reset.setAttribute("data-tip", "Click again to clear this chat");
+        armed = setTimeout(disarm, 4000);
+        return;
+      }
+      disarm();
+      log.length = 0;
+      save();
+      drawLog();
+      el.input.focus();
+    });
+    function disarm() {
+      clearTimeout(armed);
+      armed = null;
+      reset.classList.remove("sj-twin-reset--armed");
+      reset.setAttribute("data-tip", "Start a new chat");
+    }
+    var maxBtn = panel.querySelector(".sj-twin-max");
+    maxBtn.addEventListener("click", function () {
       panel.classList.toggle("sj-twin-panel--max");
+      // The label describes what the next click will do. "Expand" on a panel
+      // that is already expanded reads as a promise it cannot keep.
+      var big = panel.classList.contains("sj-twin-panel--max");
+      maxBtn.setAttribute("data-tip", big ? "Compact" : "Expand");
+      maxBtn.setAttribute("aria-label", big ? "Compact" : "Expand");
+      remember();
     });
     panel.querySelector(".sj-twin-ask").addEventListener("submit", function (e) {
       e.preventDefault();
@@ -743,14 +872,30 @@
     //   ?twin=2                         the panel, maximised
     // Also bound to hashchange: changing only the hash does not reload, and
     // build() returns early once the widget exists, so nothing would re-run.
+    function syncMaxLabel() {
+      var big = panel.classList.contains("sj-twin-panel--max");
+      maxBtn.setAttribute("data-tip", big ? "Compact" : "Expand");
+      maxBtn.setAttribute("aria-label", big ? "Compact" : "Expand");
+    }
+
     function deepLink() {
       var q = /(?:^|[?&])twin(?:=([^&]*))?(?:&|$)/.exec(location.search);
       var want = q ? (q[1] || "1") : (location.hash === "#twin" ? "1" : null);
-      if (!want) return;
+      if (!want) return false;
       panel.classList.toggle("sj-twin-panel--max", want === "2");
+      syncMaxLabel();
       if (panel.hidden) open();
+      return true;
     }
-    deepLink();
+
+    // A link wins over whatever was remembered: someone arriving on /?twin=2
+    // asked for the big panel in this visit, whatever they did last time.
+    if (!deepLink()) {
+      var was = remembered();
+      if (was === "max") panel.classList.add("sj-twin-panel--max");
+      if (was === "max" || was === "open") open();
+      syncMaxLabel();
+    }
     window.addEventListener("hashchange", deepLink);
   }
 
