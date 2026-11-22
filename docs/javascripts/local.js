@@ -1,3 +1,34 @@
+/* ==========================================================================
+   Shared rotation clock: one timer drives every rotating panel (the code
+   snippet and the "recently added" band) so they fade and flip on the same
+   tick instead of drifting on separate intervals. Registration is keyed per
+   element, so Material's instant navigation can re-init freely without
+   stacking timers or subscribers.
+   ========================================================================== */
+window.SJRotate = window.SJRotate || (function () {
+  var PERIOD = 4500, FADE = 300;
+  var subs = {}, order = [], timer = null;
+  function tick() {
+    order.forEach(function (k) { var s = subs[k]; if (s && s.el) s.el.style.opacity = "0"; });
+    setTimeout(function () {
+      order.forEach(function (k) {
+        var s = subs[k];
+        if (!s) return;
+        try { s.advance(); } catch (e) {}
+        if (s.el) s.el.style.opacity = "1";
+      });
+    }, FADE);
+  }
+  return {
+    PERIOD: PERIOD, FADE: FADE,
+    register: function (key, el, advance) {
+      if (!subs[key]) order.push(key);
+      subs[key] = { el: el, advance: advance };
+      if (!timer) timer = setInterval(tick, PERIOD);
+    }
+  };
+})();
+
 (function () {
   var snippets = [
     { lang: "python", code:
@@ -50,14 +81,10 @@
         if (langEl) langEl.textContent = s.lang;
       }
       show();
-      setInterval(function(){
-        el.style.opacity = "0";
-        setTimeout(function(){
-          idx = (idx + 1) % snippets.length;
-          show();
-          el.style.opacity = "1";
-        }, 300);
-      }, 4500);
+      window.SJRotate.register("code", el, function(){
+        idx = (idx + 1) % snippets.length;
+        show();
+      });
     }
 
     // filters (multi-select):
@@ -910,4 +937,117 @@
   if (document.readyState !== "loading") build();
   else document.addEventListener("DOMContentLoaded", build);
   if (window.document$ && window.document$.subscribe) window.document$.subscribe(build);
+})();
+
+
+/* ==========================================================================
+   Recently added: pulls a small feed of the latest write-ups from a content
+   site (currently cybersecurity) and shows the newest few on the landing, so
+   the front page reflects that the learning is still active. The feed URL sits
+   on the container (data-sj-recent); the section stays hidden until the fetch
+   succeeds, so a blocked request or an empty feed simply shows nothing rather
+   than an empty heading. Feed contract: latest.json, built by
+   hooks/latest_feed.py in the cybersecurity repo.
+   ========================================================================== */
+(function () {
+  var RECENT_N = 3;
+  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  var DOC_ICON =
+    '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" ' +
+    'stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>' +
+    '<polyline points="14 2 14 8 20 8"></polyline>' +
+    '<line x1="16" y1="13" x2="8" y2="13"></line>' +
+    '<line x1="16" y1="17" x2="8" y2="17"></line></svg>';
+
+  function esc(s) {
+    var d = document.createElement("div");
+    d.textContent = s == null ? "" : String(s);
+    return d.innerHTML;
+  }
+
+  function prettyDate(iso) {
+    // iso is YYYY-MM-DD. Formatted by hand, not via Date(), so a timezone can
+    // never roll the day back across midnight.
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
+    if (!m) return "";
+    return String(parseInt(m[3], 10)) + " " + (MONTHS[parseInt(m[2], 10) - 1] || "") + " " + m[1];
+  }
+
+  function meta(item) {
+    return [item.platform ? esc(item.platform) : "", prettyDate(item.date)]
+      .filter(Boolean).join(" · ");
+  }
+
+  function card(item) {
+    return '<a class="sj-hubcard sj-recent-card" href="' + esc(item.url) + '">' +
+      '<span class="sj-card-icon">' + DOC_ICON + "</span>" +
+      '<span class="sj-card-title">' + esc(item.title) + "</span>" +
+      '<span class="sj-card-desc">' + meta(item) + "</span></a>";
+  }
+
+  function bandRow(item) {
+    // Platform and date as separate spans so narrow screens can drop the date
+    // (via CSS) while keeping the platform and the full title.
+    var plat = item.platform ? '<span class="sj-recent-line-plat">' + esc(item.platform) + "</span>" : "";
+    var dstr = prettyDate(item.date);
+    var dt = dstr ? '<span class="sj-recent-line-date">' + esc(dstr) + "</span>" : "";
+    var dot = (plat && dt) ? '<span class="sj-recent-line-dot" aria-hidden="true"> · </span>' : "";
+    return '<a class="sj-recent-line" href="' + esc(item.url) + '">' +
+      '<span class="sj-recent-line-icon">' + DOC_ICON + "</span>" +
+      '<span class="sj-recent-line-title">' + esc(item.title) + "</span>" +
+      '<span class="sj-recent-line-meta">' + plat + dot + dt + "</span>" +
+      '<span class="sj-recent-line-go" aria-hidden="true">→</span></a>';
+  }
+
+  function render(box, items) {
+    // "band" shows a single latest line; "cards" shows a small grid. The markup
+    // decides which, so one feed drives every layout the landing might use.
+    var style = box.getAttribute("data-sj-recent-style") || "cards";
+    if (style === "band") {
+      var slot = box.querySelector(".sj-recent-band");
+      if (!slot) return false;
+      var bn = parseInt(box.getAttribute("data-sj-recent-limit"), 10) || RECENT_N;
+      var list = items.slice(0, bn);
+      var bi = 0;
+      slot.innerHTML = bandRow(list[0]);
+      // Rotate through the latest few on the shared clock, in step with the
+      // code snippet. A single item just sits there, no fade.
+      if (list.length > 1 && window.SJRotate) {
+        window.SJRotate.register("recent-band", slot, function () {
+          bi = (bi + 1) % list.length;
+          slot.innerHTML = bandRow(list[bi]);
+        });
+      }
+      return true;
+    }
+    var grid = box.querySelector(".sj-recent-grid");
+    if (!grid) return false;
+    var n = parseInt(box.getAttribute("data-sj-recent-limit"), 10) || RECENT_N;
+    grid.innerHTML = items.slice(0, n).map(card).join("");
+    return true;
+  }
+
+  function fill(box) {
+    if (box.__sjRecentDone) return;
+    var url = box.getAttribute("data-sj-recent");
+    if (!url) return;
+    box.__sjRecentDone = true;   // one attempt per element; a failure stays hidden
+    fetch(url, { cache: "no-cache" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        var items = data && Array.isArray(data.items) ? data.items : [];
+        if (items.length && render(box, items)) box.hidden = false;
+      })
+      .catch(function () { /* blocked or offline: the section stays hidden */ });
+  }
+
+  function init() {
+    document.querySelectorAll("[data-sj-recent]").forEach(fill);
+  }
+
+  if (document.readyState !== "loading") init();
+  else document.addEventListener("DOMContentLoaded", init);
+  if (window.document$ && window.document$.subscribe) window.document$.subscribe(init);
 })();

@@ -33,6 +33,11 @@
 
 <div class="sj-divider"></div>
 
+<div class="sj-recent sj-recent--band" data-sj-recent="https://skyejen.github.io/cybersecurity/latest.json" data-sj-recent-style="band" data-sj-recent-limit="5" hidden>
+<span class="sj-recent-band-label">Latest</span>
+<div class="sj-recent-band"></div>
+</div>
+
 <div class="sj-featwrap" markdown>
 
 <div class="sj-sechead" markdown>
